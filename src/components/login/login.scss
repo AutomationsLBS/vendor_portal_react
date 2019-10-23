@@ -1,0 +1,61 @@
+.loginSection {
+    .logoSection {
+        text-align: center;
+        margin-bottom: 50px;
+
+        >img {
+            height: 60px;
+            padding: 15px 0px;
+        }
+    }
+
+    .loginHeading {
+        font-family: "Segoeui-regular";
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 20px;
+    }
+
+    .section {
+        padding: 5px 20px;
+        margin: 0px auto;
+    }
+
+    .signUpSection {}
+
+    .loginFormHolder {
+        text-align: center;
+
+        .loginButton {
+            margin-top: 35px;
+        }
+
+        .forgotButton {
+            margin-top: 5px;
+            color: #000;
+        }
+
+        .signupText {
+            font-size: 12px;
+        }
+
+        .signupButton {
+            margin-top: 5px;
+        }
+
+        .signupSection {
+            margin-top: 50px;
+        }
+    }
+}
+
+.password{
+    &.error{
+        color: #f44336;
+    }    
+}
+.passwordHintText{
+    &.error{
+        color: #f44336; 
+    }
+}

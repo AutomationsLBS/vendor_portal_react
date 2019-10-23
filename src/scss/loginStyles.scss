@@ -1,0 +1,38 @@
+/* Importing Default Styles */
+@import "./defaultStyles.scss";
+
+body {
+    .loginSection {
+        width: calc(100% + 8px);
+        height: calc(100vh + 8px);
+
+        .loginFormContainer,
+        .loginSliderContainer {}
+
+        .loginSliderContainer {
+            background-color: #eaeaea;
+            padding-top: 10%;
+
+            img {
+                display: block;
+                margin: 0px auto;
+                width: 75%;
+            }
+
+            .loginSliderMessage {
+                display: block;
+                text-align: center;
+                font-size: 2em;
+                width: 80%;
+                margin: 0px auto;
+                letter-spacing: 1px;
+                color: #555;
+            }
+        }
+
+        .loginFormContainer {
+            background-color: #fff;
+            padding: 0px 16px;
+        }
+    }
+}

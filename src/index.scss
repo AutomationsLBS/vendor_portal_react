@@ -1,0 +1,314 @@
+@font-face {
+  font-family: "segoeui-regular";
+  src: url("./scss/Fonts/segoeui.ttf");
+}
+
+@font-face {
+  font-family: "segoeui-bold";
+  src: url("./scss/Fonts/segoeuib.ttf");
+}
+
+@font-face {
+  font-family: "segoeui-italic";
+  src: url("./scss/Fonts/segoeuii.ttf");
+}
+
+@font-face {
+  font-family: "segoeui-light";
+  src: url("./scss/Fonts/segoeuil.ttf");
+}
+
+@font-face {
+  font-family: "segoeui-bolditalic";
+  src: url("./scss/Fonts/segoeuiz.ttf");
+}
+
+@font-face {
+  font-family: "segoeui-semibold";
+  src: url("./scss/Fonts/seguisb.ttf");
+}
+
+@import "../node_modules/react-datepicker/dist/react-datepicker.css";
+@import "../node_modules/react-toastify/dist/ReactToastify.css";
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+  min-width: 100%;
+  font-family: "segoeui-regular";
+
+  .mainContainer {
+    display: block;
+    height: 100%;
+    width: 100%;
+
+    .bodySection {
+      display: block;
+      /* min-height: 750px; */
+      padding: 15px;
+    }
+
+    .headerContainer,
+    .bodyContainer,
+    .footerContainer {
+      /* display: block; */
+      /* background-color: #ccc; */
+      position: absolute;
+      left: 0px;
+      top: 0px;
+    }
+
+    .headerContainer {
+      height: 60px;
+      background-color: #eaeaea;
+    }
+
+    .headerContainerMobile {
+      height: 100px;
+      background-color: #eaeaea;
+    }
+
+    .footerContainer {
+      height: 40px;
+      background-color: #1e1e1e;
+      top: auto;
+      bottom: 0px;
+      color: #ccc;
+      text-align: center;
+      line-height: 40px;
+    }
+
+    .bodyContainer {
+      /* background-color: forestgreen; */
+      height: calc(100% - 100px);
+      top: 60px;
+
+      .bodyContent {
+        display: block;
+        height: 100%;
+        /* overflow-y: scroll; */
+        padding: 15px;
+      }
+    }
+  }
+
+  .headerLeftSection {
+    text-align: center;
+
+    >a {
+      display: block;
+      padding: 5px;
+
+      >img {
+        display: block;
+        height: 50px;
+        margin: 0px auto;
+      }
+    }
+  }
+
+  .filterContainer {
+    display: block;
+    position: relative;
+    left : -13px;
+
+    &.inactive {
+      .filterContent {
+        display: none;
+      }
+    }
+
+    &.active {
+      .filterContent {
+        display: block;
+        background-color: white;
+        margin: 0px;
+        padding: 15px;
+        width: 97%;
+       // border-width: thin;
+        //border: 1px solid #ccc;
+        margin-bottom:19px;
+        
+
+        label {
+          padding: 8px;
+          padding-left: 0px;
+        }
+
+        input {
+          padding: 8px;
+          border-radius: 3px;
+          border: none;
+          box-shadow: none;
+          outline: none;
+          border: 1px solid #ccc;
+        }
+      }
+    }
+  }
+}
+
+.loader-container {
+  &.showLoader {
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background-color: #000000aa;
+    z-index: 9999;
+
+    >div {
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &.hideLoader {
+    display: none;
+  }
+}
+
+.filterContainer {
+  .filterContent {
+    display: block;
+
+    .filterHeading {
+      display: block;
+    }
+
+    .submitFilter {
+      display: block;
+
+      button {
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        box-shadow: none;
+      }
+    }
+    .submitFilterInline {
+      display: inline-block;
+      vertical-align: middle;
+      button {
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        box-shadow: none;
+        padding: 6px 8px;
+      }
+    }
+
+    .filterItem {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 15px;
+
+      label {
+        font-weight: bold;
+      }
+
+      &:last-child {
+        margin-right: 0px;
+      }
+
+      .startDate,
+      .endDate {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 5px;
+
+        input {
+        
+          text-align: left;
+          max-width: 128px;
+        }
+      }
+    }
+  }
+}
+
+.btn {
+  &.btn-primary {
+    cursor: pointer;
+  }
+}
+
+.InputElement {
+  border:2px !important;
+}
+
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+.allScroll {
+  cursor: all-scroll;
+}
+.customButton {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  
+  line-height: 28px;
+}
+
+
+
+@media (min-width: 1280px){
+  .MuiGrid-grid-lg-3-74 {
+    flex-grow: 0;
+    max-width: 22% !important;
+    flex-basis: 22% !important;
+}
+
+
+
+.MuiGrid-grid-lg-9-80 {
+  flex-grow: 0;
+  max-width: 78% !important;
+  flex-basis: 78% !important;
+}
+}
+
+#app {
+  margin-top: 20px !important
+}
+
+.MuiFormControlLabel-labelPlacementStart {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+  flex-direction: row-reverse;
+}
+
+.independent, .vendor, .settings {
+  display: none !important;
+  background-color: #3f4b80;;
+  padding-left: 8px;
+}
+
+.independent-active, .vendor-active, .settings {
+  
+  background-color: #3f4b80;;
+  padding-left: 8px;
+}
+.display{
+  
+}

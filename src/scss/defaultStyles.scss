@@ -1,0 +1,399 @@
+@import "./fonts.scss";
+@import './reset.scss';
+
+body {
+
+    .track-vertical {
+        /* background-color: darkred; */
+        height: 100%;
+        width: 6px;
+        right: 0px;
+
+        >div {
+            border-radius: 5px !important;
+            background-color: #47b16f !important;
+            transition: all 50ms;
+        }
+    }
+
+    .semiScroll {
+        >div {
+            &:nth-child(3) {
+                >div {
+                    background-color: #47b16f !important;
+                }
+            }
+        }
+    }
+
+    .pageTitle {
+        color: #47b16f;
+        font-family: "Segoeui-regular";
+
+        &.titleSection {
+            padding-bottom: 20px;
+        }
+    }
+
+    .imgRound {
+        border-radius: 50%;
+    }
+
+    .listTable {
+        font-family: "Segoeui-regular";
+        tr{
+            >td, >th{
+                padding: 5px 8px;
+            }
+        }
+        >thead {
+            /* background-color: #47b16f; */
+
+            >tr {
+                border: 1px solid #ccc;
+
+                >th {
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    font-family: "Segoeui-regular";
+                    letter-spacing: 1px;
+                    font-size: 12px;
+                    color: #000;
+                }
+            }
+        }
+
+        >tbody {
+            >tr {
+                border: 1px solid #ccc;
+
+                >td {
+                    border: none;
+                }
+            }
+            .tableOptionSection{
+                a, span{
+                    outline: none;
+                }
+            }
+        }
+    }
+
+    .rc-pagination {
+        margin: 0px;
+        list-style: none;
+        padding: 15px 0px;
+        text-align: right;
+
+        >li {
+            display: inline-block;
+            vertical-align: top;
+            border: 1px solid #47b16f;
+            width: 32px;
+            height: 32px;
+            margin-right: 5px;
+            line-height: 32px;
+            text-align: center;
+            cursor: pointer;
+
+            &.rc-pagination-next,
+            &.rc-pagination-prev {
+                /* background-color: #47b16f;
+                color: #fff; */
+            }
+
+            &.rc-pagination-next {
+                position: relative;
+
+                &::before {
+                    content: ">";
+                }
+            }
+
+            &.rc-pagination-prev {
+                position: relative;
+
+                &::before {
+                    content: "<";
+                }
+            }
+
+            &.rc-pagination-jump-next,
+            &.rc-pagination-jump-prev {
+                border: none;
+
+                &::before {
+                    content: "...";
+                    font-size: 18px;
+                    font-weight: bold;
+                    line-height: 32px;
+                    letter-spacing: 2px;
+                    box-shadow: transparent;
+                }
+
+                &:focus {
+                    border: none;
+                    outline: none;
+                    box-shadow: transparent;
+                }
+            }
+
+            &.rc-pagination-item-active {
+                background-color: #47b16f;
+                border: 1px solid #47b16f;
+                color: #fff;
+            }
+
+            &:focus {
+                outline: none;
+                box-shadow: transparent;
+            }
+
+            >a {
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+        }
+    }
+
+    .preLoginHeading {
+        font-family: "Segoeui-regular";
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 20px;
+    }
+
+    .headerRightSection {
+        text-align: right;
+        display: block;       
+
+        >.profileSection {
+            display: block;
+            vertical-align: middle;
+            padding: 8px;
+            margin: 0px;
+            line-height: 50%;
+            text-align: right;
+
+            >button {
+                padding: 0px;
+                margin: 0px;
+                min-width: auto;
+                background-color: transparent !important;
+            }
+
+            .mobileMenuIcon {
+                font-size: 40px;
+                color: #47b16f;
+            }
+
+
+        }
+        &.mobileNavigation {
+            padding: 5px 8px;
+            >div{
+                display: inline-block;
+                vertical-align: middle;
+                >button {
+                    padding: 0px;
+                    margin: 0px;
+                    min-width: auto;
+                    background-color: transparent !important;
+                }    
+                .mobileMenuIcon {
+                    font-size: 40px;
+                    color: #47b16f;
+                }
+            }
+        }
+    }
+
+    .preLoginLink {
+        letter-spacing: 1px;
+        text-transform: none;
+        font-weight: normal;
+    }
+
+    .btn {
+        font-family: "Segoeui-regular";
+        text-transform: none;
+        padding: 8px 15px;
+        letter-spacing: 1px;
+        font-size: 16px;
+        border-radius: 0px;
+        font-weight: bold;
+        min-width: 100px;
+        text-align: center;
+        min-height: 0px;
+        line-height: normal;
+
+        &.btn-primary {
+            background-color: #47b16f;
+            color: #fff;
+        }
+
+        &.btn-secondary {
+            border: #47b16f 1px solid;
+            color: #000;
+        }
+        &.btn-round {
+            border-radius: 5px;
+        }
+
+        &.btn-link {
+            letter-spacing: 1px;
+            text-transform: none;
+            font-weight: normal;
+            color: #000;
+
+            &:hover {
+                background: transparent;
+            }
+        }
+    }
+
+
+    .icon {
+        color: #47b16f;
+        width: 24px;
+        height: 24px;
+
+        &.icon-delete {
+            fill: #3f4a80;
+        }
+
+        &.icon-edit {
+            fill: #47b16f;
+        }
+        &.icon-user{
+            background: url('/assets/images/user.svg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            fill: currentColor;
+        }
+        &.icon-info{
+            fill: #47b16f;
+        }
+    }
+
+    .arc text {
+        font: 10px sans-serif;
+        text-anchor: middle;
+    }
+
+    .arc path {
+        stroke: #fff;
+    }
+
+    .mobilePagitnationItem {
+        display: block;
+        border: 1px solid #ccc;
+        margin-bottom: -1px;
+        padding: 0px 15px;
+
+        .itemRowHeading {
+            position: relative;
+            min-height: 90px;
+
+            >.itemRowOptions,
+            >h3 {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            >h3 {
+                >span {
+                    display: inline-block;
+                    vertical-align: middle;
+
+                    &:first-child {
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 50%;
+                        overflow: hidden;
+                        text-align: center;
+                        margin-right: 8px;
+                        border: 1px solid #47b16f;
+                    }
+
+                    >img {
+                        height: 100%;
+                    }
+                }
+            }
+
+            .itemRowOptions {
+                position: absolute;
+                right: -10px;
+                top: 10px;
+
+                >a {
+                    display: block;
+                    padding: 5px 0px;
+                }
+            }
+
+        }
+
+        .itemRowBody {
+            display: block;
+            padding-bottom: 8px;
+
+            >div {
+                display: block;
+                padding-bottom: 5px;
+
+                >b,
+                >span {
+                    display: inline-block;
+                }
+
+                >b {
+                    position: relative;
+
+                    &:after {
+                        content: " : ";
+                    }
+                }
+            }
+        }
+    }
+    .modalHolder{
+        display: block;
+        
+        .modalTitle{
+            display: block;
+            padding: 15px;
+        }
+        .modalBody{
+            display: block;
+            padding: 25px;
+            font-size: 1.1em;
+            padding-bottom: 0px;
+        }
+        .modalFooter{
+            display: block;
+            padding: 25px 15px;
+            text-align: right;
+            a{
+                text-decoration: none;
+                color: currentColor;
+                margin-right: 8px;
+            }
+        }
+    }
+}
+.Toastify{
+    >div{
+        width: 80%;
+        min-width: 500px;
+        max-width: 650px;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
+    }
+}

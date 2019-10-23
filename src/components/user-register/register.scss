@@ -1,0 +1,64 @@
+.stepperHolder {
+    width: auto !important;
+    .stepperContainer {
+        svg[class*="MuiStepIcon-active"],
+        svg[class*="MuiStepIcon-completed"] {
+            fill: #47b16f;
+        }
+
+        $breakpoint-mobile: 600px;
+        @media (max-width: $breakpoint-mobile) {
+            span[class*="MuiStepLabel-label"]{
+                display: none;
+            }
+        }
+    }
+
+}
+.phoneMobile{
+    width: 100%;
+    padding: inherit;
+    font-size: inherit;
+    border: none;
+    border-bottom: 1px solid currentColor;
+    padding: 12px;
+    &:focus, &:hover{
+        outline: none;
+    }
+}
+.stepperFormsHolder{
+    display: block;
+    .stepperForms{
+        display: block;
+    }
+}
+.registrationFormContainer{
+    .text-right{text-align: right;}
+    .btnHolder{
+        button{
+            margin-right: 8px;
+            vertical-align: top;
+            &:last-child{
+                margin-right: 0px;
+            }
+            &:disabled{
+                opacity: 0.8;
+                color: #303030;
+            }
+        }
+    }
+}
+.serviceTypeContainer{
+    b{
+        font-size: 14px;
+    }
+}
+.inputSelect{
+    margin-top: 16px !important;
+    label{
+        color: rgba(0, 0, 0, 0.54);
+    }
+}
+.passwordField{
+    margin-top: 16px !important;
+}

@@ -1,0 +1,56 @@
+.axis--x{
+    >.tick{
+        >text{
+            border: 1px solid #c00;
+        }
+    }
+}
+.axis--x path {
+    /* display: none; */
+    stroke: #000;
+}
+.barGraph{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.colorBar{
+    display: block;
+    font-size: 0.8em;
+    .colorBarItem{
+        padding: 8px 15px;
+        >i, >span{
+            display: inline-block;
+            vertical-align: middle;
+        }
+        >i{
+            width: 12px;
+            height: 12px;
+            margin-right: 10px;
+        }
+    }
+}
+.bar{
+    opacity: 0.8;
+    &:hover{
+        opacity: 1;
+    }
+}
+#bar_tooltip{
+    display: block;
+    position: absolute;
+}
+.barLabel{
+    opacity: 0;
+    color: black;
+}
+.axis{
+    &.axis--x{
+        .tick{
+            text{
+                /* transform-origin: 0%, 0%;
+                transform: rotate(-5deg); */
+            }
+        }
+    }
+}

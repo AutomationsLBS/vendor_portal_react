@@ -1,0 +1,140 @@
+
+.accountBlock {
+    padding: 20px;
+
+    .header {
+        padding-bottom: 30px;
+
+        .Heading {
+            color: #48b16f;
+        }
+        .outlinedButton {
+            color: #48b16f !important;
+            border: 2px solid #48b16f;
+            padding: 8px 15px;
+            min-width: 120px;
+            font-family: "Segoeui-regular";
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 16px;
+            border-radius: 0px;
+            // margin-top: 35px;
+            font-weight: bold;
+        }
+    }
+    .singleFormLeft {
+        padding-right: 45px;
+        // width: 93%;
+
+        .phoneLabel {
+            color: rgba(0, 0, 0, 0.54);
+            padding: 0;
+            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+            line-height: 1;
+            font-size: 12px;
+        }
+    }
+    .singleFormRight {
+        padding-right: 10px;
+        padding-left: 5px;
+        // width: 93%;
+
+        .phoneLabel {
+            color: rgba(0, 0, 0, 0.54);
+            padding: 0;
+            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+            line-height: 1;
+            font-size: 12px;
+        }
+    }
+    .formTitle {
+            font-family: segoeui-semibold;
+            font-size: 18px;
+        }
+    .formBlock {
+        padding-bottom: 30px; 
+
+        .formTitle {
+            font-family: segoeui-semibold;
+            font-size: 18px;
+        }
+        .formSubTitle {
+            font-family: segoeui-semibold;
+            font-size: 15px;
+            padding-top: 5px;
+        }
+        .formDescp {
+            font-family: segoeui-regular;
+            font-size: 15px;
+            padding-top: 5px;
+            
+            .errorText {
+                font-size: 11px;
+                color: red;
+            }
+        }
+        .formFont > div> input { 
+            font-family: segoeui-regular !important;
+            font-size: 15px;
+        }   
+    }
+    .addressBlock {
+        padding-top: 50px; 
+        padding-bottom: 20px;
+
+        .formTitle {
+            font-family: segoeui-semibold;
+            font-size: 18px;
+        }
+        .formSubTitle {
+            font-family: segoeui-semibold;
+            font-size: 15px;
+            padding-top: 5px;
+        }
+        .formDescp {
+            font-family: segoeui-regular;
+            font-size: 15px;
+            padding-top: 5px;
+            
+            .errorText {
+                font-size: 11px;
+                color: red;
+            }
+        }
+        .formFont { 
+            font-family: segoeui-regular;
+            font-size: 15px;
+        }
+    }
+    .buttonsHolder {
+        min-height: 100px;
+        padding: 25px 0px;
+        .greenBtn {
+            font-family: Segoeui-regular;
+            text-transform: capitalize;
+            font-size: 15px;
+            border-radius: 0px;
+            // margin-top: 35px;
+            font-weight: bold;
+            background-color: #4caf50;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 0px;
+            min-width: 150px;
+            height: 30px;
+        }
+        .outlinedBtn {
+            padding: 5px 15px;
+            font-family: Segoeui-regular;
+            text-transform: capitalize;
+            font-size: 15px;
+            border-radius: 0px;
+            // margin-top: 35px;
+            font-weight: bold;
+            border: 1px solid #4caf50;
+            color: #4caf50;
+            min-width: 150px;
+            height: 30px;
+        }
+    }
+}

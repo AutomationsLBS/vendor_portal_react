@@ -1,0 +1,30 @@
+.registrationSection {
+    .registrationForm {
+        padding: 0px 20px;
+        margin:0px -16px;
+        
+        .halfWidth {
+            margin-top: 16px;
+            margin-bottom: 8px;
+            /* width: 90% !important; */
+            text-align: left;
+        }
+        .fullWidth {
+            margin-top: 16px;
+            margin-bottom: 8px;
+            /* width: 95% !important; */
+            text-align: left;
+        }
+        .errorText {
+            font-size: 11px;
+            color: red;
+            text-align: left;
+            padding-left: 15px;
+        }
+    }
+}
+
+#app {
+    margin-top: 20px !important
+}
+  

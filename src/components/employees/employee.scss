@@ -1,0 +1,50 @@
+.serviceTypeLabel{
+    font-size: 0.8em;
+}
+.serviceTypeContainer{
+    >b{
+        font-size: 0.8em;
+        font-weight: normal;
+    }
+}
+.btnHolder{
+    text-align: right;
+    button{
+        margin-right: 8px;
+    }
+}
+span[title="Disputed"]{
+    opacity: 0.5;
+}
+.modalFooter{
+    .btn{
+        border: none;
+        &.btn-secondary{
+            background: transparent;
+        }
+    }
+}
+.footerHolder{
+    display: block;
+    border-top: 1px solid #ccc;
+    margin: 0px !important;
+    padding: 0px !important;
+    background-color: #f2f2f2;
+}
+.infoContent{
+    text-align: left;
+    display: block;
+    width: 100%;
+    padding: 15px;
+    >div{
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 5px;
+        .infoIcon{
+            color: #47b16f;
+        }
+        &.infoText{
+            // margin-left: 10px;
+        }
+    }
+}
