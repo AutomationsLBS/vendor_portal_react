@@ -12,7 +12,7 @@ import {getAllUsers} from '../../actions';
 import {Link } from 'react-router-dom'
 import CommonService from './../../service/commonServices';
 import { ToastContainer, toast } from 'react-toastify';
-
+import CredentailView from '../credentials/credential-view'
 
 import {
   Table,
@@ -32,7 +32,15 @@ export default class Credentails extends Component {
     super(props);
     this.state = {
       redirect: false,
-      prevPath: ''
+      prevPath: '',
+      credentialslist:{
+        credentialName :'Vendor Terms & Conditions',
+        doc: '06/19/19',
+        startDate: '06/18/19',
+        endDate:'06/18/19',
+        status: 'a',
+        remarks: 'In here...'
+      }
     }
   }
   componentWillMount() {
@@ -91,7 +99,8 @@ export default class Credentails extends Component {
                     <TableCell> Effective End Date </TableCell>
                     <TableCell> Status </TableCell>
                     <TableCell> Reason </TableCell>  
-                    <TableCell> Edit </TableCell>  
+                    <TableCell> Edit </TableCell> 
+		    <TableCell> View </TableCell>  
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -107,6 +116,9 @@ export default class Credentails extends Component {
                           <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/>
                       </Link>
                     </TableCell>
+		    <TableCell>
+                      <CredentailView credentials = {this.state.credentialslist}/>
+                    </TableCell>
                   </TableRow>
                   <TableRow >
                     <TableCell> T.B Test </TableCell>
@@ -119,6 +131,9 @@ export default class Credentails extends Component {
                       <Link to="/credentialsEdit"   className="edit" >
                           <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/>
                       </Link>
+                    </TableCell>
+		    <TableCell>
+                      <CredentailView credentials = {this.state.credentialslist}/>
                     </TableCell>
                   </TableRow>
                   <TableRow >
@@ -133,6 +148,9 @@ export default class Credentails extends Component {
                           <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/>
                       </Link>
                     </TableCell>
+		    <TableCell>
+                      <CredentailView credentials = {this.state.credentialslist}/>
+                    </TableCell>
                   </TableRow>
                   <TableRow >
                     <TableCell>XYZ Test Conditions </TableCell>
@@ -145,6 +163,9 @@ export default class Credentails extends Component {
                       <Link to="/credentialsEdit"   className="edit" >
                           <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/>
                       </Link>
+                    </TableCell>
+		    <TableCell>
+                      <CredentailView credentials = {this.state.credentialslist}/>
                     </TableCell>
                   </TableRow>
                 </TableBody>
