@@ -50,6 +50,7 @@ body {
       display: block;
       /* min-height: 750px; */
       padding: 15px;
+      background-color: #FFFF;
     }
 
     .headerContainer,
@@ -63,7 +64,7 @@ body {
     }
 
     .headerContainer {
-      height: 60px;
+      height: 63px;
       background-color: #eaeaea;
     }
 
@@ -85,7 +86,7 @@ body {
     .bodyContainer {
       /* background-color: forestgreen; */
       height: calc(100% - 100px);
-      top: 60px;
+      top: 63px;
 
       .bodyContent {
         display: block;

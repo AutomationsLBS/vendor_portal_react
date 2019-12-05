@@ -28,32 +28,7 @@ export default class Login extends Component {
         console.log("Component loaded");
     }
 
-    getEmpoyeesList() {
-        let that = this;
-        this.setState({loader: true});
-        axios
-        .get(axios.getEmployees())
-        .then((response) => {
-           
-            this.setState({employees: response.data, loader: false});
-            toast.success(
-                (response.message != undefined) 
-                    ? "Successfully..." 
-                    : response.message, {
-                position: toast.POSITION.TOP_CENTER,
-                className: 'rotateY animated'
-              });
-           
-        })
-        .catch((error) => {
-           
-            this.setState({loader: false});
-            toast.error((error.message != undefined) ? error.toString() : "Failed for some reason", {
-                position: toast.POSITION.TOP_CENTER
-              });
-            
-        });
-    }
+  
     loginSubmit = (data) => {
      
         this.setState({login: data});
@@ -63,42 +38,63 @@ export default class Login extends Component {
             data.service = "login";
             axios
                 .post(axios.login(), data)
+
                 .then((response) => {
+                console.log(data,"data");
+                
+                CommonService.localStore.set("phone_mobile_user", data.phone_mobile); 
+
+                CommonService.localStore.set("visitor_types", response.visitor_type); 
+                        
+                    CommonService.localStore.set("currentPin",data.pin_c); 
+                    CommonService.localStore.set("username", response.visitor["first_name"]+" "+response.visitor["last_name"] );         
                     this.setState({loader: false});
-          
-                    //debugger; 
-                    if(response.visitor.phone_mobile == "8247885533"){
-                        response.type = "contractor"
-                        //alert(JSON.stringify(response));
-
-                        CommonService.localStore.set("userData", JSON.stringify(response));
-                        window.location.href = "/communityc";
-                         toast.success( "Login successfull", {
-                            position: toast.POSITION.TOP_CENTER,
-                            className: 'rotateY animated'
-                          });
-                        setTimeout(() => {
-                        }, 3000);
-                    } else if(response.visitor.phone_mobile == "7894562310"){
-                        response.type = "vendor"
-                        //alert("sdsdf"+JSON.stringify(response));
-
-                        CommonService.localStore.set("userData", JSON.stringify(response));
-                        // let ud = CommonService.localStore.get('userData');
-                        // ud = JSON.parse(ud.userData);
-                        // alert(ud.visitor.type)
-                        window.location.href = "/communityv";
-                         toast.success( "Login successfull", {
-                            position: toast.POSITION.TOP_CENTER,
-                            className: 'rotateY animated'
-                          });
-                        setTimeout(() => {
-                        }, 3000);
+                    CommonService.localStore.set("username", response.visitor["first_name"]+" "+response.visitor["last_name"] );    
+                    CommonService.localStore.set("first_name", response.visitor["first_name"])
+                    CommonService.localStore.set("last_name", response.visitor["last_name"])
+                    CommonService.localStore.set("email", response.visitor["email"])
+                   let  vendorComanyStatus = false;
+                    if (response.vendor_companies.length > 0){
+                        vendorComanyStatus = true;
+                       
+                        CommonService.localStore.set("visitor_type", response.visitor["id"]);  
+                        CommonService.localStore.set("usr_vendor_id", JSON.stringify(response.visitor["id"]));  
+                             
+                        CommonService.localStore.set("usr_company_id", JSON.stringify(response.vendor_companies[0]["id"]));   
+                        CommonService.localStore.set("usr_company_name", response.vendor_companies[0]["name"]);   
                     }
+                     
+                 if (response.visitor_type == "vendor"){
+                    window.location.href = "/communityc";
+
+                        }else{
+                            if (vendorComanyStatus){
+                                window.location.href = "/companies"; 
+
+                            } else {
+                                window.location.href = "/communityv";
+                            }
+                            
+                        }
+                        
+                        
+                        CommonService.localStore.set("userData", JSON.stringify(response));
+                                                toast.success( "Login successfull", {
+                            position: toast.POSITION.TOP_CENTER,
+                            className: 'rotateY animated'
+                          });
+                        setTimeout(() => {
+                        }, 3000);
+                    
            
                 })
                  .catch((error) => {
                     this.setState({loader: false});  
+                    
+                    toast.error((error.message != undefined) ? "Invalid Pin or Phone/Email " : "Failed for some reason", {
+                        position: toast.POSITION.TOP_CENTER
+                      });
+                    
                 });
         }
     }

@@ -50,6 +50,16 @@ import AddAdmin from '../components/account/addAdmin'
 import PaymentHistory from '../components/settings/payment-history'
 import UpdateDetails from '../components/settings/updateDetails'
 import CredentailsEdit from  "../components/credentials/credential-edit";
+import AgCredentails from  "../components/credentials/agency_credentails";
+import IdbasedvaluesCommunitys from '../components/communities/idbasedCommunitys';
+import IdbasedvaluesCredentails  from '../components/credentials/idbasedcredentials';
+import EmployeeBasedCommunity from "../components/employees/employeeBasedCommunitys";
+import UpdateProfile from "../components/updateNewpin/updateProfile";
+import EmployeeEdit from "../components/employees/editEmployee";
+import ForgotPassword from  "../components/forgotpassword/forgotpassword";
+
+import CompanysList from  "../components/companysList/index";
+
 
 const styles = theme => ({
   root: {
@@ -74,15 +84,75 @@ class userPage extends Component {
         <div><Contractor {...this.props}/></div>
       );
     }
+
+    else if (path.indexOf('/companies')!== -1){
+      console.log("in egrer")
+      return(
+        <div><CompanysList /></div>
+      )
+    }
     else if (path.indexOf('/agencyReport') !== -1) {
+
+      
       return (
         <div><Report {...this.props}/></div>
       );
     }
+
+
+    else if (path.indexOf('/agCredentials') !== -1) {
+
+      var credentails  = path.split('/');
+      if (credentails .length > 2) {
+       
+        switch (credentails[2]) {
+
+         
+          case "credentials":
+            return (
+              <div> <IdbasedvaluesCredentails {...this.props} /></div>
+            );
+            
+            break;
+          default:
+            return false;
+        }
+      } else {
+        
+        return (
+          <div><AgCredentails {...this.props}/></div>
+        );
+      }
+
+
+      
+    }
     else if (path.indexOf('/communityv') !== -1) {
-      return (
-        <div><Vendor {...this.props}/></div>
-      );
+
+
+
+      var communityv  = path.split('/');
+      if (communityv .length > 2) {
+       
+        switch (communityv[2]) {
+
+         
+          case "communityvlist":
+            return (
+              <div> <IdbasedvaluesCommunitys {...this.props} /></div>
+            );
+            
+            break;
+          default:
+            return false;
+        }
+      } else {
+        
+        return (
+          <div><Vendor {...this.props}/></div>
+        );
+      }
+    
     }
     else if (path.indexOf('/employeesCreate')!== -1){
       console.log("in egrer")
@@ -108,13 +178,41 @@ class userPage extends Component {
         <div><Credentails /></div>
       )
     }
-    
+   
     else if (path.indexOf('/employees') !== -1){
-    
-      return (
+      
+      var employeePath  = path.split('/');
+      if (employeePath .length > 2) {
+       
+        switch (employeePath[2]) {
+
+         
+          case "empBasedList":
+            return (
+              <div> <EmployeeBasedCommunity {...this.props} /></div>
+            );
+            
+            break;
+
+            case "editEmployee":
+            return (
+              <div> <EmployeeEdit {...this.props} /></div>
+            );
+            
+            break;
+
+           
+          default:
+            return false;
+        }
+      } else {
         
-        <div><Employees /></div>
-      );
+        return (
+          <div><Employees /></div>
+        );
+      }
+
+
     }
    
     
@@ -133,9 +231,18 @@ class userPage extends Component {
         <div> <Updatepin  {...this.props }/> </div>
       );
     }
+
+    else if (path.indexOf('/updateProfile') !== -1){
+      console.log("in updateProfile::")
+       return (
+         
+         <div> <UpdateProfile  {...this.props }/> </div>
+       );
+     }
+ 
     else if (path.indexOf('/register') !== -1) {
       return (
-        <div><Register {...this.props}/></div>
+        <div><ForgotPassword {...this.props}/></div>
       );
     }
     else if (path.indexOf('/addAdmin') !== -1) {

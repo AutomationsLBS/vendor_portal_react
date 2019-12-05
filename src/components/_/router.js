@@ -41,6 +41,7 @@ import Updatepin from  "../updateNewpin/index";
 import Credentails from "../credentials/credentials";
 import CredentailsCreate from  "../credentials/credential-create";
 import CredentailsEdit from  "../credentials/credential-edit";
+import Companys  from  "../companysList/index"
 
 import Report from '../credentials/report'
 import AddAdmin from '../credentials/account/addAdmin'
@@ -107,6 +108,8 @@ export default class Approute extends Component {
                             <Route path="/agencyReport" component={Report}/>
                             <Route path="/addAdmin" component={AddAdmin}/>
                             <Route path="/credentialsEdit" component={CredentailsEdit}/>
+                            <Route path="/companies" component={Companys}/>
+                        
                         </Router>
                         </Switch>
                         </div>

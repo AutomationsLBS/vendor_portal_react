@@ -36,7 +36,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
 
-export default class EmployeeCreate extends Component {
+export default class EmployeeEdit extends Component {
 
   constructor(props){
     super(props)
@@ -76,6 +76,41 @@ export default class EmployeeCreate extends Component {
     var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailPattern.test(elementValue); 
   }
+
+
+
+  getParams =()=> {
+       
+    let id  = this.props.history.location.pathname.split("/")
+    console.log(id[3]," kranthis----")
+   
+   return id[3]
+  }
+
+  community_employees = (data)=>{
+    var  usr_company_id  = CommonService.localStore.get("usr_company_id").usr_company_id
+ 
+ 
+     axios
+     .get(axios.community_employees(),{params:{community_id: data ,company_id:usr_company_id}})
+     .then((response) => {
+        // console.log(response,"respose  emp data")
+         this.setState({employeeData: response, loader: false});
+        
+           console.log(this.state.employeeData["employees"].length,"employeedata");
+     })
+     .catch((error) => {
+        
+         this.setState({loader: false});
+         toast.error((error.message != undefined) ? error.toString() : "Failed for some reason", {
+             position: toast.POSITION.TOP_CENTER
+           });
+         
+     });
+ 
+   }
+
+
   submitEmployeeForm = () => {
     let employeeError = this.state.employeeError;
     let employeeData = this.state.employeeData;
@@ -196,7 +231,7 @@ export default class EmployeeCreate extends Component {
                <Grid item>
                    <h2>
                    <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-                      Add Employee
+                      Edit Employee Details
                     </Typography>
                   
                    </h2>

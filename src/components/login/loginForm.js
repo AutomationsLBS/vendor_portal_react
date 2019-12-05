@@ -70,14 +70,14 @@ class LoginForm extends Component {
     let  phoneno = /^\d{10}$/;
 
     if (!this.state.phone_email) {
-      this.setState({"phone_error": "Phone/Email  is required!"});
+      this.setState({"phone_error": "Vendor/ Agency is required!"});
       formValid = false;
     }else if(re.test(this.state.phone_email)){
       formValid = true;
     }else if(phoneno.test(this.state.phone_email)){
       formValid = true;
     }else {
-      this.setState({"phone_error": "PhoneEmail  is required!"});
+      this.setState({"phone_error": "Vendor/ Agency is required!"});
       formValid = false;
     }
   //  let result = re.test(this.state.email);
@@ -87,12 +87,12 @@ class LoginForm extends Component {
       formValid = false;
     } */
     if (!this.state.password) {
-      this.setState({"password_error": "password is required!"});
+      this.setState({"password_error": "Pin is required!"});
       formValid = false;
     }
 
     if (formValid) {      
-      this.props.updateData({phone_mobile: this.state.phone_email, pin_c: this.state.password});
+        this.props.updateData({phone_mobile: this.state.phone_email, pin_c: this.state.password});
     }
   }
 
@@ -107,7 +107,7 @@ class LoginForm extends Component {
             variant="title"
             gutterBottom
             align="center">
-           Vendor Login
+           Vendor/ Agency Login
           </Typography>
         </Grid>
         <Grid container spacing={24} justify="center">
@@ -117,7 +117,7 @@ class LoginForm extends Component {
                 <Grid item xs={12} sm={12}>
                   <TextField
                     id="username"
-                    label="Phone/Email"
+                    label="Vendor/Agency"
                     type="text"
                     className="username"
                     value={this.state.phone_email}
@@ -153,12 +153,15 @@ class LoginForm extends Component {
                       Login
                     </Button>
                    <div>
-                    {   <Button href="./register" color="secondary" className="btn btn-link">Regisiter your mobile number?</Button>  }
+                    {   <Button href="./register" color="secondary" className="btn btn-link">Forgot password?</Button>  }
                     </div> 
                   </MuiThemeProvider>
                 </Grid>
               </Grid>
             </form>
+            <span style ={{"font-size": "16px","padding-top": "16px"}}>
+        <b>Note:</b> If you are a Vendor/ Agency, please login with your Accushield login details that you registered at Kiosk.
+      </span>
           </Grid>
           {/* <Grid
             className="section signupSection"
@@ -179,7 +182,9 @@ class LoginForm extends Component {
               </Button>
             </MuiThemeProvider>
           </Grid> */}
+      
         </Grid>
+       
       </Grid>
     );
   };

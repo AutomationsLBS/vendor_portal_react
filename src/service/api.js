@@ -14,6 +14,7 @@ axios.interceptors.request.use(
         if(userData != null){
           // config.headers['Authorization'] = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzM3MiIsImV4cCI6MTU0MjEwNjg5M30.QXVK-0AIOXs9ys54SvY0LJPyhaPS5_R7-IsGAlhG7qU";
           config.headers['Authorization'] = userData;
+          console.log("token_Data",userData)
         }
       }else if(config.method === 'post'){
         if(config != undefined && config.data.service === undefined && config.data.service != "login"){
@@ -70,7 +71,85 @@ axios.interceptors.response.use(
 
 axios.login = () => {
   return Config.apiUrlData + Config.api.login.url;
+
 };
+
+
+axios.myCommunitys = () => {
+  return Config.apiUrlData + Config.api.myCommunitys.url;
+  
+};
+
+axios.employeeDetails = () => {
+  return Config.apiUrlData + Config.api.employeeDetails.url;
+  
+};
+
+axios.req_credentials = () => {
+  return Config.apiUrlData + Config.api.req_credentials.url;
+  
+};
+
+axios.my_credentials = () => {
+  return Config.apiUrlData + Config.api.my_credentials.url;
+  
+};
+
+
+axios.add_credential = () => {
+  return Config.apiUrlData + Config.api.add_credential.url;
+  
+};
+
+axios.credential_types = () => {
+  return Config.apiUrlData + Config.api.credential_types.url;
+  
+};
+
+axios.vendor_agencies = () => {
+  return Config.apiUrlData + Config.api.vendor_agencies.url;
+  
+};
+
+axios.community_employees = () => {
+  return Config.apiUrlData + Config.api.community_employees.url;
+  
+};
+
+
+axios.update_pin = () => {
+  return Config.apiUrlData + Config.api.update_pin.url;
+  
+};
+
+
+
+axios.update_profile = () => {
+  return Config.apiUrlData + Config.api.update_profile.url;
+  
+};
+axios.create_employee = () => {
+  return Config.apiUrlData + Config.api.create_employee.url;
+  
+};
+
+axios.update_employee = () => {
+  return Config.apiUrlData + Config.api.update_employee.url;
+  
+};
+
+
+axios.forgot_pin = () => {
+  return Config.apiUrlData + Config.api.forgot_pin.url;
+  
+};
+
+axios.community_credentials = () => {
+  return Config.apiUrlData + Config.api.community_credentials.url;
+  
+};
+
+
 
 
 export default axios;

@@ -102,12 +102,9 @@ class Appheader extends Component {
           buttonRef={node => {
           this.anchorEl = node;
         }}
-          aria-owns={open
-          ? 'menu-list-grow'
-          : null}
-          aria-haspopup="true"
+         
           onClick={this.handleToggle}>
-          <img src={Config.images + "icons/green/user.png"} width="36"/>
+          <img src={Config.images + "icons/green/user.png"} width="36" style={{ position:"relative",top: "0px"}}/>
         </Button>
         <Popper
           open={open}
@@ -129,12 +126,26 @@ class Appheader extends Component {
             }}>
               <Paper>
                 <ClickAwayListener onClickAway={this.handleClose}>
+                  
+                 
                   <MenuList>
+                 
+                { /* <MenuItem>{ CommonService.localStore.get("username").username } </MenuItem> */ }  
                      <MenuItem
                       onClick={(event) => {
                       this.redirectTo('/updatenewpin');
                       this.handleClose(event);
-                    }}>Change Pin</MenuItem>
+                    }}>Change Password</MenuItem>
+
+            { /* 
+            
+             <MenuItem
+                      onClick={(event) => {
+                      this.redirectTo('/updateProfile');
+                      this.handleClose(event);
+                    }}>Update Profile</MenuItem>
+
+            */}  
                    
                     <MenuItem
                       onClick={(event) => {
@@ -170,10 +181,33 @@ class Appheader extends Component {
         </Hidden>
         <Hidden only={['xs']}>
           {/* Desktop */}
-          <Grid className="headerRightSection" item lg={10} md={10} sm={9} xs={6}>
-            <Grid item className="profileMenu">
-              {this.checkProfile()}
+          <Grid container item lg={10} md={10} sm={9} xs={6}>
+          <Grid item lg={10} md={10} sm={10} xs={10}   >
+          <div className="companyName" style = {{float:"right",position:"relative",top: "0px",paddingRight:"3px"}} > <h3 className="companyName">  { CommonService.localStore.get("usr_company_name").usr_company_name} </h3></div>
+          </Grid>
+            <Grid lg={2} md={2} sm={2} xs={2} container spacing={1} item className="profileMenu">
+
+            <Grid lg={12} md={12} sm={12} xs={12} item >
+            <center> {this.checkProfile()} </center>
+            <div  className="companyName" style={{
+              padding: "1px",
+              position: "relative",
+              top: "-10px"
+          
+            }}><center> { CommonService.localStore.get("username").username }</center></div>
+            
+    
             </Grid>
+            
+           
+             
+              
+              
+             
+              
+            </Grid>
+
+
           </Grid>
         </Hidden>
 

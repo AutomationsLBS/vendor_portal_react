@@ -111,7 +111,7 @@ export default class MainNav extends Component {
     }
 
     render() {
-        const currentUrl = this.props.match.url;
+        const currentUrl =  window.location.pathname;
         const {doRedirect, redirectUrl} = this.state;
         let userType = Config.usertype
          if (doRedirect) {
@@ -127,7 +127,15 @@ export default class MainNav extends Component {
                     {
                         
                         Config.mainnav.map((n, i) => {
-                        if(n.isLogin  && n.isDisplay && n.usertype == userType){
+                            console.log(n.usertype,"jjjjjj")
+                            let cond = false;
+                            if (n.usertype != undefined){
+                                let data_types = n.usertype.split("_");
+                                   cond  = (data_types.length > 1)?  true : data_types[0] == userType   
+                            }
+                            
+                           
+                        if(n.isLogin  && n.isDisplay &&  cond){
                             if(n.isSubNav){
                                 
                                 return <li key={i}>

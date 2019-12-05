@@ -41,11 +41,26 @@ class Employees extends Component {
   componentWillMount() {
   }
   componentDidMount() {
+     this.community_employees(this.getParams());
+
+   }
+  
+
+  getParams =()=> {
+       
+    let id  = this.props.history.location.pathname.split("/")
+    console.log(id[3]," kranthis----")
+   
+   return id[3]
+  }
 
 
-     // axios.community_employees(),{params:{company_id: CommonService.localStore.get("usr_company_id").usr_company_id  }}
+  community_employees = (data)=>{
+   var  usr_company_id  = CommonService.localStore.get("usr_company_id").usr_company_id
+
+
     axios
-    .get(axios.employeeDetails(),{params:{company_id: CommonService.localStore.get("usr_company_id").usr_company_id  }})
+    .get(axios.community_employees(),{params:{community_id: data ,company_id:usr_company_id}})
     .then((response) => {
        // console.log(response,"respose  emp data")
         this.setState({employeeData: response, loader: false});
@@ -60,10 +75,9 @@ class Employees extends Component {
           });
         
     });
-    console.log("componentDidMount ", this.props);
+
   }
 
-  
   getCredentalData = (data,employyeeName) => {
     console.log("dataSet",data);
      
@@ -80,9 +94,8 @@ class Employees extends Component {
     let state = this.state;
     console.log("Editing Row At Employees", state);
   }
-  
 
-  
+
   getCommunityData = (data,employyeeName) => {
     console.log("dataSet",data);
     
@@ -98,22 +111,6 @@ class Employees extends Component {
     console.log("Editing Row At Employees", state);
   }
 
-  getEmployeeData = (data,employyeeName) => {
-    console.log("dataSet",data);
-    
-    if(data !== undefined && data !== null){
-      this.setState({
-        doRedirect: true,
-         redirectUrl: "/employees/editEmployee/"+data
-      });
-
-      //CommonService.localStore.set("employeeName_co",employyeeName);
-    }
-    let state = this.state;
-    console.log("Editing Row At Employees", state);
-  }
-
-
   redirectToTarget = () => {
    //window.location.href = '/employeesCreate'
    console.log(" redirect to Target")
@@ -122,11 +119,18 @@ class Employees extends Component {
 
   
   setRedirect = () => {
-    // this.setState({
-    //   redirect: true
-    // })\
-    window.location.href = "/employeesCreate"
-    //return(<Redirect to='/employeesCreate' />)
+    this.setState({
+      redirect: true
+    })
+  }
+
+
+  backButton =()=>{
+    this.setState({
+      backButton:true
+
+    })
+
   }
 
   render() {
@@ -134,6 +138,12 @@ class Employees extends Component {
       if (this.state.redirectUrl) {
         return(<Redirect to={this.state.redirectUrl} />)
       }
+  
+      if (this.state.backButton) {
+        return(<Redirect to='/communityv' />)
+      }
+
+
       
     return (
       <Fragment>
@@ -142,15 +152,15 @@ class Employees extends Component {
             <Grid item sm={6}>
               <h2>
                 <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-                  My Employees
+                  {   CommonService.localStore.get("CommunityName_c").CommunityName_c} Community Employees  
                 </Typography>
               </h2>
 
               {CommonService.renderLoader(this.state.loader)}
             </Grid>
-            <Grid item xs={8} sm={6} align="right">
-              <Button className="btn btn-primary btn-round"
-                onClick={this.setRedirect}>Add Employee</Button>
+            <Grid item xs={6} sm={6} align="right">
+              <Button className="btn btn-primary btn-round" id="addCred"
+              onClick={this.backButton}>Back</Button>
             </Grid>
             <Grid item sm={12} align="right">
               <Table className="listTable" style = {{ marginTop :'15px' }}>
@@ -167,49 +177,50 @@ class Employees extends Component {
                 </TableHead>
                 <TableBody>
 
-                 {  (this.state.employeeData ) ? (this.state.employeeData["employees"].length != 0)? 
+                 {  (this.state.employeeData ) ? 
+                 (this.state.employeeData["employees"].length != 0)? 
                      
                                         
-                        this.state.employeeData["employees"].map((data)=>{
-                          return (
+                 this.state.employeeData["employees"].map((data)=>{
+                   return (
 
 
-                            <TableRow >
-                              <TableCell> { ( data["employee_details"]["first_name"] )?  data["employee_details"]["first_name"]+" "+data["employee_details"]["last_name"] : "--" }</TableCell>
-                              <TableCell>  { (data["employee_details"]["phone_mobile"] )?  data["employee_details"]["phone_mobile"] : "--" }</TableCell>
-                              <TableCell>  { (data["employee_details"]["email"] )?  data["employee_details"]["email"] : "--" } </TableCell>
-                              <TableCell>  { ( data["employee_details"]["primary_address_city"])?  data["employee_details"]["primary_address_city"]+"," :  ""   } 
-                              {(data["employee_details"]["primary_address_state"])? data["employee_details"]["primary_address_state"]+"," : ""  }
-                              {(data["employee_details"]["primary_address_street"]) ? data["employee_details"]["primary_address_street"]+"," : ""   }
-                              {data["employee_details"]["primary_address_zip"]  }
-                              </TableCell>
-                              <TableCell> 
-                                
-                                <a href="javascript:void(0);"  onClick= {(e) =>  this.getCredentalData( data["employee_details"]["id"], data["employee_details"]["first_name"]+" "+data["employee_details"]["last_name"] ) }  style={{textDecoration:"none"}} >  View Credentials</a> 
-                              </TableCell>
-                              <TableCell> 
-                                
-                                <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCommunityData(data["employee_details"]["id"] , data["employee_details"]["first_name"]+" "+data["employee_details"]["last_name"]  ) }   > View Communities</a> 
-                              </TableCell>
-                              <TableCell>
-                              
-                                <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getEmployeeData(data["employee_details"]["id"]  ) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/></a> 
-                              </TableCell>
-                            </TableRow >
+                     <TableRow >
+                       <TableCell> { ( data["employee_details"]["first_name"] )?  data["employee_details"]["first_name"]+" "+data["employee_details"]["last_name"] : "--" }</TableCell>
+                       <TableCell>  { (data["employee_details"]["phone_mobile"] )?  data["employee_details"]["phone_mobile"] : "--" }</TableCell>
+                       <TableCell>  { (data["employee_details"]["email"] )?  data["employee_details"]["email"] : "--" } </TableCell>
+                       <TableCell>  { ( data["employee_details"]["primary_address_city"])?  data["employee_details"]["primary_address_city"]+"," :  ""   } 
+                       {(data["employee_details"]["primary_address_state"])? data["employee_details"]["primary_address_state"]+"," : ""  }
+                       {(data["employee_details"]["primary_address_street"]) ? data["employee_details"]["primary_address_street"]+"," : ""   }
+                       {data["employee_details"]["primary_address_zip"]  }
+                       </TableCell>
+                       <TableCell> 
+                         
+                         <a href="javascript:void(0);"  onClick= {(e) =>  this.getCredentalData( data["employee_details"]["id"], data["employee_details"]["first_name"]+" "+data["employee_details"]["last_name"] ) }  style={{textDecoration:"none"}} >  View Credentials</a> 
+                       </TableCell>
+                       <TableCell> 
+                         
+                         <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCommunityData(data["employee_details"]["id"] , data["employee_details"]["first_name"]+" "+data["employee_details"]["last_name"]  ) }   > View Communities</a> 
+                       </TableCell>
+                       <TableCell>
+                         <Link to="/employeesCreate"   className="edit" >
+                             <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/>
+                         </Link>
+                       </TableCell>
+                     </TableRow >
 
-                                  ) 
+                           ) 
 
-                          
-                        }) : 
+                   
+                 }) :
 
-                        <TableRow >
-                            <TableCell colSpan={7}> <center>No Records</center> </TableCell>
-                            </TableRow>
-
-
+                 <TableRow >
+                 <TableCell colSpan={6}> <center>No Records</center> </TableCell>
+                 </TableRow>  
                   :  
+                  
                   <TableRow >
-                  <TableCell colSpan={7}> <center>No Records</center> </TableCell>
+                  <TableCell colSpan={6}> <center>No Records</center> </TableCell>
                   </TableRow>
                   
                   }

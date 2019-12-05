@@ -19,6 +19,7 @@ export default class LoadSinglePage extends Component {
   };
   checkView() {
     const path = this.props.location.pathname;
+    console.log( " checkkkkkk");
     if (path.indexOf('/forgotpassword') !== -1) {
       return (
         <div><Forgotpassword/></div>

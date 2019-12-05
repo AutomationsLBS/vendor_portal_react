@@ -25,13 +25,13 @@ const theme = createMuiTheme({
     },
   },
 });
-export default class Updatepin extends Component {
+export default class UpdateProfile extends Component {
     constructor(props){
         super(props)
         let ud = CommonService.localStore.get('currentPin').currentPin;
         let firstname = CommonService.localStore.get('first_name').first_name;
         let last_name = CommonService.localStore.get('last_name').last_name;
-        let email = CommonService.localStore.get('email').email;
+        let email = CommonService.localStore.get('phone_mobile_user').phone_mobile_user;
        
        this.state = {
        
@@ -90,15 +90,6 @@ export default class Updatepin extends Component {
           status = false;
           this.setState({email_error:"please enter your email"}) 
 
-        }else {
-          if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email))
-                {
-                   
-                }else {
-                  status = false;
-                  this.setState({email_error:"please enter your valid email"}) 
-
-                }
         }
 
         if (this.state.lastname === "" ){
@@ -206,24 +197,23 @@ export default class Updatepin extends Component {
 
     render(){
       const  {loader,visitorsList,total_entries,per_page}  =  this.state
+       let  visitor_types   =  CommonService.localStore.get("visitor_types").visitor_types; 
+         
         return (
           <div>
-        
-       
-           
-            
-            <Grid container>
+          <Grid container>
             <Grid item sm={6}>
               <h2>
                 <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-                  Change pin
+                  Update profile details 
+                  {CommonService.renderLoader(this.state.loader)}
                 </Typography>
               </h2>
             </Grid>
             
-            {CommonService.renderLoader(this.state.loader)}
+           
 
-            <div >  
+            <div style={{padding:"10px"}}>  
             <Grid container spacing={24} >
               <Grid className="section">
                 <form>
@@ -232,16 +222,16 @@ export default class Updatepin extends Component {
 
                   <Grid item xs={12} sm={12}>
                       <TextField
-                        id="username"
-                        label="Current pin"
-                        type="password"
+                        id="firstname"
+                        label="First Name"
+                        type="text"
                         className="username"
-                        value={this.state.oldPin}
-                        onChange={this.handleChange('oldPin')}
+                        value={this.state.firstname}
+                        onChange={this.handleChange('firstname')}
                         margin="normal"
 
-                        helperText={this.state.oldPin_error}
-                        error={(this.state.oldPin_error == "")
+                        helperText={this.state.firstname_error}
+                        error={(this.state.firstname_error == "")
                         ? false
                         : true}
                         style ={{width: '65%'}}/>
@@ -251,35 +241,61 @@ export default class Updatepin extends Component {
                      <Grid item xs={12} sm={12}>
                       <TextField
                         id="username"
-                        label="New pin"
-                        type="password"
+                        label="Last Name"
+                        type="text"
                         className="username"
-                        value={this.state.newPin}
-                        onChange={this.handleChange('newPin')}
+                        value={this.state.lastname}
+                        onChange={this.handleChange('lastname')}
                         margin="normal"
-                        helperText={this.state.newPin_error}
-                        error={(this.state.newPin_error == "")
+                        helperText={this.state.lastname_error}
+                        error={(this.state.lastname_error == "")
                         ? false
                         : true}
                         style ={{width: '65%'}} 
                         />
                     </Grid> 
-                    <Grid item xs={12} sm={12}>
-                      <TextField
-                        id="username"
-                        label="Confirm pin"
-                        type="password"
-                        className="username"
-                        value={this.state.confirm_pin}
-                        onChange={this.handleChange('confirm_pin')}
-                        margin="normal"
-                        helperText={this.state.confirm_pin_error}
-                        error={(this.state.confirm_pin_error == "")
-                        ? false
-                        : true}
-                        style ={{width: '65%'}}
-                        />
-                    </Grid>
+
+                  { (visitor_types == "agency") ? 
+                  
+                  <Grid item xs={12} sm={12}>
+                  <TextField
+                    id="username"
+                    label="Email"
+                    type="text"
+                    className="username"
+                    value={this.state.email}
+                    onChange={this.handleChange('email')}
+                    margin="normal"
+                    helperText={this.state.email_error}
+                    error={(this.state.email_error == "")
+                    ? false
+                    : true}
+                    style ={{width: '65%'}}
+                    disabled	
+                    />
+                </Grid>
+                :
+                <Grid item xs={12} sm={12}>
+                <TextField
+                id="username"
+                label="phone"
+                type="text"
+                className="username"
+                value={this.state.email}
+                onChange={this.handleChange('email')}
+                margin="normal"
+                helperText={this.state.email_error}
+                error={(this.state.email_error == "")
+                ? false
+                : true}
+                style ={{width: '65%'}}
+                disabled	
+                />
+
+            </Grid>
+
+                }
+                   
                     
                     <Grid item xs={12} sm={12}>
                       <MuiThemeProvider theme={theme}>
@@ -288,8 +304,8 @@ export default class Updatepin extends Component {
                           type="button"
                           variant="contained"
                           color="primary"
-                          className="btn btn-primary loginButton" onClick ={()=>this.updateNewPin()}>
-                          Update pin
+                          className="btn btn-primary loginButton" onClick ={()=>this.updateProfile()}>
+                          Update Profile
                         </Button>
                        
                       </MuiThemeProvider>
@@ -300,8 +316,10 @@ export default class Updatepin extends Component {
         </Grid>
         </div>
         </Grid>
-        </div>
-
+       
+           
+    </div>
+          
         );
     }
 

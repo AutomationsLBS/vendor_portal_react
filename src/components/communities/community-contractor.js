@@ -11,6 +11,9 @@ import store from '../../store';
 import {getAllUsers} from '../../actions';
 import CommonService from './../../service/commonServices';
 import { ToastContainer, toast } from 'react-toastify';
+import commonModal from '../_/commonModal';
+import Requsetd from "../_/dataTable";
+
 
 
 import {
@@ -31,19 +34,89 @@ export default class CommunityContractor extends Component {
     super(props);
 
     this.state = {
-    
+      loader : true,
+      mycommunitys:"",
+      open: false,
+      requestedData: "",
     }
   }
   componentWillMount() {
-    console.log("Component Will Mount");
+  
     
   }
   componentDidMount() {
-    console.log("componentDidMount ", this.props);
+
+    axios
+    .get(axios.myCommunitys())
+    .then((response) => {
+        console.log(response,"rta")
+        this.setState({mycommunitys: response.communities, loader: false});
+        toast.success(
+            (response.message != undefined) 
+                ? "Successfully..." 
+                : response.message, {
+            position: toast.POSITION.TOP_CENTER,
+            className: 'rotateY animated'
+          });
+       
+    })
+    .catch((error) => {
+       
+        this.setState({loader: false});
+        toast.error((error.message != undefined) ? error.toString() : "Failed for some reason", {
+            position: toast.POSITION.TOP_CENTER
+          });
+        
+    });
+    
   }
 
- 
+  handleClickOpen = (data) => {
+    console.log(data,"status__check")
+    this.setState({open:!this.state.open, 
+      requestedData :data});
+     console.log(data,"urlcode")
+  }
 
+  handleClose = (e) => {
+    this.setState({open:false}); 
+  }
+
+
+requriedCredetailsData = (data)=>{
+
+   
+ 
+  axios
+  .get(axios.community_credentials(),{params:{utype:"vendor",community_id:data.community.id }})
+  .then((response) => {
+      console.log("requested-my_credentials",response);
+     // this.setState({requestedCredetials: response, loader: false});
+       this.setState({open:!this.state.open,  requestedData :response});
+      //this.setState({showButton : (response.credentials.old_credentials.length > 0)? true : false })
+    
+     // this.setState({myCredentails: response, loader: false});
+      toast.success(
+          (response.message != undefined) 
+              ? "Successfully..." 
+              : response.message, {
+          position: toast.POSITION.TOP_CENTER,
+          className: 'rotateY animated'
+        });
+     
+  })
+  .catch((error) => {
+      
+    console.log(error,"error12")
+      this.setState({loader: false});
+      toast.error((error.message != undefined) ?   error.response.data.message : "Failed for some reason", {
+          position: toast.POSITION.TOP_CENTER
+        });
+      
+  });
+
+}
+  
   render() {
     
     return (
@@ -52,44 +125,53 @@ export default class CommunityContractor extends Component {
           <Grid item sm={12}>
             <h2>
               <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-               My Community
+              My Communities
               </Typography>
             </h2>
+
+             {CommonService.renderLoader(this.state.loader)}
             <Table className="listTable">
               <TableHead>
                 <TableRow>
                   <TableCell>Community Name</TableCell>
                   <TableCell>Address</TableCell>
-                  <TableCell>Phone no.</TableCell>
+                  <TableCell>Phone no</TableCell>
                   <TableCell> Last Visited </TableCell>
-                      
+                  <TableCell> Required Credentials </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow >
-                  <TableCell> XYZ Senior Living </TableCell>
-                  <TableCell> 200 Powers </TableCell>
-                  <TableCell> 434567894 </TableCell>
-                  <TableCell> 06/12/19 13:09:57</TableCell>
-                </TableRow > 
-                <TableRow >
-                  <TableCell> ABC Senior Living </TableCell>
-                  <TableCell> 200 Powers </TableCell>
-                  <TableCell> 6234567755 </TableCell>
-                  <TableCell> 06/12/19 13:09:57</TableCell>
-                </TableRow >
-                <TableRow >
-                  <TableCell> ACC Senior Living </TableCell>
-                  <TableCell> 200 Powers </TableCell>
-                  <TableCell> 7234567666 </TableCell>
-                  <TableCell> 06/12/19 13:09:57</TableCell>
-                </TableRow >
-                <TableRow >
-                  <TableCell> IND Senior Living </TableCell>
-                  <TableCell> 200 Powers </TableCell>
-                  <TableCell> 1234567890 </TableCell>
-                  <TableCell> 06/12/19 13:09:57</TableCell>
-                </TableRow >
+              <Requsetd  
+           buttonTitle = {"testignore"}
+           open = {this.state.open}
+           data  = {this.state.requestedData}
+           onClose = { this.handleClose}
+
+          
+          />  
+               
+              {  (this.state.mycommunitys)? 
+                   (this.state.mycommunitys.map(data =>{
+                     return (
+                      <TableRow >
+                      <TableCell> { data.community.name}</TableCell>
+                      <TableCell> { data.community.shipping_city+"," }{ data.community.shipping_street+", " }{data.community.shipping_state_abbr+", "}{data.community.shipping_zip} </TableCell>
+                      <TableCell> { data.phone_num} </TableCell>
+                      <TableCell> {  data.last_visit_date}</TableCell>
+                      <TableCell> <a herf="javascript:void(0);"  style={{textDecoration:"none",color: "blue"}} onClick = {(e) =>this.requriedCredetailsData(data) }  > View Credentials </a></TableCell>
+                      </TableRow >
+                     )
+
+                   }))
+                  :  
+                  
+                  <TableRow >
+                  <TableCell colSpan={4}> <center>No Records</center> </TableCell>
+                  </TableRow>
+                  }
+
+                  
+                 
               </TableBody>
              </Table>
           </Grid>

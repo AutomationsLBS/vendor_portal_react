@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import CommonService from '../../service/commonServices';
 
 
+
 import './forgotpassword.scss';
 import { FastfoodOutlined } from '@material-ui/icons';
 
@@ -33,7 +34,6 @@ const styles = theme => ({
         super(props);
         console.log("Register form", props);
         this.state = {
-          
             phone:"",
             phone_error:"",
             password:"",
@@ -44,8 +44,6 @@ const styles = theme => ({
             otp_error:"",
             loader:false,
             pin:"",
-            
-
         }
         // this.handleChange = this.handleChange.bind(this);
     }
@@ -83,37 +81,40 @@ const styles = theme => ({
         }
     } */
      getOtp = (event) => {
-        this.setState({enterOptDisplay:!this.state.enterOptDisplay});
-        return false;
+        // this.setState({enterOptDisplay:!this.state.enterOptDisplay});
+        // return false;
+        this.setState({loader: true});
+
       let status =  true;
       if (this.state.phone ==""){
-        this.setState({phone_error:"please enter phone"})
+        this.setState({phone_error:"please enter Vendor/ Agency "})
         status = false;
-      }else {
-        if (this.state.phone.length !=10){
-          status = false;
-          this.setState({phone_error:"Phone number must be 10 digits"})
-        }
-       
       }
+      // }else {
+      //   if (this.state.phone.length !=10){
+      //     status = false;
+      //     this.setState({phone_error:"Phone number must be 10 digits"})
+      //   }
+       
+      // }
        
        if (status){ 
 
             axios
-          .post(axios.newUserOpt(),{"phone_mobile":this.state.phone})
+          .post(axios.forgot_pin(),{"phone_mobile":this.state.phone})
           .then((response) => {
           
           
               this.setState({loader: false});
             
-              this.setState({enterOptDisplay:false})
-              toast.success( "OTP will be send to your phone ", {
+            //  this.setState({enterOptDisplay:false})
+              toast.success( "OTP will be send to your Vendor/ Agency", {
                   position: toast.POSITION.TOP_CENTER,
                   className: 'rotateY animated'
                 });
               setTimeout(() => {
               }, 3000);
-            
+             window.location.href ="/login";
           })
           .catch((error) => {
           // console.log((error !== undefined && error.response.data.message != undefined) ? error.response.data.message : "Failed for some reason")
@@ -182,7 +183,7 @@ const styles = theme => ({
      
     }
     render() {
-
+        let  {loader }  =  this.state 
         return (
 
             <Grid container>
@@ -194,9 +195,10 @@ const styles = theme => ({
                 variant="title"
                 gutterBottom
                 align="center">
-               REGISTER YOUR PHONE
+               PLEASE ENTER YOUR VENDOR/ AGENCY
               </Typography>
             </Grid>
+            {CommonService.renderLoader(loader)}
             
             <Grid container spacing={24} justify="center">
               
@@ -204,8 +206,8 @@ const styles = theme => ({
                    
                       <TextField
                         id="username"
-                        label="Phone"
-                        type="number"
+                        label="Vendor/ Agency"
+                        type="text"
                         
                         value={this.state.phone}
                         onChange={this.handleChange('phone')}
