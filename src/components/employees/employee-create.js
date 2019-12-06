@@ -148,14 +148,13 @@ export default class EmployeeCreate extends Component {
       .post(axios.create_employee(),employeeData)
       .then((response) => {
           
-        employeeData  =  {
+     let employeeData  =  {
           "phone_mobile": "",
           "first_name": "",
           "last_name": "",
           "email": "",
           "service_label": "",
-        
-        },
+        }
         
         this.setState({employeeData, loader: false});
         toast.success(
