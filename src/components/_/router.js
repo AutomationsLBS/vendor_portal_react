@@ -109,6 +109,7 @@ export default class Approute extends Component {
                             <Route path="/addAdmin" component={AddAdmin}/>
                             <Route path="/credentialsEdit" component={CredentailsEdit}/>
                             <Route path="/companies" component={Companys}/>
+                            <Route path="/for" component={Forgotpassword} />
                         
                         </Router>
                         </Switch>
