@@ -41,6 +41,7 @@ class Employees extends Component {
   componentWillMount() {
   }
   componentDidMount() {
+  
      this.community_employees(this.getParams());
 
    }
@@ -49,7 +50,8 @@ class Employees extends Component {
   getParams =()=> {
        
     let id  = this.props.history.location.pathname.split("/")
-    console.log(id[3]," kranthis----")
+    
+    console.log(id[3],id," kranthis---89")
    
    return id[3]
   }
@@ -152,7 +154,7 @@ class Employees extends Component {
             <Grid item sm={6}>
               <h2>
                 <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-                  {   CommonService.localStore.get("CommunityName_c").CommunityName_c} Community Employees  
+                Employees served for {   CommonService.localStore.get("CommunityName_c").CommunityName_c}  
                 </Typography>
               </h2>
 
@@ -215,12 +217,12 @@ class Employees extends Component {
                  }) :
 
                  <TableRow >
-                 <TableCell colSpan={6}> <center>No Records</center> </TableCell>
+                 <TableCell colSpan={7}> <center>No Records</center> </TableCell>
                  </TableRow>  
                   :  
                   
                   <TableRow >
-                  <TableCell colSpan={6}> <center>No Records</center> </TableCell>
+                  <TableCell colSpan={7}> <center>No Records</center> </TableCell>
                   </TableRow>
                   
                   }

@@ -42,7 +42,7 @@ const getUserType = ()=>{
         return ''
     }
 }
-
+ let  changeTabName =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")? "Change Pin"  : "Change Password"; 
 const Config = {
     // "baseUrl": "https://jsonplaceholder.typicode.com",
     // "baseUrl": "http://192.168.3.180:3000/",
@@ -76,7 +76,7 @@ const Config = {
         { name: "Settings", link: "#", icon: "settings-icon.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false, buttonClass :"dropdown-btn", childClass :"settings", usertype:"admin"},
         { name: "Payment Settings", link: "/mypayments", icon: "payment-icon-1.png", isLogin:true,template:"user", isDisplay:true, isSubNav : true, buttonClass :"settings" ,usertype:  "admin"},
         { name: "Add Admin", link: "/addAdmin", icon: "admin-icon.png", isLogin:true,template:"user", isDisplay:true, isSubNav : true, buttonClass :"settings" ,usertype: 'agency'},
-        { name: "Change pin", link: "/updatenewpin", icon: "changepassword-icon.png", isLogin:true,template:"user", isDisplay:true, isSubNav : true, buttonClass :"settings",usertype: 'agency_vendor'},
+        { name: changeTabName , link: "/updatenewpin", icon: "changepassword-icon.png", isLogin:true,template:"user", isDisplay:true, isSubNav : true, buttonClass :"settings",usertype: 'agency_vendor'},
       //  { name: "Update Profile", link: "/updateProfile", icon: "admin-icon.png", isLogin:true,template:"user", isDisplay:true, isSubNav : true, buttonClass :"settings",usertype: 'agency_vendor'},
       //  { name: "Update Details", link: "/updateDetails", icon: "update-white.png", isLogin:true,template:"user", isDisplay:true, isSubNav : true, buttonClass :"settings" ,usertype: 'vendor' },
         
@@ -88,7 +88,7 @@ const Config = {
         
         { name: "Add Credentials", link: "/credentialsCreate", icon: "residents.png", isLogin:true, template:"user", isDisplay:false, isSubNav : false},
         { name: "Edit Credentials", link: "/credentialsEdit", icon: "residents.png", isLogin:true, template:"user", isDisplay:false, isSubNav : false},
-        { name: "Register", link: "/register", icon: "residents.png", isLogin: false, template: "beforeLogin", isDisplay:false, isSubNav : false },
+        { name: "Register", link: "/forgotpassword", icon: "residents.png", isLogin: false, template: "beforeLogin", isDisplay:false, isSubNav : false },
         { name: "Add Employees", link: "/employeesCreate", icon: "residents.png", isLogin:true,template:"user", isDisplay:false, isSubNav : false},
         
     ],
@@ -145,6 +145,11 @@ const Config = {
         "community_credentials": {
             'url': '/api/v2/vendors/community_credentials', 'type': 'get', 'isToken': true
         },
+        
+        "employee_details":{
+        
+            'url': '/api/v2/vendors/employee_details', 'type': 'get', 'isToken': true
+        }
         
 
         

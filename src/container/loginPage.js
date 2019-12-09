@@ -24,7 +24,7 @@ export default class BeforeLoginPage extends Component {
       return (<Forgotpassword {...this.props} />) ;  
       
     } else if (path.indexOf('/forgotpassword') !== -1) {
-       //return (<Forgotpassword {...this.props}/>);
+       return (<Forgotpassword {...this.props}/>);
     } else if (path.indexOf('/resetpassword') !== -1) {
        // return (<Resetpassword {...this.props}/>);
     } else if (path.indexOf('/') !== -1) {

@@ -152,4 +152,10 @@ axios.community_credentials = () => {
 
 
 
+axios.employee_details = () => {
+  return Config.apiUrlData + Config.api.employee_details.url;
+  
+};
+
+
 export default axios;

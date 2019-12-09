@@ -30,10 +30,14 @@ export default class Login extends Component {
 
   
     loginSubmit = (data) => {
+        console.log(data);
      
-        this.setState({login: data});
-        
-        if(this.state.login.phone != "" && this.state.login.pin != ""){
+        let phone = data.phone_mobile
+        let pin =  data.pin_c;
+
+        this.setState({login: {phone,pin}});
+   
+        if(pin != "" && phone != ""){
             this.setState({loader: true});
             data.service = "login";
             axios

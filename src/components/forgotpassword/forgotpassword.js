@@ -83,13 +83,17 @@ const styles = theme => ({
      getOtp = (event) => {
         // this.setState({enterOptDisplay:!this.state.enterOptDisplay});
         // return false;
-        this.setState({loader: true});
+        
 
       let status =  true;
       if (this.state.phone ==""){
         this.setState({phone_error:"please enter Vendor/ Agency "})
         status = false;
+        return false;
+
       }
+      this.setState({loader: true});
+
       // }else {
       //   if (this.state.phone.length !=10){
       //     status = false;
@@ -130,6 +134,12 @@ const styles = theme => ({
 
       
        
+    }
+
+
+    backButton =()=>{
+       window.location.href = "/login"
+
     }
 
     submitOTP = (event) =>{
@@ -187,8 +197,11 @@ const styles = theme => ({
         return (
 
             <Grid container>
+          
+
             {(this.state.enterOptDisplay)? 
             <Fragment>
+
             <Grid item sm={12} md={12} lg={12} xs={12} xl={12}>
               <Typography
                 className="loginHeading preLoginHeading"
@@ -219,7 +232,7 @@ const styles = theme => ({
                        fullWidth />
                     
                     </Grid>
-                    <Grid item xs={12} sm={12}>
+                    <Grid item xs={12} spacing={2} sm={12}>
                       <MuiThemeProvider theme={theme}>
                       
                         <Button
@@ -231,6 +244,18 @@ const styles = theme => ({
                         </Button>
                        
                       </MuiThemeProvider>
+
+                      <MuiThemeProvider theme={theme}>
+                      
+                      <Button
+                        type="button"
+                        variant="contained"
+                         style ={{ marginLeft: "10px"}}
+                        className="btn  loginButton" onClick ={()=>this.backButton()}>
+                        Cancel
+                      </Button>
+                     
+                    </MuiThemeProvider>
                     </Grid>
                 
               
