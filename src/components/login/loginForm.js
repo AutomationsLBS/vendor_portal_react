@@ -86,6 +86,7 @@ class LoginForm extends Component {
       this.setState({email_error: "Valid email is required"});
       formValid = false;
     } */
+    this.state.password.trim();
     if (!this.state.password) {
       this.setState({"password_error": "Pin is required!"});
       formValid = false;
@@ -153,7 +154,7 @@ class LoginForm extends Component {
                       Login
                     </Button>
                    <div>
-                    {   <Button href="./register" color="secondary" className="btn btn-link">Forgot password?</Button>  }
+                    {   <Button href="./forgotpassword" color="secondary" className="btn btn-link">Forgot password?</Button>  }
                     </div> 
                   </MuiThemeProvider>
                 </Grid>

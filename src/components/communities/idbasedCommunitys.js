@@ -111,7 +111,7 @@ export default class Idbasedvalues extends Component {
            
             <h2>
               <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-               Communities  of { CommonService.localStore.get("employeeName_co").employeeName_co}
+               Communities  served for { CommonService.localStore.get("employeeName_co").employeeName_co}
               </Typography>
             </h2>
           </Grid>   

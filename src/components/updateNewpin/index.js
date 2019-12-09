@@ -143,36 +143,37 @@ export default class Updatepin extends Component {
 
         
     updateNewPin =  ()=>{
+      let  changelab =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")? "Pin"  : "Password"; 
         const onlyNumbers  = /^[0-9]+$/;
         let status  = true;   
                if (this.state.userspassword === "" ){
           status = false;
-          this.setState({newPin_error:"Please enter your new pin"}) 
+          this.setState({newPin_error:"Please enter your new "+changelab.toLowerCase()}) 
 
         }else {
 
           if(this.state.userspassword !== this.state.oldPin ){
             status = false;
-            this.setState({oldPin_error:"Current pin does not matching with old pin"}) 
+            this.setState({oldPin_error:"Current "+changelab.toLowerCase()+" does not matching with old "+changelab.toLowerCase()}) 
   
           }
         } 
         
         if (this.state.confirm_pin !== this.state.newPin ){
           status = false;
-          this.setState({confirm_pin_error:"please enter confirm pin same as new pin"}) 
+          this.setState({confirm_pin_error:"please enter confirm "+changelab.toLowerCase()+" same as new "+changelab.toLowerCase()}) 
 
         }
 
         if (this.state.confirm_pin === "" ){
           status = false;
-          this.setState({confirm_pin_error:"Please enter your confirm  pin"}) 
+          this.setState({confirm_pin_error:"Please enter your confirm  "+changelab.toLowerCase()}) 
 
         }
 
         if (this.state.newPin === "" ){
           status = false;
-          this.setState({newPin_error:"Please enter your new pin"}) 
+          this.setState({newPin_error:"Please enter your new "+changelab.toLowerCase()}) 
 
         }
       
@@ -205,6 +206,8 @@ export default class Updatepin extends Component {
 
 
     render(){
+      let  changeTabName =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")? "Change Pin"  : "Change Password"; 
+      let  changelab =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")? "Pin"  : "Password"; 
       const  {loader,visitorsList,total_entries,per_page}  =  this.state
         return (
           <div>
@@ -216,7 +219,7 @@ export default class Updatepin extends Component {
             <Grid item sm={6}>
               <h2>
                 <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-                  Change pin
+                   {changeTabName } 
                 </Typography>
               </h2>
             </Grid>
@@ -233,7 +236,7 @@ export default class Updatepin extends Component {
                   <Grid item xs={12} sm={12}>
                       <TextField
                         id="username"
-                        label="Current pin"
+                        label={"Change "+changelab}
                         type="password"
                         className="username"
                         value={this.state.oldPin}
@@ -251,7 +254,7 @@ export default class Updatepin extends Component {
                      <Grid item xs={12} sm={12}>
                       <TextField
                         id="username"
-                        label="New pin"
+                        label={"New "+changelab}
                         type="password"
                         className="username"
                         value={this.state.newPin}
@@ -267,7 +270,8 @@ export default class Updatepin extends Component {
                     <Grid item xs={12} sm={12}>
                       <TextField
                         id="username"
-                        label="Confirm pin"
+                      
+                        label={"Confirm "+changelab}
                         type="password"
                         className="username"
                         value={this.state.confirm_pin}
@@ -281,15 +285,15 @@ export default class Updatepin extends Component {
                         />
                     </Grid>
                     
-                    <Grid item xs={12} sm={12}>
+                    <Grid item xs={12} sm={12} style= {{marginTop:"20px"}} >
                       <MuiThemeProvider theme={theme}>
-                      
+                         
                         <Button
                           type="button"
                           variant="contained"
                           color="primary"
                           className="btn btn-primary loginButton" onClick ={()=>this.updateNewPin()}>
-                          Update pin
+                          Update {changelab}
                         </Button>
                        
                       </MuiThemeProvider>

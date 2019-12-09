@@ -90,6 +90,7 @@ class Appheader extends Component {
   }
 
   checkProfile() {
+    let  changeTabName =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")? "Change Pin"  : "Change Password"; 
     const {classes} = this.props;
     const {open} = this.state;
     const {anchorEl} = this.state;
@@ -135,7 +136,7 @@ class Appheader extends Component {
                       onClick={(event) => {
                       this.redirectTo('/updatenewpin');
                       this.handleClose(event);
-                    }}>Change Password</MenuItem>
+                    }}>{ changeTabName }</MenuItem>
 
             { /* 
             

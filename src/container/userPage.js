@@ -240,7 +240,8 @@ class userPage extends Component {
        );
      }
  
-    else if (path.indexOf('/register') !== -1) {
+    else if (path.indexOf('/forgotpassword') !== -1) {
+      console.log("thisss","kranthi_");
       return (
         <div><ForgotPassword {...this.props}/></div>
       );

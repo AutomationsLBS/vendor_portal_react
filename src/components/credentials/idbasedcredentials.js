@@ -192,7 +192,7 @@ export default class AgCredentails extends Component {
             <Grid item sm={6}>
               <h2>
                 <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-                 Credentails   of { CommonService.localStore.get("employeeName_c").employeeName_c  }
+                Credentials of { CommonService.localStore.get("employeeName_c").employeeName_c  }
                   </Typography>
               </h2>
               {CommonService.renderLoader(this.state.loader)}
@@ -216,8 +216,8 @@ export default class AgCredentails extends Component {
                 <TableHead>
                   <TableRow>
                     
-                    <TableCell>Credentail Name</TableCell>
-                    <TableCell>Doc/Text</TableCell>
+                    <TableCell>Credential Name</TableCell>
+                    <TableCell>Doct</TableCell>
                     <TableCell> Effective Date</TableCell>
                     <TableCell> Effective End Date </TableCell>
                     <TableCell> Status </TableCell>

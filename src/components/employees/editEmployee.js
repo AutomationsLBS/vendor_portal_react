@@ -86,13 +86,22 @@ export default class EmployeeEdit extends Component {
    
    return id[3]
   }
+ 
 
+   componentDidMount(){
+
+    this.community_employees(this.getParams());
+
+   }
+
+
+  
   community_employees = (data)=>{
-    var  usr_company_id  = CommonService.localStore.get("usr_company_id").usr_company_id
+    
  
  
      axios
-     .get(axios.community_employees(),{params:{community_id: data ,company_id:usr_company_id}})
+     .get(axios.employee_details(),{params:{id: data}})
      .then((response) => {
         // console.log(response,"respose  emp data")
          this.setState({employeeData: response, loader: false});
@@ -102,13 +111,15 @@ export default class EmployeeEdit extends Component {
      .catch((error) => {
         
          this.setState({loader: false});
-         toast.error((error.message != undefined) ? error.toString() : "Failed for some reason", {
+         toast.error((error.message != undefined) ? error.response.data.message.toString() : "Failed for some reason", {
              position: toast.POSITION.TOP_CENTER
            });
          
      });
  
    }
+
+
 
 
   submitEmployeeForm = () => {

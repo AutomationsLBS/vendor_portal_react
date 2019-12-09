@@ -159,7 +159,7 @@ render(){
           <Grid item sm={12}>
             <h2>
               <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-              Requried Credetials 
+              Required Credentials 
               </Typography>
             </h2>
 

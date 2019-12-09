@@ -87,6 +87,12 @@ export default class CredentailCreate extends Component{
       this.setState({[e.target.name] : e.target.value})
     }
 
+
+    cancelRedirect = (e)=>{
+       let  changelab =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")?  "credentials": "agCredentials" ; 
+        window.location.href = "/"+changelab;
+    }
+
   
   	componentDidMount() {
       let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
@@ -328,7 +334,7 @@ export default class CredentailCreate extends Component{
 
 
                   <input
-        accept="*"
+     accept="application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.slideshow,application/vnd.openxmlformats-officedocument.presentationml.presentation"
        // className={classes.input}
         id="contained-button-file"
         multiple={true}
@@ -442,7 +448,9 @@ export default class CredentailCreate extends Component{
                           
 
                           <input
-                                  accept="*"
+                                
+
+                                accept="application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.slideshow,application/vnd.openxmlformats-officedocument.presentationml.presentation"
                                 // className={classes.input}
                                   id="contained-button-file1"
                                   multiple
@@ -487,7 +495,7 @@ export default class CredentailCreate extends Component{
                					 Submit
             					</Button>
   					        <Button variant="outlined" className="outlinedBtn" 
-  					          href="/credentials"  style={{marginLeft:"14px"}} >
+  					          href="javascript:void(0);"  onClick={  this.cancelRedirect()} style={{marginLeft:"14px"}} >
                 					Cancel
                 				</Button>
             			</Grid>

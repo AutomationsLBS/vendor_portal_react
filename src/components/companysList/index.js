@@ -144,7 +144,7 @@ class Company extends Component {
                                 <TableRow key={ data.id} >
                                     <TableCell> <input type="radio" value={data.id} name="companyname" checked ={ this.state.defaultCompany == data.id } onClick= {(e) => this.radioOnChange(e,data.name)} /></TableCell>
                                     <TableCell> { data.name }</TableCell>
-                                   <TableCell>  {(data.shipping_city)? data.shipping_city+", ": "-" }{ (data.shipping_street)? data.shipping_street+", " :"-" }{(data.shipping_state_abbr)? data.shipping_state_abbr+", ": "-"}{(data.shipping_zip)?data.shipping_zip:"-"} </TableCell>
+                                   <TableCell>  {(data.shipping_city)? data.shipping_city+", ": "" }{ (data.shipping_street)? data.shipping_street+", " :"" }{(data.shipping_state_abbr)? data.shipping_state_abbr+", ": ""}{(data.shipping_zip)?data.shipping_zip:""} </TableCell>
                                  
                                 </TableRow >
 
