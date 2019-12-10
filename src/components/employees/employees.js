@@ -51,6 +51,8 @@ class Employees extends Component {
         this.setState({employeeData: response, loader: false});
        
           console.log(this.state.employeeData["employees"].length,"employeedata");
+          CommonService.localStore.set("serviceLables", this.state.employeeData["service_labels"]);
+          
     })
     .catch((error) => {
        
@@ -98,7 +100,7 @@ class Employees extends Component {
     console.log("Editing Row At Employees", state);
   }
 
-  getEmployeeData = (data,employyeeName) => {
+  getEmployeeData = (data) => {
     console.log("dataSet",data);
     
     if(data !== undefined && data !== null){

@@ -45,11 +45,7 @@ export default class EmployeeEdit extends Component {
       employee: {},
       communitys: [],
       employeeData: {
-        "phone_mobile": "",
-        "first_name": "",
-        "last_name": "",
-        "email": "",
-        "service_label": "",
+       
       
       },
       employeeError: {},
@@ -61,8 +57,10 @@ export default class EmployeeEdit extends Component {
     //   debugger;
     let state = this.state;
     state.employeeData[name] = event.target.value;
-    state.employeeError[name] = (event.target.value !== null && event.target.value !== '') ? '' : null;
+    state.employeeError[name] = (event.target.value !== null && event.target.value !== '' && event.target.value !== 0) ? '' : null;
+    console.log(state.employeeError,"dataoop");
     this.setState(state);
+    
   }
 
   cancelCreate = event => {
@@ -98,20 +96,31 @@ export default class EmployeeEdit extends Component {
   
   community_employees = (data)=>{
     
- 
+    let serviceLables =  JSON.parse(CommonService.localStore.get("serviceLables").serviceLables);
  
      axios
+
      .get(axios.employee_details(),{params:{id: data}})
      .then((response) => {
-        // console.log(response,"respose  emp data")
-         this.setState({employeeData: response, loader: false});
+
+       console.log(response,"respose  emp data")
+       let empDataa  =  {"phone_mobile":response.employee_data.phone_mobile ,
+        "first_name": response.employee_data.first_name ,
+        "last_name": response.employee_data.last_name ,
+        "email": response.employee_data.email ,
+      //  "service_label":  response.employee_data.service,
+      "service_label":  serviceLables[2] ,
+       
+        "id": response.employee_data.id, 
+      }
+         this.setState({employeeData: empDataa, loader: false});
         
-           console.log(this.state.employeeData["employees"].length,"employeedata");
+          // console.log(this.state.employeeData["employees"],"employeedata");
      })
      .catch((error) => {
         
          this.setState({loader: false});
-         toast.error((error.message != undefined) ? error.response.data.message.toString() : "Failed for some reason", {
+         toast.error((error.message != undefined) ? error.message.toString() : "Failed for some reason", {
              position: toast.POSITION.TOP_CENTER
            });
          
@@ -124,6 +133,7 @@ export default class EmployeeEdit extends Component {
 
   submitEmployeeForm = () => {
     let employeeError = this.state.employeeError;
+
     let employeeData = this.state.employeeData;
     let  statusFlag  = true;
     if(this.state.employeeData.first_name === ""){
@@ -161,24 +171,30 @@ export default class EmployeeEdit extends Component {
       this.setState({employeeError})
     }
 
-    if (!this.validateEmail(this.state.employeeData.email)){
+    var caseTest =  this.validateEmail(this.state.employeeData.email)
+    if (caseTest){
+      employeeError.emailValidate = "";
+      this.setState({employeeError})
+    }else {
+      
       employeeError.emailValidate = null;
       this.setState({employeeError})
       statusFlag  = false;
-    }else {
-      employeeError.emailValidate = "";
-      this.setState({employeeError})
 
     }
-    if(this.state.employeeData.service_label === ""){
+    console.log(this.state.employeeData.service_label,"dataiss");
+  
+    if(this.state.employeeData.service_label == ""){
+      console.log("i am heere---------")
       employeeError.service_label = null;
       this.setState({employeeError})
       statusFlag  = false;
     }else{
+      console.log("i am not---------")
       employeeError.service_label = "";
       this.setState({employeeError})
     }
-
+   
     let companyID = CommonService.localStore.get("usr_company_id").usr_company_id
 
     employeeData.company_id = companyID
@@ -191,7 +207,7 @@ export default class EmployeeEdit extends Component {
       this.setState({ loader : true});
 
       axios
-      .post(axios.create_employee(),employeeData)
+      .post(axios.update_employee(),employeeData)
       .then((response) => {
           
       let   employeeData  =  {
@@ -211,6 +227,8 @@ export default class EmployeeEdit extends Component {
             position: toast.POSITION.TOP_CENTER,
             className: 'rotateY animated'
           });
+
+          window.location.href="/employees"
          // console.log(response,"respose  emp data")
            
       })
@@ -231,7 +249,11 @@ export default class EmployeeEdit extends Component {
   }
  
   render() {
+    let serviceLables =  JSON.parse(CommonService.localStore.get("serviceLables").serviceLables);
+   
     const {loader, employee, employeeData, employeeError,  redirectUrl, doRedirect} = this.state;
+    let errorMessage = (this.state.employeeError.service_label !== null)? false: true ;
+   
     if (doRedirect) {
       return <Redirect to={redirectUrl}/>;
     }
@@ -252,16 +274,19 @@ export default class EmployeeEdit extends Component {
             </Grid>
             <Grid container spacing={32}>
               <Grid item xs={12} sm={6} md={6} className="singleFormRight" >
-                  <TextField  label="First Name" value={employeeData.first_name}
+                  <TextField  label=   {(employeeData.first_name!= "")?  "  ": "First Name" }
+                   value={employeeData.first_name}
+                  defaultValue = {employeeError.first_name}
                   onChange={this.handleFormChange('first_name')}
-                  style={{ width: "350px" }} placeholder=" First Name"
+                  style={{ width: "350px" }} 
                   margin="normal"
                   helperText={(employeeError.first_name !== null) ? "" : "First Name is required."}
                   error={(employeeError.first_name !== null)? false: true} 
                   />   
               </Grid>
               <Grid item xs={12} sm={6} md={6} className="singleFormRight" >
-                  <TextField  label="Last Name"
+                  <TextField 
+                    label=   {(employeeData.last_name!= "")?  " ": "Last Name" }
                     value={employeeData.last_name}
                     onChange={this.handleFormChange('last_name')}
                     style={{ width: "350px"}} placeholder=" Last Name"
@@ -272,11 +297,12 @@ export default class EmployeeEdit extends Component {
                     : true} />  
                 </Grid>
               <Grid item xs={12} sm={6} md={6} className="singleFormRight" >
-                  <TextField  label="Phone Number"
-                   defaultValue = {undefined}
+                  <TextField  
+                  label=   {(employeeData.phone_mobile!= "")?  "  ": "Phone Number" }
+                   
                    value={employeeData.phone_mobile}
                    onChange={this.handleFormChange('phone_mobile')}
-                   style={{ width: "350px"}} placeholder="Phone Number"
+                   style={{ width: "350px"}}
                    margin="normal" 
                    onInput = {(e) =>{
                     e.target.value = e.target.value.replace(/[^\d]/g, " ");
@@ -284,28 +310,52 @@ export default class EmployeeEdit extends Component {
                     e.target.value = (e.target.value == "NaN") ? "" : e.target.value;
                   }}
                   fullWidth
+                  disabled
                   helperText={(employeeError.phone_mobile !== null) ? "" : "Phone is requied"     }
                   error={(employeeError.phone_mobile !== null) ? false : true}/>  
               </Grid>
               <Grid item xs={12} sm={6} md={6} className="singleFormLeft" >
+               
                   <TextField id="email" label="Email"
+                  label=   {(employeeData.email!= "")?  "  ": "Email" }
                     value={employeeData.email}
                     onChange={this.handleFormChange('email')}
                     style={{ width: "350px"}} placeholder="Email"
                     margin="normal"
                     fullWidth
+                  
                     helperText={(employeeError.email !== null) ?  (employeeError.emailValidate !== null) ? "" : "Please enter valid email"  : "Email is required"  }
-                    error={(employeeError.email !== null) ? false : true} />  
+                    error={(employeeError.email !== null &&  employeeError.emailValidate !== null) ? false : true} />  
               </Grid>
               <Grid item xs={12} sm={6} md={6} className="singleFormLeft" >
-                  <TextField id="service_label" label="Service label"
-                    value={employeeData.service_label}
+                 
+
+
+              <FormControl error = {errorMessage}   >
+                   
+                    <Select  label="Credentialing" id="credentialing" value={employeeData.service_label} 
                     onChange={this.handleFormChange('service_label')}
-                    style={{ width: "350px"}} placeholder="Service label"
-                    margin="normal" 
-                    fullWidth
-                    helperText={(employeeError.service_label !== null) ? "" : "service label is required"}
-                    error={(employeeError.service_label !== null) ? false : true} />  
+                        style={{ width: "260px",marginTop: "30px"}}
+
+                        margin="normal">
+                        { (serviceLables)?
+                          
+                          serviceLables.map((data,index) => {
+
+                            return (
+
+                              <MenuItem value={data}>{data}</MenuItem>
+                              
+                            )
+                          })
+                        : 
+                          null}
+                    </Select>
+            {(this.state.employeeError.service_label !== null) 
+            ? "" :<FormHelperText style={{'color': '#f44336'}}>service label is required</FormHelperText>
+            }
+                                              
+              </FormControl>   
               </Grid>
               <Grid item xs={12} sm={6} md={6} className="singleFormLeft" >
                { /*  <FormControl>

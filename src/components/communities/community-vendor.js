@@ -76,7 +76,7 @@ export default class CommunityVendor extends Component {
 
 
   getEmployeeCommunityData = ( data,communityName) =>{
-
+    
     if(data !== undefined && data !== null){
       this.setState({
         doRedirect: true,
@@ -84,6 +84,7 @@ export default class CommunityVendor extends Component {
       });
      console.log(data,communityName,"oop")
       CommonService.localStore.set("CommunityName_c", communityName);
+      CommonService.localStore.set("router", window.location.pathname);
     }
 
   }

@@ -55,9 +55,15 @@ export default class CredentailCreate extends Component{
         }
   	}
     onChangedata = (e)=> {
-        console.log( e.target.files[0]["name"] , "on file change")       
-         this.setState({file:e.target.files[0],  fileName : e.target.files[0]["name"],uploadFile_error:""})
-      
+
+      let fileType  =  e.target.files[0]["name"];
+      var ext = fileType.split('.').pop();
+      if(ext=="pdf" || ext=="docx" || ext=="doc"){
+        this.setState({file:e.target.files[0],  fileName : e.target.files[0]["name"],uploadFile_error:""})
+      } else{
+        this.setState({file:"",  fileName :"",uploadFile_error:"Please upload only Doc/Pdf"});
+      }
+       
         
     }
   	onDrop = () => {
@@ -147,8 +153,18 @@ export default class CredentailCreate extends Component{
            
     }
     fileUpload2 = (event) =>{
-      
-      this.setState({alterFiledata: event.target.files[0], alterFilename : event.target.files[0]["name"],alterFiledata_error:"" })
+
+
+      let fileType  =  event.target.files[0]["name"];
+      var ext = fileType.split('.').pop();
+      if(ext=="pdf" || ext=="docx" || ext=="doc"){
+        this.setState({alterFiledata: event.target.files[0], alterFilename : event.target.files[0]["name"],alterFiledata_error:"" })
+      } else{
+        
+        this.setState({alterFiledata:"", alterFilename :"",alterFiledata_error:"Please upload only Doc/Pdf" })
+      }
+    
+     
     }
 
 
@@ -495,7 +511,7 @@ export default class CredentailCreate extends Component{
                					 Submit
             					</Button>
   					        <Button variant="outlined" className="outlinedBtn" 
-  					          href="javascript:void(0);"  onClick={  this.cancelRedirect()} style={{marginLeft:"14px"}} >
+  					          href="javascript:void(0);"  onClick={  this.cancelRedirect} style={{marginLeft:"14px"}} >
                 					Cancel
                 				</Button>
             			</Grid>

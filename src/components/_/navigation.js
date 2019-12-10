@@ -154,7 +154,7 @@ export default class MainNav extends Component {
                                     </li>
                             }else {
                                 return <li key={i}>
-
+                               
                                 <Link to={ (false) ? "#" : n.link  } className={(n.link === currentUrl) ? "active": ""} >
                                     <img src={Config.images + "icons/white/" + n.icon} />
                                     <span>{n.name}</span>

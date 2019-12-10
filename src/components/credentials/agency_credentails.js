@@ -163,6 +163,20 @@ export default class AgCredentails extends Component {
     this.setState({"historyData":!this.state.historyData })
   }
 
+
+  getCredetailsData = (data)=>{
+    console.log("dataSet",data);
+    
+    if(data !== undefined && data !== null){
+      // this.setState({
+      //   doRedirect: true,
+      //    redirectUrl: "/agCredentials/editCredentials/"+data
+      // });
+       window.location.href = "/agCredentials/editCredentials/"+data;
+
+      //CommonService.localStore.set("employeeName_co",employyeeName);
+    }
+  }
   
 
   render() {
@@ -209,6 +223,7 @@ export default class AgCredentails extends Component {
                                 <TableCell> Effective End Date </TableCell>
                                 <TableCell> Status </TableCell>
                                 <TableCell> Reason </TableCell>  
+                               {/* <TableCell></TableCell> */}   
                               
                               </TableRow>
                             </TableHead>
@@ -229,6 +244,12 @@ export default class AgCredentails extends Component {
                             <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
                             <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
                             <TableCell> {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
+
+
+                           {/*} <TableCell>
+                              
+                              <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.credential_type_id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/></a> 
+                            </TableCell> */}
                           
                           </TableRow>
 
@@ -306,6 +327,7 @@ export default class AgCredentails extends Component {
                                   <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
                                   <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
                                   <TableCell> {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
+
                                   
                                   </TableRow>      
                               )

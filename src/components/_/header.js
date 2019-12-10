@@ -10,7 +10,8 @@ import {
   Popper,
   Paper,
   Hidden,
-  withWidth
+  withWidth,
+  Tooltip
 } from '@material-ui/core';
 import compose from 'recompose/compose';
 import {withStyles} from '@material-ui/core/styles';
@@ -21,6 +22,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {toggleMobileMenu} from '../../actions';
 import store from '../../store';
 import CommonService from '../../service/commonServices';
+
+
+
 
 const styles = theme => ({
   root: {
@@ -195,7 +199,11 @@ class Appheader extends Component {
               position: "relative",
               top: "-10px"
           
-            }}><center> { CommonService.localStore.get("username").username }</center></div>
+            }}><center>  
+                { CommonService.localStore.get("username").username }
+               
+              
+        </center></div>
             
     
             </Grid>

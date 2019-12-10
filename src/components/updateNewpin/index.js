@@ -76,6 +76,18 @@ export default class Updatepin extends Component {
   };
 
 
+  logoutUser() {
+    setTimeout(() => {
+      window
+        .localStorage
+        .clear();
+      window.location.pathname = "/login";
+    }, 1000);
+  }
+
+
+
+
 
    updateProfile =  ()=>{
         const onlyNumbers  = /^[0-9]+$/;
@@ -187,7 +199,7 @@ export default class Updatepin extends Component {
           
           
             this.setState({loader: false});
-            window.location.href = "/";
+             this.logoutUser();
         
             
           }).catch((error)=>{

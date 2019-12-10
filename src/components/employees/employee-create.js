@@ -114,21 +114,24 @@ export default class EmployeeCreate extends Component {
       employeeError.email = "";
       this.setState({employeeError})
     }
-
-    if (!this.validateEmail(this.state.employeeData.email)){
+    var caseTest =  this.validateEmail(this.state.employeeData.email)
+    if (caseTest){
+      employeeError.emailValidate = "";
+      this.setState({employeeError})
+    }else {
+      
       employeeError.emailValidate = null;
       this.setState({employeeError})
       statusFlag  = false;
-    }else {
-      employeeError.emailValidate = "";
-      this.setState({employeeError})
 
     }
-    if(this.state.employeeData.service_label === ""){
+    if(this.state.employeeData.service_label == ""){
+      console.log("i am heere---------")
       employeeError.service_label = null;
       this.setState({employeeError})
       statusFlag  = false;
     }else{
+      console.log("i am not---------")
       employeeError.service_label = "";
       this.setState({employeeError})
     }
@@ -184,6 +187,8 @@ export default class EmployeeCreate extends Component {
   }
  
   render() {
+    let serviceLables =  JSON.parse(CommonService.localStore.get("serviceLables").serviceLables);
+    let errorMessage = (this.state.employeeError.service_label !== null)? false: true ;
     const {loader, employee, employeeData, employeeError,  redirectUrl, doRedirect} = this.state;
     if (doRedirect) {
       return <Redirect to={redirectUrl}/>;
@@ -251,14 +256,45 @@ export default class EmployeeCreate extends Component {
                     error={(employeeError.email !== null) ? false : true} />  
               </Grid>
               <Grid item xs={12} sm={6} md={6} className="singleFormLeft" >
-                  <TextField id="service_label" label="Service label"
+               {/** 
+               <TextField id="service_label" label="Service label"
                     value={employeeData.service_label}
                     onChange={this.handleFormChange('service_label')}
                     style={{ width: "350px"}} placeholder="Service label"
                     margin="normal" 
                     fullWidth
                     helperText={(employeeError.service_label !== null) ? "" : "service label is required"}
-                    error={(employeeError.service_label !== null) ? false : true} />  
+                    error={(employeeError.service_label !== null) ? false : true} />
+              
+              */}  
+
+
+              
+                    <FormControl error = {errorMessage}   >
+                    <InputLabel htmlFor="community-helper"  style={{"marginTop": "15px"}}>Service labels</InputLabel>
+                    <Select  label="Credentialing" id="credentialing" value={employeeData.service_label} 
+                    onChange={this.handleFormChange('service_label')}
+                        style={{ width: "260px",marginTop: "30px"}}
+
+                        margin="normal">
+                        { (serviceLables)?
+                          
+                          serviceLables.map((data,index) => {
+
+                            return (
+
+                              <MenuItem value={data}>{data}</MenuItem>
+                              
+                            )
+                          })
+                        : 
+                          null}
+                    </Select>
+            {(this.state.employeeError.service_label !== null) 
+            ? "" :<FormHelperText style={{'color': '#f44336'}}>service label is required</FormHelperText>
+            }
+                                              
+              </FormControl>   
               </Grid>
               <Grid item xs={12} sm={6} md={6} className="singleFormLeft" >
                { /*  <FormControl>

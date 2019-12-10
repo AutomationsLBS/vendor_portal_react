@@ -158,4 +158,11 @@ axios.employee_details = () => {
 };
 
 
+axios.update_credential = () => {
+  return Config.apiUrlData + Config.api.update_credential.url;
+  
+};
+
+
+
 export default axios;

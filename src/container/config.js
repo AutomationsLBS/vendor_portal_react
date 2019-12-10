@@ -43,6 +43,7 @@ const getUserType = ()=>{
     }
 }
  let  changeTabName =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")? "Change Pin"  : "Change Password"; 
+ let companysDisplay  =  (CommonService.localStore.get("companystatus").companystatus == 1)? true : false ; 
 const Config = {
     // "baseUrl": "https://jsonplaceholder.typicode.com",
     // "baseUrl": "http://192.168.3.180:3000/",
@@ -64,7 +65,7 @@ const Config = {
 
         //{ name: "Independent Contractor", link: "#", icon: "contractor-icon.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false, buttonClass :"dropdown-btn", childClass : "independent"},
         { name: "My Communities", link: "/communityc", icon: "communities.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false , buttonClass:"" ,usertype: "vendor" }, // @@@
-        { name: "Companies", link: "/companies", icon: "credentials-icon.png", isLogin:true, template:"user", isDisplay:true, isSubNav : false, buttonClass:"",usertype: "agency" }, 
+        { name: "Companies", link: "/companies", icon: "credentials-icon.png", isLogin:true, template:"user", isDisplay: companysDisplay, isSubNav : false, buttonClass:"",usertype: "agency_vendor" }, 
         //{ name: "Vendor Agency", link: "#", icon: "vendor.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false, buttonClass :"dropdown-btn" , childClass : 'vendor' },
         { name: "Agency Communities", link: "/communityv", icon: "communities.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false, buttonClass :"" ,usertype: 'agency' },       
         { name: "Agency Employees", link: "/employees", icon: "employees.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false, buttonClass :"" ,usertype: 'agency' },
@@ -149,8 +150,14 @@ const Config = {
         "employee_details":{
         
             'url': '/api/v2/vendors/employee_details', 'type': 'get', 'isToken': true
-        }
+        },
+
         
+        
+        "update_credential":{
+        
+            'url': '/api/v2/vendors/update_credential', 'type': 'get', 'isToken': true
+        },
 
         
         

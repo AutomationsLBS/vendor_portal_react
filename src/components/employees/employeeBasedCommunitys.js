@@ -174,7 +174,7 @@ class Employees extends Component {
                     <TableCell> Address </TableCell>
                     <TableCell> Credentials </TableCell>
                     <TableCell> Communities Served </TableCell>
-                    <TableCell> Edit </TableCell>
+                   {/* <TableCell> Edit </TableCell> */}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -202,13 +202,13 @@ class Employees extends Component {
                        </TableCell>
                        <TableCell> 
                          
-                         <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCommunityData(data["employee_details"]["id"] , data["employee_details"]["first_name"]+" "+data["employee_details"]["last_name"]  ) }   > View Communities</a> 
+                         <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCommunityData(data["employee_details"]["id"] , data["employee_details"]["first_name"]+" "+data["employee_details"]["last_name"]  ) }   > View S Communities</a> 
                        </TableCell>
-                       <TableCell>
-                         <Link to="/employeesCreate"   className="edit" >
+                       
+                        {/*  <TableCell>} <Link to="/employeesCreate"   className="edit" >
                              <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/>
-                         </Link>
-                       </TableCell>
+                   </Link>  </TableCell> */ }
+                       
                      </TableRow >
 
                            ) 

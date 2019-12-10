@@ -53,6 +53,7 @@ import CredentailsEdit from  "../components/credentials/credential-edit";
 import AgCredentails from  "../components/credentials/agency_credentails";
 import IdbasedvaluesCommunitys from '../components/communities/idbasedCommunitys';
 import IdbasedvaluesCredentails  from '../components/credentials/idbasedcredentials';
+import EditCredentials from  "../components/credentials/credential-edit";
 import EmployeeBasedCommunity from "../components/employees/employeeBasedCommunitys";
 import UpdateProfile from "../components/updateNewpin/updateProfile";
 import EmployeeEdit from "../components/employees/editEmployee";
@@ -111,6 +112,14 @@ class userPage extends Component {
           case "credentials":
             return (
               <div> <IdbasedvaluesCredentails {...this.props} /></div>
+            );
+            
+            break;
+            case "editCredentials":
+            return (
+
+
+              <div> <EditCredentials {...this.props} /></div>
             );
             
             break;
