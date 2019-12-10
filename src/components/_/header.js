@@ -11,7 +11,7 @@ import {
   Paper,
   Hidden,
   withWidth,
-  Tooltip
+
 } from '@material-ui/core';
 import compose from 'recompose/compose';
 import {withStyles} from '@material-ui/core/styles';
@@ -22,6 +22,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {toggleMobileMenu} from '../../actions';
 import store from '../../store';
 import CommonService from '../../service/commonServices';
+import Tooltip from "@material-ui/core/Tooltip";
+import TooltipOwn from  "../_/Tooltip";
 
 
 
@@ -168,6 +170,7 @@ class Appheader extends Component {
     return showProfile;
   }
   render() {
+     let  username   = (CommonService.localStore.get("username").username.length <= 20 )? CommonService.localStore.get("username").username   : CommonService.localStore.get("username").username.substr(0,16)+"..." ;
     return (
       <Grid container className="headerContainer">
         <Grid className="headerLeftSection" item lg={2} md={2} sm={3} xs={6}>
@@ -200,7 +203,9 @@ class Appheader extends Component {
               top: "-10px"
           
             }}><center>  
-                { CommonService.localStore.get("username").username }
+              <TooltipOwn message={ CommonService.localStore.get("username").username }  position={'left'}> { username }</TooltipOwn>
+          
+        
                
               
         </center></div>
