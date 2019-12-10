@@ -202,7 +202,7 @@ class Employees extends Component {
                        </TableCell>
                        <TableCell> 
                          
-                         <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCommunityData(data["employee_details"]["id"] , data["employee_details"]["first_name"]+" "+data["employee_details"]["last_name"]  ) }   > View S Communities</a> 
+                         <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCommunityData(data["employee_details"]["id"] , data["employee_details"]["first_name"]+" "+data["employee_details"]["last_name"]  ) }   > View Communities</a> 
                        </TableCell>
                        
                         {/*  <TableCell>} <Link to="/employeesCreate"   className="edit" >

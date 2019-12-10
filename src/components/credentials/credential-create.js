@@ -288,6 +288,9 @@ export default class CredentailCreate extends Component{
       position: toast.POSITION.TOP_CENTER,
       className: 'rotateY animated'
     });
+
+    let  changelab =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")?  "credentials": "agCredentials" ; 
+    window.location.href = "/"+changelab;
        console.log(response,"data........")
   })
   .catch((error) => {

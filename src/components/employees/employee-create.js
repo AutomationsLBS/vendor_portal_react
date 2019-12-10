@@ -167,6 +167,7 @@ export default class EmployeeCreate extends Component {
             position: toast.POSITION.TOP_CENTER,
             className: 'rotateY animated'
           });
+          window.location.href = "/employees"
          // console.log(response,"respose  emp data")
            
       })

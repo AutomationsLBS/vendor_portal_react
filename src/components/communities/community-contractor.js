@@ -151,6 +151,7 @@ requriedCredetailsData = (data)=>{
           />  
                
               {  (this.state.mycommunitys)? 
+                  (this.state.mycommunitys.length > 0) ?  
                    (this.state.mycommunitys.map(data =>{
                      return (
                       <TableRow >
@@ -158,7 +159,7 @@ requriedCredetailsData = (data)=>{
                       <TableCell> { data.community.shipping_city+"," }{ data.community.shipping_street+", " }{data.community.shipping_state_abbr+", "}{data.community.shipping_zip} </TableCell>
                       <TableCell> { data.phone_num} </TableCell>
                       <TableCell> {  data.last_visit_date}</TableCell>
-                      <TableCell> <a herf="javascript:void(0);"  style={{textDecoration:"none",color: "blue"}} onClick = {(e) =>this.requriedCredetailsData(data) }  > View Credentials </a></TableCell>
+                      <TableCell> <a href="javascript:void(0);"  style={{textDecoration:"none",color: "blue"}} onClick = {(e) =>this.requriedCredetailsData(data) }  > View Credentials </a></TableCell>
                       </TableRow >
                      )
 
@@ -166,7 +167,11 @@ requriedCredetailsData = (data)=>{
                   :  
                   
                   <TableRow >
-                  <TableCell colSpan={4}> <center>No Records</center> </TableCell>
+                  <TableCell colSpan={5}> <center>No Records</center> </TableCell>
+                  </TableRow>
+                  : 
+                  <TableRow >
+                  <TableCell colSpan={5}> <center>No Records</center> </TableCell>
                   </TableRow>
                   }
 

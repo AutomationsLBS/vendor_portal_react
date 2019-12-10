@@ -175,7 +175,8 @@ render(){
                         return (
                           <TableRow style={{ border:"0px"}} >
                         { /*  <TableCell> {  this.state.credential_types[data.credential_type_id]}</TableCell> */}
-                        <TableCell style={{  width: "3px"}}> { (data.already_set)?  <img src={Config.images+"/correct-symbol.png"} width="14px" style = {{ marginLeft:'15px',position: "relative",top: "3px"}}/> : <img src={Config.images+"/cancel-mark.png"} width="14px" style = {{ marginLeft:'15px'}}/>  }   </TableCell>
+                         {/* <TableCell style={{  width: "3px"}}> { (data.already_set)?  <img src={Config.images+"/correct-symbol.png"} width="14px" style = {{ marginLeft:'15px',position: "relative",top: "3px"}}/> : <img src={Config.images+"/cancel-mark.png"} width="14px" style = {{ marginLeft:'15px'}}/>  }   </TableCell> */}
+                         <TableCell style={{  width: "3px"}}> { (data.already_set)?  <i className="fa fa-check" style={{color:"green",    position: "relative",top: "-2px"}} aria-hidden="true"></i> :  <i className="fa fa-times" style={{color:"red", position: "relative",top: "-2px"}} aria-hidden="true"></i> }   </TableCell>
                           <TableCell> <span 
                             style={{
                               position: "relative",
