@@ -42,6 +42,8 @@ export default class AgCredentails extends Component {
       open: false,
       url:"",
       backButton:false,
+      historyData:false,
+      showButton: false,
     }
   }
  
@@ -143,14 +145,18 @@ export default class AgCredentails extends Component {
 
 
   credetailsData =(data)=>{
-
-
+   let utype =  "vendor"
+    let vendorType  = CommonService.localStore.get("routerR").routerR
+    if (vendorType == "/employees"){
+      utype = "vendor"
+    }
     axios
-    .get(axios.my_credentials(),{params:{employee:data}})
+    .get(axios.my_credentials(),{params:{employee:data,utype: utype}})
     .then((response) => {
         
         this.setState({myCredentails: response.credentials, loader: false});
         console.log( this.state.myCredentails,"test data")
+        this.setState({showButton : (response.credentials.old_credentials.length > 0)? true : false })
        // this.setState({myCredentails: response, loader: false});
         toast.success(
             (response.message != undefined) 
@@ -172,6 +178,11 @@ export default class AgCredentails extends Component {
 
 
 
+  }
+
+
+  showHistory = (e) =>{
+    this.setState({"historyData":!this.state.historyData })
   }
 
 
@@ -217,7 +228,7 @@ export default class AgCredentails extends Component {
                   <TableRow>
                     
                     <TableCell>Credential Name</TableCell>
-                    <TableCell>Doct</TableCell>
+                    <TableCell>Doc</TableCell>
                     <TableCell> Effective Date</TableCell>
                     <TableCell> Effective End Date </TableCell>
                     <TableCell> Status </TableCell>
@@ -227,29 +238,29 @@ export default class AgCredentails extends Component {
                 </TableHead>
                 <TableBody>
                 { /*(data.docs.length > 0)?data.docs[0]["document_path"]: "--"  (data.docs.length > 0)? "": "--"  */}
-                {(this.state.myCredentails )? (this.state.myCredentails.lenght >0)?
-              this.state.myCredentails.map((data,i)=>{
-                  
-                let docpath = (data.docs.length > 0)? data.docs[0]["document_path"]: "none"
-                 
-                return (
-                  <TableRow key={i} >
-                <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
-                
-                <TableCell> <a onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" > </i></a></TableCell>
+                          {(this.state.myCredentails)? (this.state.myCredentails.current_credentials.length  > 0) ?
+                          this.state.myCredentails.current_credentials.map((data,i)=>{
+                              
+                            let docpath = (data.docs.length > 0)? data.docs[0]["document_path"]: "none"
+                            
+                            return (
+                              <TableRow key={i} >
+                            <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
+                            
+                            <TableCell>{(docpath != "none")? <a href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"} </TableCell>
 
-                <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
-                <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
-                <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
-                <TableCell> {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
-               { /*
-                <TableCell>
-                <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/>
-                
-                </TableCell>
-              
-              */} 
-              </TableRow>
+                            <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
+                            <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
+                            <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
+                            <TableCell style ={{width: "120px" }} > {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
+
+
+                           {/*} <TableCell>
+                              
+                              <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.credential_type_id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/></a> 
+                            </TableCell> */}
+                          
+                          </TableRow>
 
                 ) 
               }) :
@@ -272,6 +283,82 @@ export default class AgCredentails extends Component {
               </Table>
            </Grid>
         </Grid>
+
+
+        <div  align="left" style= { { "padding-bottom": "14px" , "padding-top": "14px"}}> 
+                    { (this.state.historyData)?  <a href="javascript:void(0)" onClick = {this.showHistory}  style ={{"text-decoration": "none",color:"blue"}} >Hide Past Credentials  </a>  :  (this.state.showButton ) ? <a herf="javascript:void(0);" style ={{"text-decoration": "none",color:"blue"}} onClick = {this.showHistory}  > Past Credentials  </a> : null } 
+                </div>
+                <Grid item sm={12} align="right"> 
+                  <Table className="listTable" >
+
+
+                 
+                  
+                  { (this.state.historyData)? 
+                      <TableHead>
+                      <TableRow>
+                          
+                          <TableCell>Credential Type</TableCell>
+                          <TableCell>Doc</TableCell>
+                          <TableCell> Effective Start Date</TableCell>
+                          <TableCell> Effective End Date </TableCell>
+                          <TableCell> Status </TableCell>
+                          <TableCell> Reason </TableCell>  
+                      
+                      </TableRow>
+                      </TableHead>
+                     : "" }
+
+                      <TableBody >
+                          {(this.state.historyData)? (this.state.myCredentails)? 
+                              
+
+                              this.state.myCredentails.old_credentials.map((data,i) => {
+                              let docpath = (data.docs.length > 0)? data.docs[0]["document_path"]: "none"
+
+                              return (
+                                  <TableRow key={i} >
+                                  <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
+                                  
+                                  <TableCell>{ (docpath != "none")? <a onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> : "--"} </TableCell>
+                  
+                                  <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
+                                  <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
+                                  <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
+                                  <TableCell style ={{width: "120px" }}> {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
+
+                                  
+                                  </TableRow>      
+                              )
+                              
+
+                              })
+
+                              
+                              :
+                              
+                              <TableRow >
+                              <TableCell colSpan={6}> <center>No Records</center> </TableCell>
+                              </TableRow>                  
+                              
+                              
+                              : 
+                              null
+                              
+                              }
+
+                        </TableBody>
+
+              
+              
+                 
+
+
+                  </Table>
+                </Grid>
+
+
+
       </Grid>
         {/* <ToastContainer autoClose={50000} /> */}
       </Fragment>

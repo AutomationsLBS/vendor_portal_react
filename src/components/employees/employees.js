@@ -78,7 +78,7 @@ class Employees extends Component {
       CommonService.localStore.set("employeeName_c", employyeeName);
       console.log(CommonService.localStore.get("employeeName_c"));
     }
-
+    CommonService.localStore.set("routerR","/employees");
     let state = this.state;
     console.log("Editing Row At Employees", state);
   }
@@ -109,7 +109,7 @@ class Employees extends Component {
          redirectUrl: "/employees/editEmployee/"+data
       });
 
-      //CommonService.localStore.set("employeeName_co",employyeeName);
+   
     }
     let state = this.state;
     console.log("Editing Row At Employees", state);
