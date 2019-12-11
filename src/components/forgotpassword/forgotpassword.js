@@ -240,7 +240,7 @@ const styles = theme => ({
                           variant="contained"
                           color="primary"
                           className="btn btn-primary loginButton" onClick ={()=>this.getOtp()}>
-                          Get OTP
+                          Submit
                         </Button>
                        
                       </MuiThemeProvider>
