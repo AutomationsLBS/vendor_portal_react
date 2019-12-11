@@ -95,7 +95,7 @@ render(){
           <div>
                   <div style={{"float":"right"}}> <i className="far fa-times-circle" onClick = {this.props.onClose}></i>  </div>
           </div>  
-           {(this.props.url != "none" )?  <GoogleDocsViewer  ref = {(e) => this.popUp}  width="1000px" height="780px" fileUrl={this.props.url}/> : "No image or doc" }
+           {(this.props.url != "none" )?  <GoogleDocsViewer  ref = {(e) => this.popUp}  width="1000px" height="780px" fileUrl={this.props.url}/> : <h3 style={{padding:"25px"}} >No PDF or DOC</h3> }
                        
           </Dialog>
         </Fragment>

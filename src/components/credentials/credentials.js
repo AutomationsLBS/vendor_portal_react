@@ -215,20 +215,20 @@ export default class Credentails extends Component {
               {(this.state.myCredentails)? (this.state.myCredentails.current_credentials.length  > 0) ?
               this.state.myCredentails.current_credentials.map((data,i)=>{
                   
-                let docpath = (data.docs.length > 0)? data.docs[0]["document_path"]: "none"
-                let alternativeDocPath =  (data.alternate_docs.length > 0)? data.alternate_docs[0]["document_path"]: "none";
+                let docpath = (data.docs.length > 0)? (data.docs[0]["document_path"] != "")? data.docs[0]["document_path"] : "none": "none"
+                let alternativeDocPath =  (data.alternate_docs.length > 0)? (data.alternate_docs[0]["document_path"] != "" )? data.alternate_docs[0]["document_path"] : "none" : "none";
                  
                 return (
                   <TableRow key={i} >
                 <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
                 
-                <TableCell> <a onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" > </i></a></TableCell>
-                <TableCell> <a onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > <i className="fas fa-file" > </i></a></TableCell>
+                <TableCell>{ (docpath !="none")? <a  href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> : "---" } </TableCell>
+                <TableCell> { (alternativeDocPath !="none")? <a  href="javascript:void(0);"  onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"}</TableCell>
 
                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
                 <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
-                <TableCell> {(data.docs.length > 0)?data.docs[0]["remarks"]: "" } {(data.alternate_docs.length > 0)?data.alternate_docs[0]["remarks"]: "" }</TableCell>
+                <TableCell style ={{width: "120px" }}> {(data.docs.length > 0)?data.docs[0]["remarks"]: "" } {(data.alternate_docs.length > 0)?data.alternate_docs[0]["remarks"]: "" }</TableCell>
 
               
               </TableRow>
@@ -293,19 +293,20 @@ export default class Credentails extends Component {
                  
 
                   this.state.myCredentails.old_credentials.map((data,i) => {
-                    let docpath = (data.docs.length > 0)? data.docs[0]["document_path"]: "none"
-                    let alternativeDocPath =  (data.alternate_docs.length > 0)? data.alternate_docs[0]["document_path"]: "none";
-
+                   
+                    let docpath = (data.docs.length > 0)? (data.docs[0]["document_path"] != "")? data.docs[0]["document_path"] : "none": "none"
+                    let alternativeDocPath =  (data.alternate_docs.length > 0)? (data.alternate_docs[0]["document_path"] != "" )? data.alternate_docs[0]["document_path"] : "none" : "none";
+                     
                     return (
                       <TableRow key={i} >
                         <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
                         
-                        <TableCell> <a onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" > </i></a></TableCell>
-                        <TableCell> <a onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > <i className="fas fa-file" > </i></a></TableCell>
+                        <TableCell>{(docpath !="none")?<a  href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}}  > </i></a> : "--"} </TableCell>
+                        <TableCell> {(alternativeDocPath !="none")? <a  href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"} </TableCell>
                         <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                         <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
                         <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
-                        <TableCell> {(data.docs.length > 0)?data.docs[0]["remarks"]: "" } {(data.alternate_docs.length > 0)?data.alternate_docs[0]["remarks"]: "" }</TableCell>
+                        <TableCell style ={{width: "120px" }}> {(data.docs.length > 0)?data.docs[0]["remarks"]: "" } {(data.alternate_docs.length > 0)?data.alternate_docs[0]["remarks"]: "" }</TableCell>
                       
                       </TableRow>      
                     )

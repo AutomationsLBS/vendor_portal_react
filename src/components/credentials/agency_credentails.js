@@ -238,12 +238,12 @@ export default class AgCredentails extends Component {
                               <TableRow key={i} >
                             <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
                             
-                            <TableCell> <a onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" > </i></a></TableCell>
+                            <TableCell>{(docpath != "none")? <a href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"} </TableCell>
 
                             <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                             <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
                             <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
-                            <TableCell> {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
+                            <TableCell style ={{width: "120px" }} > {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
 
 
                            {/*} <TableCell>
@@ -321,12 +321,12 @@ export default class AgCredentails extends Component {
                                   <TableRow key={i} >
                                   <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
                                   
-                                  <TableCell> <a onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" > </i></a></TableCell>
+                                  <TableCell>{ (docpath != "none")? <a onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> : "--"} </TableCell>
                   
                                   <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                                   <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
                                   <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
-                                  <TableCell> {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
+                                  <TableCell style ={{width: "120px" }}> {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
 
                                   
                                   </TableRow>      

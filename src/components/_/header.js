@@ -170,7 +170,7 @@ class Appheader extends Component {
     return showProfile;
   }
   render() {
-     let  username   = (CommonService.localStore.get("username").username.length <= 20 )? CommonService.localStore.get("username").username   : CommonService.localStore.get("username").username.substr(0,16)+"..." ;
+     let  username   = (CommonService.localStore.get("username").username.length <= 20 )? false   : true ;
     return (
       <Grid container className="headerContainer">
         <Grid className="headerLeftSection" item lg={2} md={2} sm={3} xs={6}>
@@ -202,8 +202,9 @@ class Appheader extends Component {
               position: "relative",
               top: "-10px"
           
-            }}><center>  
-              <TooltipOwn message={ CommonService.localStore.get("username").username }  position={'left'}> { username }</TooltipOwn>
+            }}><center> 
+              { (username)?  <TooltipOwn message={ CommonService.localStore.get("username").username }  position={'left'}> { CommonService.localStore.get("username").username.substr(0,16)+"..."}</TooltipOwn> : CommonService.localStore.get("username").username  }
+              
           
         
                

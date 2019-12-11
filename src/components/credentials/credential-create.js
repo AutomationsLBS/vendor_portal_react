@@ -289,9 +289,9 @@ export default class CredentailCreate extends Component{
       className: 'rotateY animated'
     });
 
-    let  changelab =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")?  "credentials": "agCredentials" ; 
-    window.location.href = "/"+changelab;
-       console.log(response,"data........")
+  //  let  changelab =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")?  "credentials": "agCredentials" ; 
+   // window.location.href = "/"+changelab;
+     //  console.log(response,"data........")
   })
   .catch((error) => {
        

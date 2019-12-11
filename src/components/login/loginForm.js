@@ -161,7 +161,19 @@ class LoginForm extends Component {
               </Grid>
             </form>
             <span style ={{"font-size": "16px","padding-top": "16px"}}>
-        <b>Note:</b> If you are a Vendor/ Agency, please login with your Accushield login details that you registered at Kiosk.
+            <b   style={{
+              position: "relative",
+              right: "191px"
+
+            }}  
+    >Note:</b>
+            <br />
+            <ol>
+              <li style ={{ "text-align": "left"}}>If you are an individual Vendor, please use the phone number and the PIN that was used for signing into the Kiosk.</li>
+              <li style ={{ "text-align": "left"}} >If you are an Agency employee, please use the email address and the password shared by the Accushield for signing into the portal. If you don’t have the details, please contact support@Accushield.com</li>
+            </ol>
+        
+         
       </span>
           </Grid>
           {/* <Grid

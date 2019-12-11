@@ -243,7 +243,7 @@ export default class EmployeeCreate extends Component {
                     e.target.value = (e.target.value == "NaN") ? "" : e.target.value;
                   }}
                   fullWidth
-                  helperText={(employeeError.phone_mobile !== null) ? "" : "Phone is requied"     }
+                  helperText={(employeeError.phone_mobile !== null) ? "" : "Phone is required"     }
                   error={(employeeError.phone_mobile !== null) ? false : true}/>  
               </Grid>
               <Grid item xs={12} sm={6} md={6} className="singleFormLeft" >

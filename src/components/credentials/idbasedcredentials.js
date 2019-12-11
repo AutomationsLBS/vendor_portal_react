@@ -222,7 +222,7 @@ export default class AgCredentails extends Component {
                     <TableCell> Effective End Date </TableCell>
                     <TableCell> Status </TableCell>
                     <TableCell> Reason </TableCell>  
-                    <TableCell> Edit </TableCell>  
+                   {/* <TableCell> Edit </TableCell>   */} 
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -242,23 +242,26 @@ export default class AgCredentails extends Component {
                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
                 <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
                 <TableCell> {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
+               { /*
                 <TableCell>
                 <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/>
                 
                 </TableCell>
+              
+              */} 
               </TableRow>
 
                 ) 
               }) :
               <TableRow >
-              <TableCell colSpan={7}> <center>No Records</center> </TableCell>
+              <TableCell colSpan={6}> <center>No Records</center> </TableCell>
               </TableRow>  
                 
                 :
                 
                 
                 <TableRow >
-                <TableCell colSpan={7}> <center>No Records</center> </TableCell>
+                <TableCell colSpan={6}> <center>No Records</center> </TableCell>
                 </TableRow>  
                 
                 }
