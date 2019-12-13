@@ -40,9 +40,6 @@
     "react-d3-basic": "^1.6.11",
     "react-datepicker": "^1.6.0",
     "react-dom": "^16.4.2",
-    "react-dropzone": "^10.1.10",
-    "react-dropzone-uploader": "^2.10.1",
-    "react-file-viewer": "^0.5.0",
     "react-google-docs-viewer": "^1.0.1",
     "react-https-redirect": "^1.1.0",
     "react-images-upload": "^1.2.7",
@@ -52,23 +49,20 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
-    "react-stripe-elements": "^3.0.0",
     "react-text-mask": "^5.4.3",
     "react-toastify": "^4.4.0",
     "react-transition-group": "^2.4.0",
-    "redux": "^4.0.0",
-    "redux-actions": "^2.6.1",
-    "redux-thunk": "^2.3.0",
     "sass-loader": "^7.1.0",
     "save": "^2.4.0",
-	"superagent": "^5.1.0",
-	"webpack":"3.4.1"
+    "superagent": "^5.1.0"
+    
   },
   "engines": {
     "node": ">=10.0.0",
     "npm": ">=6.0.0"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
