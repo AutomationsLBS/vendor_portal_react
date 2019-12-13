@@ -183,9 +183,35 @@ class userPage extends Component {
     }
     else if (path.indexOf('/credentials')!== -1){
       console.log("in egrer")
-      return(
-        <div><Credentails /></div>
-      )
+
+      var credentails  = path.split('/');
+      if (credentails .length > 2) {
+       
+        switch (credentails[2]) {
+
+         
+
+            case "editCredentials":
+            return (
+
+
+              <div> <EditCredentials {...this.props} /></div>
+            );
+            
+            break;
+          default:
+            return false;
+        }
+      } else {
+        
+        return (
+          <div><Credentails {...this.props}/></div>
+        );
+      }
+
+      // return(
+      //   <div><Credentails /></div>
+      // )
     }
    
     else if (path.indexOf('/employees') !== -1){

@@ -91,7 +91,7 @@ axios.req_credentials = () => {
 };
 
 axios.my_credentials = () => {
-  return Config.apiUrlData + Config.api.my_credentials.url;
+  return Config.apiUrlData + Config.api.my_credentials.url; 
   
 };
 
@@ -160,6 +160,11 @@ axios.employee_details = () => {
 
 axios.update_credential = () => {
   return Config.apiUrlData + Config.api.update_credential.url;
+  
+};
+
+axios.credential_details = () => {
+  return Config.apiUrlData + Config.api.credential_details.url;
   
 };
 

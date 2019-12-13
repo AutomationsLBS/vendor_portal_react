@@ -25,6 +25,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import  AlertDialog from '../_/commonModal';
 
 
 export default class CredentailEdit extends Component{
@@ -51,9 +52,21 @@ export default class CredentailEdit extends Component{
           alterFilename: "",
           uploadFile_error :"",
           alterFilename_error:"",
+          open:"",
+          url: "",
+          recordId:"",
           
         }
-  	}
+    }
+    
+
+    handleClickOpen = (data) => {
+      console.log(data,"status__check")
+      this.setState({open:!this.state.open,url:data});
+      
+      
+      
+    }
     onChangedata = (e)=> {
 
       let fileType  =  e.target.files[0]["name"];
@@ -66,6 +79,77 @@ export default class CredentailEdit extends Component{
        
         
     }
+    getDateformat = (dates)=>{
+   
+       //let dateformat  = dates.split("-"); 
+     //  let data = new Date(dates)
+       //  dateformat[1]+"/"+dateformat[2]+"/"+dateformat[0]
+       return dates
+    }
+    getParams =()=> {
+       
+      let id  = this.props.history.location.pathname.split("/")
+      console.log( id," kranthis----")
+     // this.setState({communitId:id[3]})
+      console.log(this.state.communitId,"iikt");
+  
+     return id[3]
+    }
+
+    handleClose = (e) => {
+      this.setState({open:false}); 
+    }
+
+    credentails  = (data)=>{
+      console.log(data,"idd")
+      let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
+     let  vendoerType  = (visitorType == "vendor")?  'vendor': 'agency' ;
+       this.setState({loader: true})
+      axios
+      .get(axios.credential_details(),{params : {'id':data,"utype":vendoerType}
+      })
+      .then((response) => {
+
+           console.log(response,"dsds")
+          
+
+          this.setState({ loader: false
+          ,credential_value: response.credential_data.credentialdata.credential_type_id ,
+         
+          effectiveStartDate : (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)?this.getDateformat(response.credential_data.docs.effective_start_date) : "":"", 
+
+          effectiveEndtDate : (response.credential_data.hasOwnProperty('doc'))? (response.credential_data.docs  )? this.getDateformat(response.credential_data.docs.effective_end_date) : "":"",
+
+          remarks: (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)? response.credential_data.docs.remarks : "":"",
+          fileName: (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)? response.credential_data.docs.document_path : "":"",
+          alterFilename:  (response.credential_data.hasOwnProperty('alternate_docs'))? response.credential_data.alternate_docs.document_path : "",
+          recordId: response.credential_data.credentialdata.id,
+          altfile:  (response.credential_data.hasOwnProperty('alternate_docs'))? (response.credential_data.alternate_docs.length > 0)? "yes":"no"  : "no",
+
+          });
+        
+          toast.success(
+              (response.message != undefined) 
+                  ? "Successfully..." 
+                  : response.message, {
+              position: toast.POSITION.TOP_CENTER,
+              className: 'rotateY animated'
+            });
+            console.log( this.state ,"stateset")
+      })
+
+     
+      .catch((error) => {
+         
+          this.setState({loader: false});
+          toast.error((error.message != undefined) ? error.response.data.message : "Failed for some reason", {
+              position: toast.POSITION.TOP_CENTER
+            });
+          
+      });
+     }
+  
+  
   	onDrop = () => {
       // POST to a test endpoint for demo purposes
       //this.inputRef.click();
@@ -127,13 +211,100 @@ export default class CredentailEdit extends Component{
             });
           
       });
+
+
+      /*  get credetails */
+      this.credentails(this.getParams());
+
+
     }
+
+
+
+
     
     
 
-     onSubmit = async (e) => {
+     onSubmit =  (e) => {
       e.preventDefault() 
-      let res = await this.uploadFile(this.state.file,this.state.alterFiledata);
+      let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
+      console.log(visitorType,"vistor")
+      let  vendoerType  = (visitorType == "vendor")?  'vendor': 'agency' ;
+      //let res = await this.uploadFile(this.state.file,this.state.alterFiledata);
+
+
+
+      let statusFlag =   true;
+      
+
+    
+        
+      let  parseStartDate = Date.parse(this.state.effectiveStartDate);
+      let  parseEndDate =  Date.parse(this.state.effectiveEndDate);
+      let dates  = (parseEndDate - parseStartDate )
+      if ( dates < 0) {
+        this.setState({startDateError_error: "Invalid date range"});
+        statusFlag =  false;
+      }
+
+
+      if (statusFlag === false){
+        return false;
+      }
+    
+      this.setState({ loader : true});
+
+
+       var month = (this.state.effectiveStartDate.getMonth() + 1);
+       var day = (this.state.effectiveStartDate.getDate());
+       var year = (this.state.effectiveStartDate.getFullYear() );
+       var startdate = month +"/"+ day + "/" +year;
+    
+       var emonth = (this.state.effectiveEndDate.getMonth() + 1);
+       var eday = (this.state.effectiveEndDate.getDate());
+       var eyear = (this.state.effectiveEndDate.getFullYear() );
+       var endtdate = emonth +"/"+ eday + "/" +eyear;
+
+      
+        axios
+        .post(axios.update_credential(),{
+          effective_start_date:startdate,
+          effective_end_date:endtdate,
+          id:  this.state.recordId,
+          utype: vendoerType,
+          remarks: this.state.remarks,
+
+
+        })
+        .then((response) => {
+
+          this.setState({loader: false});
+            
+          let  changelab =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")?  "credentials": "agCredentials" ; 
+           window.location.href = "/"+changelab;
+          
+         
+          toast.success(
+              (response.message != undefined) 
+                  ? "Successfully..." 
+                  : response.message, {
+              position: toast.POSITION.TOP_CENTER,
+              className: 'rotateY animated'
+            });
+           
+           // console.log(response,"respose  emp data")
+             
+        })
+        .catch((error) => {
+           
+            this.setState({loader: false});
+            toast.error((error.message != undefined) ? error.response.data.message: "Failed for some reason", {
+                position: toast.POSITION.TOP_CENTER
+              });
+            
+        });
+       
+    
       }
   
 
@@ -168,144 +339,13 @@ export default class CredentailEdit extends Component{
     }
 
 
- uploadFile = async (file,alterFile) => {
-  
-
-  let statusFlag =   true;
-   
-
-  if(this.state.credential_value == ""){
-        this.setState({credential_value_error: "Please select credentials Type"});
-        statusFlag =  false;
-    }    
-    
-    if (this.state.altfile  != "no"){
-
-      if (this.state.alterFiledata == ""){
-         this.setState({alterFiledata_error: "Please upload document"});
-         statusFlag =  false;
-      }
- 
-    }else {
-      if (this.state.file == ""){
-        this.setState({uploadFile_error: "Please upload document"});
-        statusFlag =  false;
-      } 
-    }
-    
-    let  parseStartDate = Date.parse(this.state.effectiveStartDate);
-    let  parseEndDate =  Date.parse(this.state.effectiveEndDate);
-    let dates  = (parseEndDate - parseStartDate )
-    if ( dates < 0) {
-      this.setState({startDateError_error: "Invalid date range"});
-      statusFlag =  false;
-    }
-
-
-    if (statusFlag === false){
-      return false;
-    }
-
-
-
-
-  
-
-   
-  var month = (this.state.effectiveStartDate.getMonth() + 1);
-  var day = (this.state.effectiveStartDate.getDate());
-  var year = (this.state.effectiveStartDate.getFullYear() - 1);
-  var startdate = month +"/"+ day + "/" +year;
-
-  var emonth = (this.state.effectiveEndDate.getMonth() + 1);
-  var eday = (this.state.effectiveEndDate.getDate());
-  var eyear = (this.state.effectiveEndDate.getFullYear() - 1);
-  var endtdate = emonth +"/"+ eday + "/" +eyear;
-
-  let vendorId = CommonService.localStore.get("userData");
-  let vendorData = JSON.parse(vendorId.userData);
-  let efdate  = startdate;
-  let efenddate  = endtdate;
-  const formData = new FormData();
-  this.setState({loader:true})
-  if(file){
-    console.log(file,"hifile");
-    formData.append('uploadDoc',file)
-  }
-  
-  formData.append('effective_start_date',startdate)
-  formData.append('effective_end_date',endtdate)
-  formData.append('vendor_id',vendorData["visitor"]['id'])
-  formData.append('credential_type_id',this.state.credential_value)
-  formData.append('utype',vendorData["visitor_type"])
-  formData.append('alternate_docs', this.state.altfile)
-  formData.append('alteruploadDoc',  alterFile)
-  formData.append('remarks',  this.state.remarks)
-
-  if (CommonService.localStore.get("usr_company_id").usr_company_id !== undefined && CommonService.localStore.get("usr_company_id").usr_company_id !== "" ){
-   
-   formData.append('company_id',  CommonService.localStore.get("usr_company_id").usr_company_id)
-  }
-
-
-
-      
-  
- 
-
-
-  
-  return  await axios.post(axios.add_credential(),formData,{
-      headers: {
-          'content-type': 'multipart/form-data'
-      }
-  }).then((response)=>{
-
-   
-    this.setState({
-      altfile:"no",
-      		effectiveStartDate:new Date(),
-      		effectiveEndDate:new Date(),
-      	
-          remarks : "",
-        
-          loader:false,
-          credential_value:"",
-          uploadFile:"",
-          alterFiledata:"",
-          file:"",
-          fileName:"",
-          alterFilename:""
-          
-
-
-    });
-
-    toast.success(
-      (response.message != undefined) 
-          ? "Successfully..." 
-          : response.message, {
-      position: toast.POSITION.TOP_CENTER,
-      className: 'rotateY animated'
-    });
-       console.log(response,"data........")
-  })
-  .catch((error) => {
-       
-    this.setState({loader: false});
-    toast.error((error.message != undefined) ? error.toString() : "Failed for some reason", {
-        position: toast.POSITION.TOP_CENTER
-      });
-    
-});
-}
-
  
 
 	render() {
      let errorMessage = (this.state.credential_value_error == "")? false:  true  ;
      let  visitor_types   =  CommonService.localStore.get("visitor_types").visitor_types; 
     let isDisplay  =  (visitor_types != "agency")?  "" : "none"
+    let isDisplayDoc  =  (this.state.altfile == "yes")?  "" : "none"
 
 		return (
       		<Fragment>
@@ -322,7 +362,7 @@ export default class CredentailEdit extends Component{
                   <Grid item xs={12} sm={6} md={6} className="singleFormRight" >
                         <FormControl   error ={ errorMessage} >
                             <InputLabel htmlFor="community-helper"  style={{"marginTop": "15px"}}>Credential Type</InputLabel>
-                            <Select  label="Credentialing" id="credentialing" value={this.state.credential_value} onChange ={this.dropdownValue}
+                            <Select disabled label="Credentialing" id="credentialing" value={this.state.credential_value} onChange ={this.dropdownValue}
                                 style={{ width: "260px",marginTop: "30px"}}
 
                                 margin="normal">
@@ -335,6 +375,7 @@ export default class CredentailEdit extends Component{
                                   })
                                 : 
                                   null}
+                          
                             </Select>
                     {(this.state.credential_value_error != "") 
                     ? <FormHelperText style={{'color': '#f44336'}}> Credential Type is required!</FormHelperText>
@@ -348,10 +389,25 @@ export default class CredentailEdit extends Component{
                   </Grid>
                   <Grid item xs={12} sm={6} md={6} className="singleFormLeft"  >
 
+                  <AlertDialog  
+                      buttonTitle = {"testignore"}
+                      open = {this.state.open}
+                      url = {this.state.url}
+                      onClose = { this.handleClose}
 
+                      
+                      />
 
-                  <FormHelperText >  Doc Name:</FormHelperText>
+                  <FormHelperText >  View Doc </FormHelperText>
+                     <span style={{
+                       position: "relative",
+                       color: "black",
+                       top: "15px",
+                     }} >{(this.state.fileName != "")? <a href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(this.state.fileName)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"}</span>
+                     
+                      
 
+     { /* 
       <span style={{ position: "relative",
     top: "29px",
     padding: "2px"}}> { this.state.fileName } </span>
@@ -360,6 +416,8 @@ export default class CredentailEdit extends Component{
                     ? <FormHelperText style={{'color': '#f44336',top: "21px",position:"relative" }}> { this.state.uploadFile_error }</FormHelperText>
                     : ""}
 
+    
+    */} 
 
   
                    { /* <input type="file" style={{display:"none"}}  ref ={this.inputRef}  />
@@ -393,6 +451,7 @@ export default class CredentailEdit extends Component{
                                     'aria-label': 'change date',
                                   }}
                            />
+                      
                      
                      {(this.state.startDateError_error != null) 
                             ? <FormHelperText style={{'color': '#f44336',top: "0px",position:"relative" }}> { this.state.startDateError_error }</FormHelperText>
@@ -437,11 +496,11 @@ export default class CredentailEdit extends Component{
                           style={{"marginTop": "25px" ,display:isDisplay  }}>
                               <FormHelperText > Alternative Doc</FormHelperText>
                               
-                            <RadioGroup aria-label="position" name="position" 
+                            <RadioGroup aria-label="position" name="position"  disabled
                               value={this.state.altfile} onChange={this.radioButton} row> 
-                              <FormControlLabel value="yes" control={<Radio color="primary" />}
+                              <FormControlLabel value="yes" disabled control={<Radio color="primary" />}
                                 label="Yes" labelPlacement="start"  />
-                              <FormControlLabel value="no"  control={<Radio color="primary" />}
+                              <FormControlLabel value="no" disabled control={<Radio color="primary" />}
                                 label="No" labelPlacement="start"  />
                             </RadioGroup>
 
@@ -449,11 +508,17 @@ export default class CredentailEdit extends Component{
                           </Grid>
 
                    
-                          <Grid item xs={12} sm={6} md={6} id="alternateDoc" style={{display:"none","marginTop": "20px"}}>
+                          <Grid item xs={12} sm={6} md={6} id="alternateDoc" style={{display:isDisplayDoc,marginTop: "20px"}}>
                           
 
                       
-                                <FormHelperText >  Doc Name:</FormHelperText>
+                          <FormHelperText >  View Alternative Doc </FormHelperText>
+                     <span style={{
+                       position: "relative",
+                       color: "black",
+                       top: "15px",
+                     }} >{(this.state.alterFilename != "")? <a href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(this.state.alterFilename)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"}</span>
+                     
                                 
 
                               

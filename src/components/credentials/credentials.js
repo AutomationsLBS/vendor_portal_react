@@ -162,6 +162,21 @@ export default class Credentails extends Component {
     this.setState({"historyData":!this.state.historyData })
   }
 
+
+  getCredetailsData = (data)=>{
+    console.log("dataSet",data);
+    
+    if(data !== undefined && data !== null){
+      // this.setState({
+      //   doRedirect: true,
+      //    redirectUrl: "/agCredentials/editCredentials/"+data
+      // });
+       window.location.href = "/credentials/editCredentials/"+data;
+
+      //CommonService.localStore.set("employeeName_co",employyeeName);
+    }
+  }
+
   render() {
     
       if (this.state.redirect) {
@@ -207,6 +222,7 @@ export default class Credentails extends Component {
                     <TableCell> Effective End Date </TableCell>
                     <TableCell> Status </TableCell>
                     <TableCell> Reason </TableCell>  
+                    <TableCell> </TableCell>  
                    
                   </TableRow>
                 </TableHead>
@@ -229,7 +245,10 @@ export default class Credentails extends Component {
                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
                 <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
                 <TableCell style ={{width: "120px" }}> {(data.docs.length > 0)?data.docs[0]["remarks"]: "" } {(data.alternate_docs.length > 0)?data.alternate_docs[0]["remarks"]: "" }</TableCell>
-
+                <TableCell>
+                              
+                              <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/> </a> 
+                            </TableCell> 
               
               </TableRow>
 

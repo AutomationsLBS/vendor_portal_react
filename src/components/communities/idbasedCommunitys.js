@@ -80,7 +80,7 @@ export default class Idbasedvalues extends Component {
     let id  = this.props.history.location.pathname.split("/")
     console.log( id," kranthis----")
     this.setState({communitId:id[3]})
-    console.log(this.state.communitId,"iikt");
+    console.log(this.state.communitId,"iikt");  
 
    return id[3]
   }

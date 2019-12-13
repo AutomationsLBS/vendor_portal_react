@@ -156,8 +156,15 @@ const Config = {
         
         "update_credential":{
         
-            'url': '/api/v2/vendors/update_credential', 'type': 'get', 'isToken': true
+            'url': '/api/v2/vendors/update_credential', 'type': 'post', 'isToken': true
         },
+
+         
+        "credential_details":{
+        
+            'url': '/api/v2/vendors/credential_details', 'type': 'get', 'isToken': true
+        },
+
 
         
         

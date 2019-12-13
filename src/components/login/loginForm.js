@@ -170,7 +170,7 @@ class LoginForm extends Component {
             <br />
             <ol>
               <li style ={{ "text-align": "left"}}>If you are an individual Vendor, please use the phone number and the PIN that was used for signing into the Kiosk.</li>
-              <li style ={{ "text-align": "left"}} >If you are an Agency employee, please use the email address and the password shared by the Accushield for signing into the portal. If you don’t have the details, please contact support@Accushield.com</li>
+              <li style ={{ "text-align": "left"}} >If you are an Agency employee, please use the email address and the password shared by the Accushield for signing into the portal. If you don’t have the details, please contact <a href="mailto:support@Accushield.com"  style={{textDecoration:"none"}} target="_top">support@Accushield.com</a></li>
             </ol>
         
          

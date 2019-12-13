@@ -129,7 +129,7 @@ export default class AgCredentails extends Component {
     var dateformat = new Date(fdate)
     var emonth = (dateformat.getMonth() + 1);
     var eday = (dateformat.getDate());
-    var eyear = (dateformat.getFullYear() - 1);
+    var eyear = (dateformat.getFullYear() );
     var endtdate = emonth +"/"+ eday + "/" +eyear;
     return endtdate
   }
@@ -223,7 +223,7 @@ export default class AgCredentails extends Component {
                                 <TableCell> Effective End Date </TableCell>
                                 <TableCell> Status </TableCell>
                                 <TableCell> Reason </TableCell>  
-                               {/* <TableCell></TableCell> */}   
+                                <TableCell></TableCell> 
                               
                               </TableRow>
                             </TableHead>
@@ -246,10 +246,10 @@ export default class AgCredentails extends Component {
                             <TableCell style ={{width: "120px" }} > {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
 
 
-                           {/*} <TableCell>
+                           <TableCell>
                               
-                              <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.credential_type_id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/></a> 
-                            </TableCell> */}
+                              <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/></a> 
+                            </TableCell> 
                           
                           </TableRow>
 
