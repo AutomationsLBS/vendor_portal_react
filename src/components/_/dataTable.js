@@ -6,7 +6,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import "../../index.scss"
 import {Button, Grid, Menu, MenuItem, Typography} from '@material-ui/core';
-import FileViewer from 'react-file-viewer';
 import GoogleDocsViewer from 'react-google-docs-viewer';
 import CommonService from './../../service/commonServices';
 import axios from 'axios';

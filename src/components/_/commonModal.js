@@ -6,7 +6,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import "../../index.scss"
-import FileViewer from 'react-file-viewer';
 import GoogleDocsViewer from 'react-google-docs-viewer';
 import CommonService from './../../service/commonServices';
 

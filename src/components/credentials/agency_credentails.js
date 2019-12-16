@@ -201,7 +201,7 @@ export default class AgCredentails extends Component {
       
                         <Grid item xs={6} sm={6} align="right">
                           <Button className="btn btn-primary btn-round" id="addCred"
-                          onClick={this.setRedirect}>Add Credentials</Button>
+                          onClick={this.setRedirect}>Add Credential</Button>
 
                       <AlertDialog  
                       buttonTitle = {"testignore"}
@@ -233,7 +233,7 @@ export default class AgCredentails extends Component {
                           this.state.myCredentails.current_credentials.map((data,i)=>{
                               
                             let docpath = (data.docs.length > 0)? data.docs[0]["document_path"]: "none"
-                            
+                           
                             return (
                               <TableRow key={i} >
                             <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>

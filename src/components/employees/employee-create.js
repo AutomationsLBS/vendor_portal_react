@@ -272,7 +272,7 @@ export default class EmployeeCreate extends Component {
 
               
                     <FormControl error = {errorMessage}   >
-                    <InputLabel htmlFor="community-helper"  style={{"marginTop": "15px"}}>Service labels</InputLabel>
+                    <InputLabel htmlFor="community-helper"  style={{"marginTop": "15px"}}>Service Type</InputLabel>
                     <Select  label="Credentialing" id="credentialing" value={employeeData.service_label} 
                     onChange={this.handleFormChange('service_label')}
                         style={{ width: "260px",marginTop: "30px"}}
@@ -292,7 +292,7 @@ export default class EmployeeCreate extends Component {
                           null}
                     </Select>
             {(this.state.employeeError.service_label !== null) 
-            ? "" :<FormHelperText style={{'color': '#f44336'}}>service label is required</FormHelperText>
+            ? "" :<FormHelperText style={{'color': '#f44336'}}>service type is required</FormHelperText>
             }
                                               
               </FormControl>   

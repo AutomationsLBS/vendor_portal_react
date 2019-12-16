@@ -544,7 +544,7 @@ export default class CredentailEdit extends Component{
             				<Button variant="contained" color="primary" onClick = {this.onSubmit}
             					style={{backgroundColor:"#47b16f"}} 
             					className="greenBtn">
-               					 Update Credetials
+               					 Save
             					</Button>
   					        <Button variant="outlined" className="outlinedBtn" 
   					          href="javascript:void(0);"  onClick={  this.cancelRedirect} style={{marginLeft:"14px"}} >

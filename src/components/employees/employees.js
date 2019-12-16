@@ -161,7 +161,7 @@ class Employees extends Component {
                     <TableCell>Employee Name</TableCell>
                     <TableCell>Phone Number</TableCell>
                     <TableCell> Email</TableCell>
-                    <TableCell> Address </TableCell>
+                   {/*  <TableCell> Address </TableCell> */}
                     <TableCell> Credentials </TableCell>
                     <TableCell> Communities Served </TableCell>
                     <TableCell> Edit </TableCell>
@@ -180,11 +180,15 @@ class Employees extends Component {
                               <TableCell> { ( data["employee_details"]["first_name"] )?  data["employee_details"]["first_name"]+" "+data["employee_details"]["last_name"] : "--" }</TableCell>
                               <TableCell>  { (data["employee_details"]["phone_mobile"] )?  data["employee_details"]["phone_mobile"] : "--" }</TableCell>
                               <TableCell>  { (data["employee_details"]["email"] )?  data["employee_details"]["email"] : "--" } </TableCell>
-                              <TableCell>  { ( data["employee_details"]["primary_address_city"])?  data["employee_details"]["primary_address_city"]+"," :  ""   } 
+                             {/*
+                            
+                             <TableCell>  { ( data["employee_details"]["primary_address_city"])?  data["employee_details"]["primary_address_city"]+"," :  ""   } 
                               {(data["employee_details"]["primary_address_state"])? data["employee_details"]["primary_address_state"]+"," : ""  }
                               {(data["employee_details"]["primary_address_street"]) ? data["employee_details"]["primary_address_street"]+"," : ""   }
                               {data["employee_details"]["primary_address_zip"]  }
                               </TableCell>
+                            */} 
+
                               <TableCell> 
                                 
                                 <a href="javascript:void(0);"  onClick= {(e) =>  this.getCredentalData( data["employee_details"]["id"], data["employee_details"]["first_name"]+" "+data["employee_details"]["last_name"] ) }  style={{textDecoration:"none"}} >  View Credentials</a> 
@@ -205,13 +209,13 @@ class Employees extends Component {
                         }) : 
 
                         <TableRow >
-                            <TableCell colSpan={7}> <center>No Records</center> </TableCell>
+                            <TableCell colSpan={6}> <center>No Records</center> </TableCell>
                             </TableRow>
 
 
                   :  
                   <TableRow >
-                  <TableCell colSpan={7}> <center>No Records</center> </TableCell>
+                  <TableCell colSpan={6}> <center>No Records</center> </TableCell>
                   </TableRow>
                   
                   }
