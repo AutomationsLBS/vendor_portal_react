@@ -15,6 +15,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Dialog } from '@material-ui/core';
 import  AlertDialog from '../_/commonModal';
 import GoogleDocsViewer from 'react-google-docs-viewer';
+import { ChatFeed, Message } from 'react-chat-ui'
+
 
 
 import {
