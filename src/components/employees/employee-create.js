@@ -80,7 +80,7 @@ export default class EmployeeCreate extends Component {
     let employeeError = this.state.employeeError;
     let employeeData = this.state.employeeData;
     let  statusFlag  = true;
-    if(this.state.employeeData.first_name === ""){
+    if(this.state.employeeData.first_name.trim() === ""){
        employeeError.first_name = null;
       this.setState({employeeError})
       statusFlag  = false;
@@ -89,7 +89,7 @@ export default class EmployeeCreate extends Component {
       this.setState({employeeError})
     }
 
-    if(this.state.employeeData.last_name === ""){
+    if(this.state.employeeData.last_name.trim() === ""){
       employeeError.last_name = null;
       this.setState({employeeError})
       statusFlag  = false;

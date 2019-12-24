@@ -13,6 +13,7 @@ import CommonService from './../../service/commonServices';
 
 
 
+
 const file = 'https://accushield-community-assets.s3.amazonaws.com/Screenshot%20from%202019-10-29%2017-24-53.png'
 const type = 'png'
 
@@ -27,6 +28,8 @@ export default class  AlertDialog extends  Component {
         numPages: null,
     pageNumber: 1,
     loading: true,
+    docTypes: {doc:"doc","docx":"docx",pdf:"pdf","jpg":"jpg","png":"png",gif:"gif",jpeg:"jpeg"},
+
    }
 
   }
@@ -44,6 +47,7 @@ export default class  AlertDialog extends  Component {
     this.setState({open:false});
     console.log(this.state.open,"kranthi...........")
   };
+
   
 
 
@@ -74,6 +78,40 @@ render(){
       borderRadius: "4px",
       }
       
+      let  doctype  = this.props.url.split(".").pop();
+       console.log(doctype,"opps.............");
+        let docTypeValue  =this.state.docTypes[doctype];
+       let urlShowDisplay = "";
+
+        switch(docTypeValue){
+           case "doc":
+           case "docx":
+           urlShowDisplay =  "doc";
+           break;
+
+           case "pdf":
+              urlShowDisplay = "pdf"
+           break;
+
+    
+          case "pdf":
+          case "PDF":
+          case "jpg":
+          case "gif":
+          case "jpeg":
+
+
+           urlShowDisplay =  "image"
+           break;
+        
+
+        }
+
+         
+
+
+
+
     
     
     return (
@@ -90,16 +128,20 @@ render(){
             
             maxWidth = "xl"
           >
-            {  this.state.loading? ( CommonService.renderLoader(this.state.loading) ): null }
+           
           <div>
                   <div style={{"float":"right"}}> <i className="far fa-times-circle" onClick = {this.props.onClose}></i>  </div>
           </div>  
-           {(this.props.url != "none" )?  <GoogleDocsViewer  ref = {(e) => this.popUp}  width="1000px" height="780px" fileUrl={this.props.url}/> : <h3 style={{padding:"25px"}} >No PDF or DOC</h3> }
-                       
-          </Dialog>
-        </Fragment>
           
-      
+          
+            { ((urlShowDisplay == "doc" ) ||  (urlShowDisplay == "docx")  )?  <GoogleDocsViewer  ref = {(e) => this.popUp}  width="1000px" height="780px" fileUrl={this.props.url}/> : "" }
+
+            { ((urlShowDisplay == "pdf" )  )?  <GoogleDocsViewer  ref = {(e) => this.popUp}  width="1000px" height="780px" fileUrl={this.props.url}/> : "" }
+
+            { ((urlShowDisplay == "image" ) )?  <img src={this.props.url} width="1000px" height="780px" ></img> : "" }
+            
+          </Dialog>
+        </Fragment>      
       );
  }
   

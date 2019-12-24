@@ -17,6 +17,7 @@ import  AlertDialog from '../_/commonModal';
 import GoogleDocsViewer from 'react-google-docs-viewer';
 import { ChatFeed, Message } from 'react-chat-ui'
 
+import TooltipOwn from  "../_/historyTooltip";
 
 
 import {
@@ -45,10 +46,12 @@ export default class AgCredentails extends Component {
       url:"",
       historyData:false,
       showButton: false,
+      recordValue: "",
     }
   }
  
   componentDidMount() {
+    console.log(this.state,"kranthi..");
     let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
     console.log(visitorType,"vistor")
     let  vendoerType  = (visitorType == "vendor")?  'vendor': 'vendor_agency' ;
@@ -165,6 +168,18 @@ export default class AgCredentails extends Component {
     this.setState({"historyData":!this.state.historyData })
   }
 
+  recordToBedisplayed = (data) => {
+      //e.preventDefault();
+
+    if (data === this.state.recordValue){
+      this.setState({"recordValue": null })
+    }else {
+      this.setState({"recordValue": data })
+    }
+
+    
+
+  }
 
   getCredetailsData = (data)=>{
     console.log("dataSet",data);
@@ -226,6 +241,7 @@ export default class AgCredentails extends Component {
                                 <TableCell> Status </TableCell>
                                 <TableCell> Reason </TableCell>  
                                 <TableCell></TableCell> 
+                                <TableCell></TableCell> 
                               
                               </TableRow>
                             </TableHead>
@@ -236,26 +252,49 @@ export default class AgCredentails extends Component {
                               
                             let docpath = (data.docs.length > 0)? data.docs[0]["document_path"]: "none"
                            
-                            return (
+                            return (<Fragment>
                               <TableRow key={i} >
-                            <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
-                            
-                            <TableCell>{(docpath != "none")? <a href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"} </TableCell>
+                                <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
+                                
+                                <TableCell>{(docpath != "none")? <a href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"} </TableCell>
 
-                            <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
-                            <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
-                            <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
-                            <TableCell style ={{width: "120px" }} > {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
+                                <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
+                                <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
+                                <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
+                                <TableCell style ={{width: "120px" }} > {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
+                                <TableCell>
+                                  <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/></a> 
+                                </TableCell> 
 
-
-                           <TableCell>
-                              
-                              <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/></a> 
-                            </TableCell> 
+                                <TableCell>
+                            {(this.state.recordValue == i)? <i class="fa fa-minus-circle" aria-hidden="true" onClick = { () => {this.recordToBedisplayed(i)}} ></i> : <i class="fa fa-plus-circle" aria-hidden="true" onClick = { (e) => {this.recordToBedisplayed(i)} } ></i>  }
+                                
+                                </TableCell> 
                           
-                          </TableRow>
+                            </TableRow>
+                             { (this.state.recordValue  ==  i ) ?
+                                  <Fragment>
+                                  <TableRow  >
+                                  <TableCell colSpan={8}><span align="left" style={{ color:"blue"}}>Past Credentials</span></TableCell>
+                             
 
-                            )
+                                  </TableRow>
+
+                                  <TableRow  >
+                                 
+                                  <TableCell colSpan={8}> <center>No Records</center> </TableCell>
+                                  
+                                  </TableRow> 
+                                  <TableRow  >
+                                  <TableCell colSpan={8}>  </TableCell>
+                                  </TableRow>
+                                  </Fragment>
+                               : "" } 
+                            
+                            </Fragment>
+
+                          
+                          )
                           })
                           : 
                           <TableRow >

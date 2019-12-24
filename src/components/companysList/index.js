@@ -137,6 +137,23 @@ class Company extends Component {
 
                  {  (this.state.companyData.length > 0) ? 
                       this.state.companyData.map((data)=>{
+                         
+                         let address = []
+                         if (data.shipping_city){
+                          address.push(data.shipping_city);
+                         }
+                         if (data.shipping_street){
+                          address.push(data.shipping_street);
+                         }
+                         if (data.shipping_state_abbr){
+                          address.push(data.shipping_state_abbr);
+                         }
+                         if (data.shipping_zip){
+                          address.push(data.shipping_zip);
+                         }
+                         const adds  = (address.length >0)? address.join()  : "" ;
+                     
+
                             
                         return (
 
@@ -144,7 +161,8 @@ class Company extends Component {
                                 <TableRow key={ data.id} >
                                     <TableCell> <input type="radio" value={data.id} name="companyname" checked ={ this.state.defaultCompany == data.id } onClick= {(e) => this.radioOnChange(e,data.name)} /></TableCell>
                                     <TableCell> { data.name }</TableCell>
-                                   <TableCell>  {(data.shipping_city)? data.shipping_city+", ": "" }{ (data.shipping_street)? data.shipping_street+", " :"" }{(data.shipping_state_abbr)? data.shipping_state_abbr+", ": ""}{(data.shipping_zip)?data.shipping_zip:""} </TableCell>
+                                   {/* <TableCell>  {(data.shipping_city)? data.shipping_city+", ": "" }{ (data.shipping_street)? data.shipping_street+", " :"" }{(data.shipping_state_abbr)? data.shipping_state_abbr+", ": ""}{(data.shipping_zip)?data.shipping_zip:""} </TableCell> */}
+                                   <TableCell> { adds }</TableCell>
                                  
                                 </TableRow >
 

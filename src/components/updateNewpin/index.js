@@ -222,12 +222,10 @@ export default class Updatepin extends Component {
       let  changelab =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")? "Pin"  : "Password"; 
       const  {loader,visitorsList,total_entries,per_page}  =  this.state
         return (
-          <div>
-        
-       
-           
-            
-            <Grid container>
+           <Fragment>
+
+
+<Grid container>
             <Grid item sm={6}>
               <h2>
                 <Typography className="pageTitle titleSection" variant="title" gutterBottom>
@@ -238,17 +236,17 @@ export default class Updatepin extends Component {
             
             {CommonService.renderLoader(this.state.loader)}
 
-            <div >  
+            
             <Grid container spacing={24} >
               <Grid className="section">
-                <form>
-                  <Grid container spacing={24} justify="center">
+              
+                  <Grid container spacing={24} justify="center" style={{position:"absolute"}}>
                   
 
                   <Grid item xs={12} sm={12}>
                       <TextField
                         id="username"
-                        label={"Change "+changelab}
+                        label={"Current "+changelab}
                         type="password"
                         className="username"
                         value={this.state.oldPin}
@@ -311,12 +309,19 @@ export default class Updatepin extends Component {
                       </MuiThemeProvider>
                     </Grid>
                   </Grid>
-                </form>
+            
               </Grid>
         </Grid>
-        </div>
+      
         </Grid>
-        </div>
+
+           </Fragment>
+        
+       
+           
+            
+            
+        
 
         );
     }

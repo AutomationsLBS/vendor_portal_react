@@ -42,6 +42,10 @@ const getUserType = ()=>{
         return ''
     }
 }
+const uploadFileSize = ()=>{
+    return 10240
+}
+
  let  changeTabName =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")? "Change Pin"  : "Change Password"; 
  let companysDisplay  =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")? false : true ; 
 const Config = {
@@ -56,6 +60,7 @@ const Config = {
     "daysRange":daysRangeJson(),
     "chargebeeurl":chargebeeurl(),
     "usertype" : getUserType(),
+    "filesize": uploadFileSize(),
    
     "mainnav": [
         

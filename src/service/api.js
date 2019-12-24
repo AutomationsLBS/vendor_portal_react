@@ -56,6 +56,7 @@ axios.interceptors.response.use(
   },
   error => {
     // debugger;
+    
     if(error !== undefined && error.response !== undefined && error.response.data.message === "Invalid token"){      
       toast.error(error.response.data.message, {
         position: toast.POSITION.TOP_CENTER

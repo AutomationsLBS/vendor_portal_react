@@ -37,7 +37,7 @@ export default class CredentailEdit extends Component{
       		selectedDate :new Date(),
       		altfile:"no",
       		effectiveStartDate:new Date(),
-      		effectiveEndDate:new Date(),
+      		effectiveEndDate: new Date(),
       		textarea:"",
           remarks : "",
           credential_types:"",
@@ -82,9 +82,9 @@ export default class CredentailEdit extends Component{
     getDateformat = (dates)=>{
    
        //let dateformat  = dates.split("-"); 
-     //  let data = new Date(dates)
-       //  dateformat[1]+"/"+dateformat[2]+"/"+dateformat[0]
-       return dates
+      let data = new Date(dates)
+      // //  dateformat[1]+"/"+dateformat[2]+"/"+dateformat[0]
+       return data
     }
     getParams =()=> {
        
@@ -118,7 +118,8 @@ export default class CredentailEdit extends Component{
          
           effectiveStartDate : (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)?this.getDateformat(response.credential_data.docs.effective_start_date) : "":"", 
 
-          effectiveEndtDate : (response.credential_data.hasOwnProperty('doc'))? (response.credential_data.docs  )? this.getDateformat(response.credential_data.docs.effective_end_date) : "":"",
+        //  effectiveEndDate: (response.credential_data.hasOwnProperty('doc'))? (response.credential_data.docs != null )? this.getDateformat(response.credential_data.docs.effective_end_date) : "":"",
+        effectiveEndDate: this.getDateformat(response.credential_data.docs.effective_end_date),
 
           remarks: (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)? response.credential_data.docs.remarks : "":"",
           fileName: (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)? response.credential_data.docs.document_path : "":"",
@@ -345,7 +346,18 @@ export default class CredentailEdit extends Component{
      let errorMessage = (this.state.credential_value_error == "")? false:  true  ;
      let  visitor_types   =  CommonService.localStore.get("visitor_types").visitor_types; 
     let isDisplay  =  (visitor_types != "agency")?  "" : "none"
-    let isDisplayDoc  =  (this.state.altfile == "yes")?  "" : "none"
+    let isDisplayDoc  =  (this.state.altfile == "yes")?  "" : "none";
+     let data = this.state.fileName.replace(/%20/g, "")
+
+    let fileSplit =   data.split("/");
+
+    let filenames =fileSplit.length -1;
+    let filename9 = fileSplit[filenames]
+
+
+    console.log( fileSplit[filenames],"909");
+
+
 
 		return (
       		<Fragment>
@@ -403,7 +415,7 @@ export default class CredentailEdit extends Component{
                        position: "relative",
                        color: "black",
                        top: "15px",
-                     }} >{(this.state.fileName != "")? <a href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(this.state.fileName)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"}</span>
+                     }} >{(this.state.fileName != "")? <Fragment> <a href="javascript:void(0);" style={{textDecoration:"none",color:"black"}} onClick = {(e) =>this.handleClickOpen(this.state.fileName)  }  > <i className="fas fa-file" style={{color:"black"}} > </i> {filename9} </a> </Fragment> :"--"}</span>
                      
                       
 

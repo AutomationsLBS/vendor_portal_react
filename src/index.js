@@ -1,3 +1,5 @@
+import 'core-js/es/map';
+import 'core-js/es/set';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -10,6 +12,7 @@ import green from '@material-ui/core/colors/indigo';
 import pink from '@material-ui/core/colors/pink';
 import red from '@material-ui/core/colors/red';
 import store from './store';
+
 
 
 const theme = createMuiTheme({
@@ -30,9 +33,12 @@ const theme = createMuiTheme({
 ReactDOM.render(
     <Provider store={store}>
         <MuiThemeProvider theme={theme}>
-			<HttpsRedirect>
-	            <App />
-			</HttpsRedirect>
+			      <HttpsRedirect>
+
+            <App />
+            </HttpsRedirect>
+              
+			
         </MuiThemeProvider>
     </Provider>
     , 

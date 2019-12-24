@@ -19,12 +19,14 @@ import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 import MenuItem from '@material-ui/core/MenuItem';
 import moment from 'moment';
+import Config from '../../container/config';
 
 import DateFnsUtils from '@date-io/date-fns';
 import { ToastContainer, toast } from 'react-toastify';
 import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 
 
 export default class CredentailCreate extends Component{
@@ -51,18 +53,34 @@ export default class CredentailCreate extends Component{
           alterFilename: "",
           uploadFile_error :"",
           alterFilename_error:"",
+          docTypes: {doc:"doc","docx":"docx",pdf:"pdf","jpg":"jpg","png":"png",gif:"gif",jpeg:"jpeg"},
           
         }
   	}
     onChangedata = (e)=> {
+      
+      let filesizes = Math.round((  e.target.files[0]["size"]/ 1024))
+      let  filesizelimit  = Config.filesize;
+      if (filesizes < filesizelimit ){
+        let fileType  =  e.target.files[0]["name"];
+        var ext = fileType.split('.').pop();
+        if(ext== this.state.docTypes[ext]){
+          this.setState({file:e.target.files[0],  fileName : e.target.files[0]["name"],uploadFile_error:""})
+        } else{
+          this.setState({file:"",  fileName :"",uploadFile_error:"Please upload only Doc/Pdf/images"});
+        }
+        
+      }else{
 
-      let fileType  =  e.target.files[0]["name"];
-      var ext = fileType.split('.').pop();
-      if(ext=="pdf" || ext=="docx" || ext=="doc"){
-        this.setState({file:e.target.files[0],  fileName : e.target.files[0]["name"],uploadFile_error:""})
-      } else{
-        this.setState({file:"",  fileName :"",uploadFile_error:"Please upload only Doc/Pdf"});
+        this.setState({file:"",  fileName :"",uploadFile_error:"File size must be low 5 mb"});
+
       }
+      
+     
+      
+      
+
+       
        
         
     }
@@ -157,7 +175,7 @@ export default class CredentailCreate extends Component{
 
       let fileType  =  event.target.files[0]["name"];
       var ext = fileType.split('.').pop();
-      if(ext=="pdf" || ext=="docx" || ext=="doc"){
+      if(ext== this.state.docTypes[ext]){
         this.setState({alterFiledata: event.target.files[0], alterFilename : event.target.files[0]["name"],alterFiledata_error:"" })
       } else{
         
@@ -290,7 +308,7 @@ export default class CredentailCreate extends Component{
     });
 
    let  changelab =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")?  "credentials": "agCredentials" ; 
-   //window.location.href = "/"+changelab;
+   window.location.href = "/"+changelab;
      //  console.log(response,"data........")
   })
   .catch((error) => {
