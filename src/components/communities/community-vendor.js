@@ -38,6 +38,9 @@ export default class CommunityVendor extends Component {
       redirectUrl:"",
       requestedData:"",
       open: false,
+      requestedDataVendor:"",
+    
+      
     }
   }
   componentWillMount() {
@@ -46,6 +49,8 @@ export default class CommunityVendor extends Component {
   }
   componentDidMount() {
     var companyId = CommonService.localStore.get("usr_company_id").usr_company_id
+
+     
 
     axios
     .get(axios.myCommunitys(),{params:{company_id:companyId}})
@@ -99,8 +104,10 @@ export default class CommunityVendor extends Component {
     .get(axios.community_credentials(),{params:{utype:"agency",community_id:data.id,employee:  CommonService.localStore.get("usr_company_id").usr_company_id }})
     .then((response) => {
         console.log("requested-my_credentials",response);
+         
+        this.setState({  requestedData:response});
        // this.setState({requestedCredetials: response, loader: false});
-         this.setState({open:!this.state.open,  requestedData :response});
+       //  this.setState({  [crednetialsData]:response});
         //this.setState({showButton : (response.credentials.old_credentials.length > 0)? true : false })
       
        // this.setState({myCredentails: response, loader: false});
@@ -122,6 +129,38 @@ export default class CommunityVendor extends Component {
           });
         
     });
+
+
+
+  axios
+  .get(axios.community_credentials(),{params:{utype:"vendor",community_id:data.id }})
+  .then((response) => {
+      console.log("requested-my_credentials",response);
+     // this.setState({requestedCredetials: response, loader: false});
+       this.setState({open:!this.state.open,  requestedDataVendor :response});
+      //this.setState({showButton : (response.credentials.old_credentials.length > 0)? true : false })
+    
+     // this.setState({myCredentails: response, loader: false});
+      toast.success(
+          (response.message != undefined) 
+              ? "Successfully..." 
+              : response.message, {
+          position: toast.POSITION.TOP_CENTER,
+          className: 'rotateY animated'
+        });
+     
+  })
+  .catch((error) => {
+      
+    console.log(error,"error12")
+      this.setState({loader: false});
+      toast.error((error.message != undefined) ?   error.response.data.message : "Failed for some reason", {
+          position: toast.POSITION.TOP_CENTER
+        });
+      
+  });
+
+  
   
   }
 
@@ -152,6 +191,7 @@ export default class CommunityVendor extends Component {
            open = {this.state.open}
            data  = {this.state.requestedData}
            onClose = { this.handleClose}
+           dataForVendor = {this.state.requestedDataVendor}
 
           
           />  
@@ -164,7 +204,7 @@ export default class CommunityVendor extends Component {
                   <TableCell> Contact Person</TableCell>
                   <TableCell> Contact Phone no. </TableCell>
                   <TableCell> Employees Serving </TableCell>
-                  <TableCell> Required Credentials </TableCell>
+                  <TableCell> Required Credentials</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

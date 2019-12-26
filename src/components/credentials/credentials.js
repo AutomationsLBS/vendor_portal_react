@@ -43,6 +43,7 @@ export default class Credentails extends Component {
       url:"",
       historyData:false,
       showButton: false,
+      recordValue: "",
     }
   }
  
@@ -94,7 +95,7 @@ export default class Credentails extends Component {
     .then((response) => {
         console.log("response-my_credentials",response);
         this.setState({myCredentails: response.credentials, loader: false});
-        this.setState({showButton : (response.credentials.old_credentials.length > 0)? true : false })
+     //   this.setState({showButton : (response.credentials.old_credentials.length > 0)? true : false })
       
        // this.setState({myCredentails: response, loader: false});
         toast.success(
@@ -177,6 +178,19 @@ export default class Credentails extends Component {
     }
   }
 
+  recordToBedisplayed = (data) => {
+    //e.preventDefault();
+
+  if (data === this.state.recordValue){
+    this.setState({"recordValue": null })
+  }else {
+    this.setState({"recordValue": data })
+  }
+
+  
+
+}
+
   render() {
     
       if (this.state.redirect) {
@@ -223,18 +237,20 @@ export default class Credentails extends Component {
                     <TableCell> Status </TableCell>
                     <TableCell> Reason </TableCell>  
                     <TableCell> </TableCell>  
+                    <TableCell> </TableCell>  
                    
                   </TableRow>
                 </TableHead>
                 <TableBody>
                 { /*(data.docs.length > 0)?data.docs[0]["document_path"]: "--"  (data.docs.length > 0)? "": "--"  */}
-              {(this.state.myCredentails)? (this.state.myCredentails.current_credentials.length  > 0) ?
-              this.state.myCredentails.current_credentials.map((data,i)=>{
+              {(this.state.myCredentails)? (this.state.myCredentails.credentials.length  > 0) ?
+              this.state.myCredentails.credentials.map((data,i)=>{
                   
                 let docpath = (data.docs.length > 0)? (data.docs[0]["document_path"] != "")? data.docs[0]["document_path"] : "none": "none"
                 let alternativeDocPath =  (data.alternate_docs.length > 0)? (data.alternate_docs[0]["document_path"] != "" )? data.alternate_docs[0]["document_path"] : "none" : "none";
                  
                 return (
+                  <Fragment>
                   <TableRow key={i} >
                 <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
                 
@@ -249,8 +265,50 @@ export default class Credentails extends Component {
                               
                               <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/> </a> 
                             </TableCell> 
+
+                            <TableCell>
+                            {(this.state.recordValue == i)? <i class="fa fa-minus-circle" aria-hidden="true" onClick = { () => {this.recordToBedisplayed(i)}} ></i> : <i class="fa fa-plus-circle" aria-hidden="true" onClick = { (e) => {this.recordToBedisplayed(i)} } ></i>  }
+                                
+                                </TableCell> 
               
               </TableRow>
+              { (this.state.recordValue  ==  i)? 
+                                <TableRow  >
+                                <TableCell colSpan={9}><span align="left" style={{ color:"blue"}}>Past Credentials</span></TableCell>
+                                </TableRow>
+
+                              : ""}
+                          
+                             { (this.state.recordValue  ==  i ) ?
+                                  <Fragment>
+                                  { (data.old_credentials.length > 0)? data.old_credentials.map((olddata) =>{
+                                      let docpath = (olddata.docs.length > 0)? olddata.docs[0]["document_path"]: "none";
+                                      let alternativeDocPath =  (olddata.alternate_docs.length > 0)? (olddata.alternate_docs[0]["document_path"] != "" )? olddata.alternate_docs[0]["document_path"] : "none" : "none";
+                                    return(
+                                      <Fragment>
+                                      <TableRow key={i} >
+                                          <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
+                                          
+                                          <TableCell>{(docpath != "none")? <a href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"} </TableCell>
+                                          <TableCell> { (alternativeDocPath !="none")? <a  href="javascript:void(0);"  onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"}</TableCell>
+                                          <TableCell> {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
+                                          <TableCell> {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_end_date"]): "--" } </TableCell>
+                                          <TableCell> {(olddata.docs.length > 0)?olddata.docs[0]["verification_status"]: "--" }</TableCell>
+                                          <TableCell colSpan={3} style ={{width: "120px" }} > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
+                                      
+                                        </TableRow>
+                                      </Fragment>
+                                    ) 
+                                  }): 
+                                  <TableRow  >
+                                  <TableCell colSpan={9}><center> No Records  </center></TableCell>
+                                  </TableRow>
+                                  }
+                                
+                                  </Fragment>
+                               : "" } 
+
+              </Fragment>
 
                 )
               })
@@ -280,76 +338,7 @@ export default class Credentails extends Component {
 
         </Grid>
 
-        <div  align="left" style= { { "padding-bottom": "14px" , "padding-top": "14px"}}> 
-                    { (this.state.historyData)?  <a href="javascript:void(0)" onClick = {this.showHistory}  style ={{"text-decoration": "none",color:"blue"}} >Hide Past Credentials  </a>  :  (this.state.showButton ) ? <a herf="javascript:void(0);" style ={{"text-decoration": "none",color:"blue"}} onClick = {this.showHistory}  > Past Credentials  </a> : null } 
-                </div>
-                <Grid item sm={12} align="right"> 
-                  <Table className="listTable" >
 
-
-                 
-                  
-                  { (this.state.historyData)? 
-                      <TableHead>
-                      <TableRow>
-                          
-                          <TableCell>Credential Type</TableCell>
-                          <TableCell>Doc</TableCell>
-                          <TableCell> Alternative Doc</TableCell>
-                          <TableCell> Effective Start Date</TableCell>
-                          <TableCell> Effective End Date </TableCell>
-                          <TableCell> Status </TableCell>
-                          <TableCell> Reason </TableCell>  
-                      
-                      </TableRow>
-                      </TableHead>
-                     : "" }
-
-                
-                      
-                <TableBody >
-                {(this.state.historyData)? (this.state.myCredentails)? 
-                 
-
-                  this.state.myCredentails.old_credentials.map((data,i) => {
-                   
-                    let docpath = (data.docs.length > 0)? (data.docs[0]["document_path"] != "")? data.docs[0]["document_path"] : "none": "none"
-                    let alternativeDocPath =  (data.alternate_docs.length > 0)? (data.alternate_docs[0]["document_path"] != "" )? data.alternate_docs[0]["document_path"] : "none" : "none";
-                     
-                    return (
-                      <TableRow key={i} >
-                        <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
-                        
-                        <TableCell>{(docpath !="none")?<a  href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}}  > </i></a> : "--"} </TableCell>
-                        <TableCell> {(alternativeDocPath !="none")? <a  href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"} </TableCell>
-                        <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
-                        <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
-                        <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
-                        <TableCell style ={{width: "120px" }}> {(data.docs.length > 0)?data.docs[0]["remarks"]: "" } {(data.alternate_docs.length > 0)?data.alternate_docs[0]["remarks"]: "" }</TableCell>
-                      
-                      </TableRow>      
-                    )
-                   
-
-                  })
-
-                  
-                  :
-                  <TableRow >
-                  <TableCell colSpan={6}> <center>No Records</center> </TableCell>
-                  </TableRow>
-                  
-                  : ""}
-                
-                        </TableBody>
-
-              
-              
-                 
-
-
-                  </Table>
-                </Grid>
 
 
                  

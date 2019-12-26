@@ -140,70 +140,86 @@ render(){
            // disableBackdropClick ="false"
           
             open={ this.props.open  }
-            
-            Width = "1000px"
+            maxWidth = "xl"
+  
           >
           
-          <div>
-                  <div style={{"float":"right"}}> <i className="far fa-times-circle" onClick = {this.props.onClose}></i>  </div>
+          
+          <div><div style={{float:"left"}}></div>
+                  <div style={{"float":"right",
+                    position: "relative",
+                    paddingRight:"10px",
+                    top: "7px"
+                }}> <i className="far fa-times-circle" onClick = {this.props.onClose}></i>  </div>
           </div>  
-  
-          <Grid container style={{
-
-"padding-bottom": "34px",
-"padding-left": "20px",
-"padding-right": "20px",
-"width": "500px",
-          }} >
-          <Grid item sm={12}>
-            <h2>
-              <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-              Required Credentials 
-              </Typography>
-            </h2>
-
-           
-            <Table className="listTable"  width="800px" > 
+          <Grid container  >
+        
+          <Grid item sm={12} style={{margin:"10px"}}>
             
-              <TableBody>
-   
+              <Typography style={{fontSize:"22px"}} className="pageTitle titleSection" variant="title" gutterBottom>
+              <b >Required Credentials </b> 
+              </Typography>
+            
+          </Grid>
+          <Grid container >
+            <Grid item sm={6}>
+               <div className="requredcredentilas"><b>Agency Required Credentials </b> </div>
                
-              {  (this.props.data)?
-                    (this.props.data.credentials.length > 0)?
-                      (this.props.data.credentials.map(data =>{
+             
+                
+                {  (this.props.data)?
+                      (this.props.data.credentials.length > 0)?
+                        (this.props.data.credentials.map(data =>{
+                          return (
+                            
+                            <div > { (data.already_set)? <div class="requredcredentilasRows"> <i className="fa fa-check" style={{color:"green",    position: "relative",top: "-2px"}} aria-hidden="true"></i> <span style={{position:"relative",top:"-2px"}}>{ data.title }</span>  </div> : <div> <i className="fa fa-check" style={{color:"red",    position: "relative",top: "-2px"}} aria-hidden="true"></i>  { data.title } </div>  }   </div>
+                           
+
+                          )
+
+                        }))
+                    :
+                   
+                    <div >  <div class="requredcredentilasRows"><center>No Required  Credentials </center> </div></div> 
+
+                    :
+                    
+                    <div >  <div class="requredcredentilasRows"><center>No Required  Credentials </center> </div></div> 
+                    }
+
+                    
+                  
+            </Grid>
+                    
+              <Grid item sm={6}>
+              <div className="requredcredentilas"> <b> Vendor Required Credentials</b>  </div>
+             
+              
+              {  (this.props.dataForVendor)?
+                    (this.props.dataForVendor.credentials.length > 0)?
+                      (this.props.dataForVendor.credentials.map(data =>{
                         return (
-                          <TableRow style={{ border:"0px"}} >
-                        { /*  <TableCell> {  this.state.credential_types[data.credential_type_id]}</TableCell> */}
-                         {/* <TableCell style={{  width: "3px"}}> { (data.already_set)?  <img src={Config.images+"/correct-symbol.png"} width="14px" style = {{ marginLeft:'15px',position: "relative",top: "3px"}}/> : <img src={Config.images+"/cancel-mark.png"} width="14px" style = {{ marginLeft:'15px'}}/>  }   </TableCell> */}
-                         <TableCell style={{  width: "3px"}}> { (data.already_set)?  <i className="fa fa-check" style={{color:"green",    position: "relative",top: "-2px"}} aria-hidden="true"></i> :  <i className="fa fa-times" style={{color:"red", position: "relative",top: "-2px"}} aria-hidden="true"></i> }   </TableCell>
-                          <TableCell> <span 
-                            style={{
-                              position: "relative",
-                              top: "-2px",
-                            }} 
-                          >{ data.title} </span> </TableCell>
-                          </TableRow >
+                        
 
-                        )
+                          <div > { (data.already_set)? <div class="requredcredentilasRows"> <i className="fa fa-check" style={{color:"green",    position: "relative",top: "-2px"}} aria-hidden="true"></i> <span style={{position:"relative",top:"-2px"}}>{ data.title }</span>  </div> : <div> <i className="fa fa-check" style={{color:"red",    position: "relative",top: "-2px"}} aria-hidden="true"></i>  { data.title } </div>  }   </div>  
 
-                      }))
+                          )
+
+                        }))
                   :
-                  <TableRow    style={{border:"0px"}}>
-                  <TableCell colSpan={2}> <center>No Required  Credentials </center> </TableCell>
-                  </TableRow>
+                  <div >  <div class="requredcredentilasRows"><center>No Required  Credentials </center> </div></div> 
+                 
                   :
                   
-                  <TableRow   style={{border:"0px"}}>
-                  <TableCell colSpan={2}> <center>No Required  Credentials</center> </TableCell>
-                  </TableRow>
+                  <div >  <div class="requredcredentilasRows"><center>No Required  Credentials </center> </div></div> 
                   }
 
                   
-                 
-              </TableBody>
-             </Table>
+                
+              </Grid>
+            </Grid>
           </Grid>
-        </Grid>
+        
 
            
                        
