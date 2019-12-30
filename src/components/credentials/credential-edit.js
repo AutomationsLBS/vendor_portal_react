@@ -20,6 +20,7 @@ import axios from 'axios';
 import MenuItem from '@material-ui/core/MenuItem';
 import moment from 'moment';
 
+
 import DateFnsUtils from '@date-io/date-fns';
 import { ToastContainer, toast } from 'react-toastify';
 import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
@@ -56,11 +57,33 @@ export default class CredentailEdit extends Component{
           url: "",
           recordId:"",
           verificationStatus:"",
+          upperLimit_error:"",
+          lowerLimit_error:"",
+          upperLimit:"",
+          lowerLimit:"",
+          vendoerType:"",
+          upperLimitRange_error:"",
 
           
         }
     }
     
+
+
+handleChange = name => event => {
+ 
+
+  this.setState({
+      [name]: event.target.value,
+  });
+  if (name != '') {
+      let errName = name + '_error'
+      console.log("Handle change", event, name, errName);
+      this.setState({
+          [errName]: false,
+      });
+  }
+};
 
     handleClickOpen = (data) => {
       console.log(data,"status__check")
@@ -106,6 +129,7 @@ export default class CredentailEdit extends Component{
      // console.log(data,"idd")
       let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
      let  vendoerType  = (visitorType == "vendor")?  'vendor': 'agency' ;
+     this.setState({vendoerType});
        this.setState({loader: true})
       axios
       .get(axios.credential_details(),{params : {'id':data,"utype":vendoerType}
@@ -125,7 +149,7 @@ export default class CredentailEdit extends Component{
 
           remarks: (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)? response.credential_data.docs.remarks : "":"",
           fileName: (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)? response.credential_data.docs.document_path : "":"",
-          alterFilename:  (response.credential_data.hasOwnProperty('alternate_docs'))? response.credential_data.alternate_docs[0]["document_path"] : "",
+         // alterFilename:  (response.credential_data.hasOwnProperty('alternate_docs'))? response.credential_data.alternate_docs[0]["document_path"] : "",
           recordId: response.credential_data.credentialdata.id,
           altfile:  (response.credential_data.hasOwnProperty('alternate_docs'))? (response.credential_data.alternate_docs.length > 0)? "yes":"no"  : "no",
           verificationStatus: (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)? response.credential_data.docs.verification_status : "":"",
@@ -145,7 +169,7 @@ export default class CredentailEdit extends Component{
       .catch((error) => {
          
           this.setState({loader: false});
-          toast.error((error.message != undefined) ? error.response.data.message : "Failed for some reason", {
+          toast.error((error.message != undefined) ? error.message : "Failed for some reason", {
               position: toast.POSITION.TOP_CENTER
             });
           
@@ -328,18 +352,65 @@ export default class CredentailEdit extends Component{
               statusFlag =  false;
           }    
           
-           if (this.state.altfile  != "no"){
+           
+
+
+
+          if(this.state.vendoerType != "vendor"){
       
-            // if (this.state.alterFiledata == ""){
-            //    this.setState({alterFiledata_error: "Please upload document"});
-            //    statusFlag =  false;
-            // }
-       
-          }else {
-            if (this.state.file == ""){
-              this.setState({uploadFile_error: "Please upload document"});
-              statusFlag =  false;
-            } 
+            if(this.state.lowerLimit == ""){
+              statusFlag  =  false;
+              this.setState({lowerLimit_error: true});
+              return false;
+      
+           }else {
+              statusFlag  =  true;
+      
+           }
+          
+            if(this.state.upperLimit ==""){
+               statusFlag  =  false;
+               this.setState({upperLimit_error: true});
+               return false;
+            }else {
+               statusFlag  =  true;
+            }
+      
+      
+            
+      
+            let data  = ( this.state.upperLimit - this.state.lowerLimit);
+          
+            if(data > 0 ){
+             
+              statusFlag  =  true;
+              this.setState({upperLimit_error: false});
+              this.setState({upperLimitRange_error:false})
+            }else {
+              this.setState({upperLimit_error: true});
+              this.setState({upperLimitRange_error:true})
+              statusFlag  =  false;
+              return false;
+            }
+
+
+            if (this.state.altfile  != "no"){
+      
+              // if (this.state.alterFiledata == ""){
+              //    this.setState({alterFiledata_error: "Please upload document"});
+              //    statusFlag =  false;
+              // }
+         
+            }else {
+              if(this.state.fileName == ""){
+                if (this.state.file == ""){
+                  this.setState({uploadFile_error: "Please upload document"});
+                  statusFlag =  false;
+                }
+              }
+               
+            }
+      
           }
           
           let  parseStartDate = Date.parse(this.state.effectiveStartDate);
@@ -350,6 +421,8 @@ export default class CredentailEdit extends Component{
             statusFlag =  false;
           }
       
+
+          
       
           if (statusFlag === false){
             return false;
@@ -382,6 +455,11 @@ export default class CredentailEdit extends Component{
           formData.append('uploadDoc',file)
         }
 
+
+  if(this.state.vendoerType != "vendor"){
+    formData.append('lower_limit',this.state.lowerLimit);
+    formData.append('upper_limit',this.state.upperLimit);
+  }
          if(alterFile){
            console.log(file,"hifile");
             formData.append('alteruploadDoc',  alterFile)
@@ -527,6 +605,8 @@ export default class CredentailEdit extends Component{
     }else if( this.state.verificationStatus == "verified" || this.state.verificationStatus == "rejected" ) {
       buttonHideOrNot =  "none";     
     }
+
+    let  statusOfVendort = ((this.state.vendoerType != "vendor")? "show"  : "none")
 
 
 
@@ -702,6 +782,54 @@ export default class CredentailEdit extends Component{
 
 
         					</Grid>
+                  <Grid item xs={12} sm={6} md={6} className="singleFormLeft"  
+                          style={{"marginTop": "0px", display: statusOfVendort }}>
+                             <TextField
+                                id="lowerLimit"
+                                style = {{width: "276px"}}
+                                label="Lower limit"
+                                className="formFont"
+                                value={this.state.lowerLimit}
+                                onChange={this.handleChange('lowerLimit')}
+                                margin="normal"
+                                maxLength="100"
+                                type ="number"
+                                error={this.state.lowerLimit_error}
+                            />
+                              
+                          
+                        <div>
+                        {(this.state.lowerLimit_error)? <FormHelperText style={{'color': '#f44336'}}> Lower Limit is required</FormHelperText>:""}
+                            
+                        </div> 
+
+
+                          </Grid>
+
+                   
+                          <Grid item xs={12} sm={6} md={6} style={{ display: statusOfVendort  }} >
+                          
+                          <TextField
+                                id="upperLimit"
+                                style = {{width: "276px"}}
+                                label="Upper limit"
+                                className="formFont"
+                                value={this.state.upperLimit}
+                                onChange={this.handleChange('upperLimit')}
+                                margin="normal"
+                                maxLength="100"
+                                type ="number"
+                                error={this.state.upperLimit_error}
+                            />
+                          
+                        <div>
+                        
+                            
+                            { (this.state.upperLimitRange_error !="")? <FormHelperText style={{'color': '#f44336'}}> Upper Limit is range is invalid</FormHelperText> : (this.state.upperLimit_error)? <FormHelperText style={{'color': '#f44336'}}> Upper Limit is required</FormHelperText>:""  }
+                        </div> 
+                          </Grid>
+
+
 
                    
                           <Grid item xs={12} sm={6} md={6} className="singleFormLeft"  
@@ -710,9 +838,9 @@ export default class CredentailEdit extends Component{
                               
                             <RadioGroup aria-label="position" name="position" 
                               value={this.state.altfile} onChange={this.radioButton} row> 
-                              <FormControlLabel value="yes"  control={<Radio color="primary" />}
+                              <FormControlLabel value="yes" disabled ={statusOfButton }  control={<Radio color="primary" />}
                                 label="Yes" labelPlacement="start"  />
-                              <FormControlLabel value="no"  control={<Radio color="primary" />}
+                              <FormControlLabel value="no"  disabled ={statusOfButton } control={<Radio color="primary" />}
                                 label="No" labelPlacement="start"  />
                             </RadioGroup>
 
@@ -759,6 +887,8 @@ export default class CredentailEdit extends Component{
                             
                           </Grid>
 
+
+                         
                       
 
                     

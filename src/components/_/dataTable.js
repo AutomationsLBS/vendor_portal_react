@@ -42,6 +42,7 @@ export default class  RequestedCommunity extends  Component {
     loader: false,
     requestedCredetials : "",
     credential_types: "",
+    vendoerType:"",
    }
 
   }
@@ -67,8 +68,10 @@ export default class  RequestedCommunity extends  Component {
      let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
   
      let  vendoerType  = (visitorType == "vendor")?  'vendor': 'vendor_agency' ;
+     this.setState({vendoerType});
+
      axios
-     .get(axios.credential_types(),{params:{ ctype:"vendor"}})
+     .get(axios.credential_types(),{params:{ ctype:vendoerType}})
      .then((response) => {
       let  data  = response.credentials.reduce((intails,recent)=>{
            intails[recent.id] = recent.name
@@ -162,56 +165,59 @@ render(){
             
           </Grid>
           <Grid container >
-            <Grid item sm={6}>
-               <div className="requredcredentilas"><b>Agency Required Credentials </b> </div>
-               
-             
+          {(this.state.vendoerType != "vendor")? 
+
+                <Grid item sm={6}>
+                <div className="requredcredentilas"><b>Agency Required Credentials </b> </div>
+
+
                 
-                {  (this.props.data)?
-                      (this.props.data.credentials.length > 0)?
-                        (this.props.data.credentials.map(data =>{
+                {  (this.props.data.length > 0)?
+                      
+                        (this.props.data.map(data =>{
                           return (
                             
-                            <div > { (data.already_set)? <div class="requredcredentilasRows"> <i className="fa fa-check" style={{color:"green",    position: "relative",top: "-2px"}} aria-hidden="true"></i> <span style={{position:"relative",top:"-2px"}}>{ data.title }</span>  </div> : <div> <i className="fa fa-check" style={{color:"red",    position: "relative",top: "-2px"}} aria-hidden="true"></i>  { data.title } </div>  }   </div>
-                           
+                            <div > { (data.already_set)? <div class="requredcredentilasRows"> <i className="fa fa-check" style={{color:"green",    position: "relative",top: "-2px"}} aria-hidden="true"></i> <span style={{position:"relative",top:"-2px"}}>{ data.title }</span>  </div> : <div class="requredcredentilasRows"> <i className="fa fa-times" style={{color:"red",    position: "relative",top: "-2px"}} aria-hidden="true"></i> <span style={{position:"relative",top:"-2px"}}>{ data.title }</span>  </div>  }   </div>
+                            
 
                           )
 
                         }))
                     :
-                   
-                    <div >  <div class="requredcredentilasRows"><center>No Required  Credentials </center> </div></div> 
-
-                    :
                     
-                    <div >  <div class="requredcredentilasRows"><center>No Required  Credentials </center> </div></div> 
+                    <div >  <div class="requredcredentilasRows"><center>No Records </center> </div></div> 
+
+                    
                     }
 
                     
                   
-            </Grid>
+                </Grid>
+
+          :  ""
+          
+          
+          }
                     
               <Grid item sm={6}>
               <div className="requredcredentilas"> <b> Vendor Required Credentials</b>  </div>
              
               
-              {  (this.props.dataForVendor)?
-                    (this.props.dataForVendor.credentials.length > 0)?
-                      (this.props.dataForVendor.credentials.map(data =>{
+              {  (this.props.dataForVendor.length >0 )?
+                  
+                      (this.props.dataForVendor.map(data =>{
                         return (
                         
 
-                          <div > { (data.already_set)? <div class="requredcredentilasRows"> <i className="fa fa-check" style={{color:"green",    position: "relative",top: "-2px"}} aria-hidden="true"></i> <span style={{position:"relative",top:"-2px"}}>{ data.title }</span>  </div> : <div> <i className="fa fa-check" style={{color:"red",    position: "relative",top: "-2px"}} aria-hidden="true"></i>  { data.title } </div>  }   </div>  
+                          <div > { (data.already_set)? <div class="requredcredentilasRows"> <i className="fa fa-check" style={{color:"green",    position: "relative",top: "-2px"}} aria-hidden="true"></i> <span style={{position:"relative",top:"-2px"}}>{ data.title }</span>  </div> : <div class="requredcredentilasRows"> <i className="fa fa-times" style={{color:"red",    position: "relative",top: "-2px"}} aria-hidden="true"></i> <span style={{position:"relative",top:"-2px"}}>{ data.title }</span>  </div>  }   </div>
 
                           )
 
                         }))
                   :
-                  <div >  <div class="requredcredentilasRows"><center>No Required  Credentials </center> </div></div> 
+                  <div >  <div class="requredcredentilasRows"><center>No Records </center> </div></div> 
                  
-                  :
-                  
-                  <div >  <div class="requredcredentilasRows"><center>No Required  Credentials </center> </div></div> 
+                 
                   }
 
                   

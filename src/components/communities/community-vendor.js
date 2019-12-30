@@ -103,14 +103,15 @@ export default class CommunityVendor extends Component {
     axios
     .get(axios.community_credentials(),{params:{utype:"agency",community_id:data.id,employee:  CommonService.localStore.get("usr_company_id").usr_company_id }})
     .then((response) => {
-        console.log("requested-my_credentials",response);
-         
-        this.setState({  requestedData:response});
-       // this.setState({requestedCredetials: response, loader: false});
-       //  this.setState({  [crednetialsData]:response});
-        //this.setState({showButton : (response.credentials.old_credentials.length > 0)? true : false })
-      
-       // this.setState({myCredentails: response, loader: false});
+        console.log("requested-my_credentials",response.credentials);
+        this.setState({open:true});
+        if(response.credentials.length > 0){
+          this.setState({  requestedData:response.credentials});
+        }
+        if(response.vendor_req_credentials.length > 0){
+          this.setState({  requestedDataVendor:response.vendor_req_credentials});
+        }
+       console.log(this.state,"youandi");
         toast.success(
             (response.message != undefined) 
                 ? "Successfully..." 
@@ -132,33 +133,6 @@ export default class CommunityVendor extends Component {
 
 
 
-  axios
-  .get(axios.community_credentials(),{params:{utype:"vendor",community_id:data.id }})
-  .then((response) => {
-      console.log("requested-my_credentials",response);
-     // this.setState({requestedCredetials: response, loader: false});
-       this.setState({open:!this.state.open,  requestedDataVendor :response});
-      //this.setState({showButton : (response.credentials.old_credentials.length > 0)? true : false })
-    
-     // this.setState({myCredentails: response, loader: false});
-      toast.success(
-          (response.message != undefined) 
-              ? "Successfully..." 
-              : response.message, {
-          position: toast.POSITION.TOP_CENTER,
-          className: 'rotateY animated'
-        });
-     
-  })
-  .catch((error) => {
-      
-    console.log(error,"error12")
-      this.setState({loader: false});
-      toast.error((error.message != undefined) ?   error.response.data.message : "Failed for some reason", {
-          position: toast.POSITION.TOP_CENTER
-        });
-      
-  });
 
   
   

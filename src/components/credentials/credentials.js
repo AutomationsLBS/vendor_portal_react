@@ -17,6 +17,7 @@ import  AlertDialog from '../_/commonModal';
 import GoogleDocsViewer from 'react-google-docs-viewer';
 
 
+
 import {
   Table,
   TableHead,
@@ -179,7 +180,7 @@ export default class Credentails extends Component {
   }
 
   recordToBedisplayed = (data) => {
-    //e.preventDefault();
+
 
   if (data === this.state.recordValue){
     this.setState({"recordValue": null })
@@ -231,11 +232,11 @@ export default class Credentails extends Component {
                     
                     <TableCell>Credential Type</TableCell>
                     <TableCell>Doc</TableCell>
-                    <TableCell> Alternative Doc</TableCell>
-                    <TableCell> Effective Start Date</TableCell>
-                    <TableCell> Effective End Date </TableCell>
-                    <TableCell> Status </TableCell>
-                    <TableCell> Reason </TableCell>  
+                    <TableCell>Alternative Doc</TableCell>
+                    <TableCell>Start Date</TableCell>
+                    <TableCell>End Date</TableCell>
+                    <TableCell>Status</TableCell>
+                    <TableCell>Reason</TableCell>  
                     <TableCell> </TableCell>  
                     <TableCell> </TableCell>  
                    
@@ -250,61 +251,84 @@ export default class Credentails extends Component {
                 let alternativeDocPath =  (data.alternate_docs.length > 0)? (data.alternate_docs[0]["document_path"] != "" )? data.alternate_docs[0]["document_path"] : "none" : "none";
                  
                 return (
-                  <Fragment>
+                  <Fragment> 
                   <TableRow key={i} >
-                <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
+                <TableCell style={{width: "16%"}}>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
                 
                 <TableCell>{ (docpath !="none")? <a  href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> : "---" } </TableCell>
                 <TableCell> { (alternativeDocPath !="none")? <a  href="javascript:void(0);"  onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"}</TableCell>
 
                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
-                <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
-                <TableCell style ={{width: "120px" }}> {(data.docs.length > 0)?data.docs[0]["remarks"]: "" } {(data.alternate_docs.length > 0)?data.alternate_docs[0]["remarks"]: "" }</TableCell>
+                <TableCell> {(data.docs.length > 0)?Config.credetailStatus[data.docs[0]["verification_status"]]: "--" }</TableCell>
+                <TableCell style ={{width: "120px" }}>  {(data.alternate_docs.length > 0)?data.alternate_docs[0]["remarks"]: (data.docs.length > 0)?data.docs[0]["remarks"]: ""  }</TableCell>
                 <TableCell>
                               
                               <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/> </a> 
                             </TableCell> 
 
                             <TableCell>
-                            {(this.state.recordValue == i)? <i class="fa fa-minus-circle" aria-hidden="true" onClick = { () => {this.recordToBedisplayed(i)}} ></i> : <i class="fa fa-plus-circle" aria-hidden="true" onClick = { (e) => {this.recordToBedisplayed(i)} } ></i>  }
+                            
+                            {(data.old_credentials.length > 0)? (this.state.recordValue == i)? <i class="fa fa-minus-circle" aria-hidden="true" onClick = { (e) => { this.recordToBedisplayed(i)}} ></i> : <i class="fa fa-plus-circle" aria-hidden="true" onClick = { (e) => {this.recordToBedisplayed(i)} } ></i> : "" }
                                 
                                 </TableCell> 
               
               </TableRow>
-              { (this.state.recordValue  ==  i)? 
+              {/* { (this.state.recordValue  ==  i)? 
                                 <TableRow  >
                                 <TableCell colSpan={9}><span align="left" style={{ color:"blue"}}>Past Credentials</span></TableCell>
                                 </TableRow>
 
-                              : ""}
+                              : ""} */}
                           
                              { (this.state.recordValue  ==  i ) ?
                                   <Fragment>
+                                  <TableRow  style={{padding:"10px"}} >
+                                  <TableCell colSpan = {9}>
+                                  <Table className="listTable"  style={{"border-color":"#EAEAEA",
+                                     "border-style": "solid",
+                                     "border-width" : "thin"
+                                }} >
+                                 
+                                   
                                   { (data.old_credentials.length > 0)? data.old_credentials.map((olddata) =>{
                                       let docpath = (olddata.docs.length > 0)? olddata.docs[0]["document_path"]: "none";
                                       let alternativeDocPath =  (olddata.alternate_docs.length > 0)? (olddata.alternate_docs[0]["document_path"] != "" )? olddata.alternate_docs[0]["document_path"] : "none" : "none";
                                     return(
                                       <Fragment>
-                                      <TableRow key={i} >
-                                          <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
-                                          
-                                          <TableCell>{(docpath != "none")? <a href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"} </TableCell>
-                                          <TableCell> { (alternativeDocPath !="none")? <a  href="javascript:void(0);"  onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"}</TableCell>
-                                          <TableCell> {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
-                                          <TableCell> {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_end_date"]): "--" } </TableCell>
-                                          <TableCell> {(olddata.docs.length > 0)?olddata.docs[0]["verification_status"]: "--" }</TableCell>
-                                          <TableCell colSpan={3} style ={{width: "120px" }} > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
-                                      
-                                        </TableRow>
+                                  
+                                        <TableRow
+                                       
+                                        key={i} >
+                                            
+                                            <TableCell style={{width:"16%"}} > </TableCell>
+                                                
+                                                    <TableCell  style={{width:"6%", position:"relative",left: "-6px" }} >{(docpath != "none")? <a href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"} </TableCell>
+                                                    <TableCell style={{ width: "18%",
+                                                      position: "relative",
+                                                      left: "-5px",
+                                                  }}  > { (alternativeDocPath !="none")? <a  href="javascript:void(0);"  onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"}</TableCell>
+                                                    <TableCell 
+                                                      style ={{ position:"relative",left: "-4px"}}
+                                                    > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
+                                                    <TableCell  > {(olddata.docs.length > 0)? <span> { this.dateFormat(olddata.docs[0]["effective_end_date"]) }</span>: "--" } </TableCell>
+                                                    <TableCell> {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell>
+                                                    <TableCell style={{ width:"24%"}}> {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
+                                                    
+                                              </TableRow>
+                                        
+                                    
+                                       
                                       </Fragment>
                                     ) 
-                                  }): 
-                                  <TableRow  >
-                                  <TableCell colSpan={9}><center> No Records  </center></TableCell>
-                                  </TableRow>
+                                  }): ""
+                                  // <TableRow  >
+                                  // <TableCell colSpan={9}><center> No Records  </center></TableCell>
+                                  // </TableRow>
                                   }
-                                
+                                   </Table>
+                                   </TableCell>
+                                  </TableRow>
                                   </Fragment>
                                : "" } 
 

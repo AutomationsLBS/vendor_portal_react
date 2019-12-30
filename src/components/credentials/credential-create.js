@@ -54,6 +54,12 @@ export default class CredentailCreate extends Component{
           uploadFile_error :"",
           alterFilename_error:"",
           docTypes: {doc:"doc","docx":"docx",pdf:"pdf","jpg":"jpg","png":"png",gif:"gif",jpeg:"jpeg"},
+          upperLimit_error:"",
+          lowerLimit_error:"",
+          upperLimit:"",
+          lowerLimit:"",
+          vendoerType:"",
+          upperLimitRange_error:"",
           
         }
   	}
@@ -107,7 +113,7 @@ export default class CredentailCreate extends Component{
     }
 
     remarksOnChange = (e) =>{
-      console.log(e,"11122")
+      
       this.setState({[e.target.name] : e.target.value})
     }
 
@@ -122,6 +128,7 @@ export default class CredentailCreate extends Component{
       let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
       console.log(visitorType,"vistor")
       let  vendoerType  = (visitorType == "vendor")?  'vendor': 'vendor_agency' ;
+      this.setState({vendoerType});
     
       axios
       .get(axios.credential_types()+"?ctype="+vendoerType)
@@ -208,7 +215,7 @@ export default class CredentailCreate extends Component{
       if (this.state.file == ""){
         this.setState({uploadFile_error: "Please upload document"});
         statusFlag =  false;
-      } 
+      }
     }
     
     let  parseStartDate = Date.parse(this.state.effectiveStartDate);
@@ -220,12 +227,54 @@ export default class CredentailCreate extends Component{
     }
 
 
-    if (statusFlag === false){
+    if(this.state.vendoerType != "vendor"){
+      
+      if(this.state.lowerLimit == ""){
+        statusFlag  =  false;
+        this.setState({lowerLimit_error: true});
+        return false;
+
+     }else {
+        statusFlag  =  true;
+
+     }
+    
+      if(this.state.upperLimit ==""){
+         statusFlag  =  false;
+         this.setState({upperLimit_error: true});
+         return false;
+      }else {
+         statusFlag  =  true;
+      }
+
+
+      
+
+      let data  = ( this.state.upperLimit - this.state.lowerLimit);
+    
+      if(data > 0 ){
+       
+        statusFlag  =  true;
+        this.setState({upperLimit_error: false});
+        this.setState({upperLimitRange_error:false})
+      }else {
+        this.setState({upperLimit_error: true});
+        this.setState({upperLimitRange_error:true})
+        statusFlag  =  false;
+        return false;
+      }
+
+    }
+
+    
+    if (statusFlag == false){
+      console.log("your data","00090");
       return false;
+      
     }
 
 
-
+   
 
   
 
@@ -247,10 +296,15 @@ export default class CredentailCreate extends Component{
   const formData = new FormData();
   this.setState({loader:true})
   if(file){
-    console.log(file,"hifile");
+    
     formData.append('uploadDoc',file)
   }
-  
+
+  if(this.state.vendoerType != "vendor"){
+    formData.append('lower_limit',this.state.lowerLimit);
+    formData.append('upper_limit',this.state.upperLimit);
+  }
+
   formData.append('effective_start_date',startdate)
   formData.append('effective_end_date',endtdate)
   formData.append('vendor_id',vendorData["visitor"]['id'])
@@ -321,12 +375,29 @@ export default class CredentailCreate extends Component{
 });
 }
 
+
+handleChange = name => event => {
+ 
+
+  this.setState({
+      [name]: event.target.value,
+  });
+  if (name != '') {
+      let errName = name + '_error'
+      console.log("Handle change", event, name, errName);
+      this.setState({
+          [errName]: false,
+      });
+  }
+};
+
  
 
 	render() {
      let errorMessage = (this.state.credential_value_error == "")? false:  true  ;
      let  visitor_types   =  CommonService.localStore.get("visitor_types").visitor_types; 
-    let isDisplay  =  (visitor_types != "agency")?  "" : "none"
+    let isDisplay  =  (visitor_types != "agency")?  "" : "none";
+    let  statusOfVendort = ((this.state.vendoerType != "vendor")? "show"  : "none")
 
 		return (
       		<Fragment>
@@ -464,6 +535,56 @@ export default class CredentailCreate extends Component{
 
         					</Grid>
 
+
+
+                  <Grid item xs={12} sm={6} md={6} className="singleFormLeft"  
+                          style={{"marginTop": "0px", display: statusOfVendort }}>
+                             <TextField
+                                id="lowerLimit"
+                                style = {{width: "276px"}}
+                                label="Lower limit"
+                                className="formFont"
+                                value={this.state.lowerLimit}
+                                onChange={this.handleChange('lowerLimit')}
+                                margin="normal"
+                                maxLength="100"
+                                type ="number"
+                                error={this.state.lowerLimit_error}
+                            />
+                              
+                          
+                        <div>
+                        {(this.state.lowerLimit_error)? <FormHelperText style={{'color': '#f44336'}}> Lower Limit is required</FormHelperText>:""}
+                            
+                        </div> 
+
+
+                          </Grid>
+
+                   
+                          <Grid item xs={12} sm={6} md={6} style={{"marginTop": "0px", display: statusOfVendort }} >
+                          
+                          <TextField
+                                id="upperLimit"
+                                style = {{width: "276px"}}
+                                label="Upper limit"
+                                className="formFont"
+                                value={this.state.upperLimit}
+                                onChange={this.handleChange('upperLimit')}
+                                margin="normal"
+                                maxLength="100"
+                                type ="number"
+                                error={this.state.upperLimit_error}
+                            />
+                          
+                        <div>
+                        
+                            
+                            { (this.state.upperLimitRange_error !="")? <FormHelperText style={{'color': '#f44336'}}> Upper Limit is range is invalid</FormHelperText> : (this.state.upperLimit_error)? <FormHelperText style={{'color': '#f44336'}}> Upper Limit is required</FormHelperText>:""  }
+                        </div> 
+                          </Grid>
+
+
                    
                           <Grid item xs={12} sm={6} md={6} className="singleFormLeft"  
                           style={{"marginTop": "25px" ,display:isDisplay  }}>
@@ -510,7 +631,10 @@ export default class CredentailCreate extends Component{
                             
                           </Grid>
 
-                      
+                  
+
+
+                        
 
                     
 

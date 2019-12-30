@@ -38,6 +38,7 @@ export default class CommunityContractor extends Component {
       mycommunitys:"",
       open: false,
       requestedData: "",
+      requestedDataVendor:"",
     }
   }
   componentWillMount() {
@@ -92,7 +93,7 @@ requriedCredetailsData = (data)=>{
   .then((response) => {
       console.log("requested-my_credentials",response);
      // this.setState({requestedCredetials: response, loader: false});
-       this.setState({open:!this.state.open,  requestedData :response});
+       this.setState({open:!this.state.open,  requestedData :response.credentials});
       //this.setState({showButton : (response.credentials.old_credentials.length > 0)? true : false })
     
      // this.setState({myCredentails: response, loader: false});
@@ -144,8 +145,9 @@ requriedCredetailsData = (data)=>{
               <Requsetd  
            buttonTitle = {"testignore"}
            open = {this.state.open}
-           data  = {this.state.requestedData}
+           data  = {this.state.requestedDataVendor}
            onClose = { this.handleClose}
+           dataForVendor = {this.state.requestedData}
 
           
           />  

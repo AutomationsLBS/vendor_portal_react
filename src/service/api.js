@@ -169,6 +169,12 @@ axios.credential_details = () => {
   
 };
 
+axios.vendor_req_credentials = () => {
+  return Config.apiUrlData + Config.api.vendor_req_credentials.url;
+  
+};
+
+
 
 
 export default axios;

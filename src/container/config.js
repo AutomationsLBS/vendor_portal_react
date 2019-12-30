@@ -16,6 +16,14 @@ const BaseURL = () => {
     return apiUrl;
 }
 
+const  credetailStatus = ()=>{
+    return  {
+        "not_verified":"Submitted" ,
+         "in_progress":"In-progress",
+         "verified": "Verified", 
+         "rejected":"Rejected",
+    }
+}
 const ApiUrls = ()=>{
    // let url = window.location.href;
     //let apiUrl = "https://accupass-api-dev.herokuapp.com";
@@ -61,6 +69,7 @@ const Config = {
     "chargebeeurl":chargebeeurl(),
     "usertype" : getUserType(),
     "filesize": uploadFileSize(),
+    "credetailStatus":credetailStatus(),
    
     "mainnav": [
         
@@ -169,7 +178,10 @@ const Config = {
         
             'url': '/api/v2/vendors/credential_details', 'type': 'get', 'isToken': true
         },
-
+        "vendor_req_credentials":{
+        
+            'url': '/api/v2/vendors/vendor_req_credentials', 'type': 'get', 'isToken': true
+        },
 
         
         
