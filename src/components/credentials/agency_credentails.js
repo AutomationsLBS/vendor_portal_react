@@ -275,7 +275,7 @@ export default class AgCredentails extends Component {
           
                           
                           
-                          { (this.state.recordValue  ==  i ) ?
+                          { ((this.state.recordValue  ==  i ) && (data.old_credentials.length > 0)) ?
                                   <Fragment>
                                   <TableRow  style={{padding:"10px",boder:"solid"}} >
                                   <TableCell colSpan = {8}>
@@ -291,7 +291,7 @@ export default class AgCredentails extends Component {
                                     return(
                                       <Fragment>
                                   
-                                        <TableRow
+                                        <TableRow 
                                        
                                         key={i} 
                                         style={{"border-color":"#EAEAEA",
@@ -320,9 +320,7 @@ export default class AgCredentails extends Component {
                                       </Fragment>
                                     ) 
                                   }): 
-                                  <TableRow  >
-                                  <TableCell colSpan={9}><center> No Records  </center></TableCell>
-                                  </TableRow>
+                                   ""
                                   }
                                    </Table>
                                    </TableCell>
@@ -337,12 +335,12 @@ export default class AgCredentails extends Component {
                           })
                           : 
                           <TableRow >
-                          <TableCell colSpan={6}> <center>No Records</center> </TableCell>
+                          <TableCell colSpan={8}> <center>No Records</center> </TableCell>
                           </TableRow> 
                             :
                             
                             <TableRow >
-                            <TableCell colSpan={6}> <center>No Records</center> </TableCell>
+                            <TableCell colSpan={8}> <center>No Records</center> </TableCell>
                             </TableRow>
                             
                             }

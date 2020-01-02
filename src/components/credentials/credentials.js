@@ -281,7 +281,7 @@ export default class Credentails extends Component {
 
                               : ""} */}
                           
-                             { (this.state.recordValue  ==  i ) ?
+                             { ((this.state.recordValue  ==  i ) && (data.old_credentials.length > 0) ) ?
                                   <Fragment>
                                   <TableRow  style={{padding:"10px"}} >
                                   <TableCell colSpan = {9}>
@@ -338,11 +338,11 @@ export default class Credentails extends Component {
               })
               :  
               <TableRow >
-              <TableCell colSpan={7}> <center>No Records</center> </TableCell>
+              <TableCell colSpan={9}> <center>No Records</center> </TableCell>
               </TableRow> 
                 : 
                 <TableRow >
-                <TableCell colSpan={7}> <center>No Records</center> </TableCell>
+                <TableCell colSpan={9}> <center>No Records</center> </TableCell>
                 </TableRow>}
 
 

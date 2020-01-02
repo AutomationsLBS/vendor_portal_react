@@ -200,7 +200,8 @@ render(){
           }
                     
               <Grid item sm={6}>
-              <div className="requredcredentilas"> <b> Vendor Required Credentials</b>  </div>
+              {(this.state.vendoerType != "vendor")? <div className="requredcredentilas"> <b> Vendor Required Credentials</b>  </div> : ""}
+              
              
               
               {  (this.props.dataForVendor.length >0 )?

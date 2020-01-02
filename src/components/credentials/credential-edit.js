@@ -72,9 +72,12 @@ export default class CredentailEdit extends Component{
 
 handleChange = name => event => {
  
+  const onlyNums = event.target.value;
 
-  this.setState({
-      [name]: event.target.value,
+  
+  //console.log(name,onlyNums,"jkerr123lllr");
+    this.setState({
+      [name]: onlyNums.replace(/[^0-9\.]+/g, ''),
   });
   if (name != '') {
       let errName = name + '_error'

@@ -377,11 +377,19 @@ export default class CredentailCreate extends Component{
 
 
 handleChange = name => event => {
- 
 
-  this.setState({
-      [name]: event.target.value,
-  });
+ 
+  const onlyNums = event.target.value;
+
+  
+      //console.log(name,onlyNums,"jkerr123lllr");
+        this.setState({
+          [name]: onlyNums.replace(/[^0-9\.]+/g, ''),
+      });
+     console.log(this.state.lowerLimit,"testtt,,,,");
+  
+
+  
   if (name != '') {
       let errName = name + '_error'
       console.log("Handle change", event, name, errName);
@@ -391,7 +399,7 @@ handleChange = name => event => {
   }
 };
 
- 
+
 
 	render() {
      let errorMessage = (this.state.credential_value_error == "")? false:  true  ;
@@ -548,8 +556,9 @@ handleChange = name => event => {
                                 onChange={this.handleChange('lowerLimit')}
                                 margin="normal"
                                 maxLength="100"
-                                type ="number"
+                                type ="text"
                                 error={this.state.lowerLimit_error}
+                                
                             />
                               
                           
@@ -574,6 +583,7 @@ handleChange = name => event => {
                                 margin="normal"
                                 maxLength="100"
                                 type ="number"
+                                pattern="[0-9]{10}"
                                 error={this.state.upperLimit_error}
                             />
                           

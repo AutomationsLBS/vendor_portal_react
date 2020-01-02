@@ -34,8 +34,10 @@ ReactDOM.render(
     <Provider store={store}>
         <MuiThemeProvider theme={theme}>
 			      
-
+            <HttpsRedirect>
             <App />
+            </HttpsRedirect>
+            
             
               
 			
