@@ -58,9 +58,9 @@ export default class Approute extends Component {
         console.log("Location---------", window.location.pathname);
 
         Config.mainnav.map((n, i) => {
-            alert(n.name+" "+window.location.pathname)
+           // alert(n.name+" "+window.location.pathname)
             if (n.link == window.location.pathname && n.isLogin == true) {
-                alert(n.name)
+                
                 this.isRoute = true;
                 return false;
             }

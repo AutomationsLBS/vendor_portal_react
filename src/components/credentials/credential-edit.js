@@ -64,7 +64,9 @@ export default class CredentailEdit extends Component{
           vendoerType:"",
           upperLimitRange_error:"",
 
-          
+
+
+    
         }
     }
     
@@ -144,7 +146,8 @@ handleChange = name => event => {
 
           this.setState({ loader: false
           ,credential_value: response.credential_data.credentialdata.credential_type_id ,
-         
+          upperLimit:response.credential_data.credentialdata.upper_limit,
+          lowerLimit:response.credential_data.credentialdata.lower_limit,
           effectiveStartDate : (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)?this.getDateformat(response.credential_data.docs.effective_start_date) : "":"", 
 
         //  effectiveEndDate: (response.credential_data.hasOwnProperty('doc'))? (response.credential_data.docs != null )? this.getDateformat(response.credential_data.docs.effective_end_date) : "":"",
@@ -867,10 +870,11 @@ handleChange = name => event => {
                                   type="file"
                                   style={{"display":"none"}}
                                   onChange = { this.fileUpload2}
+                                  disabled ={statusOfButton }
 
                                 />
                                 <label htmlFor="contained-button-file1" style={{ position: "relative",top: "12px" ,display:buttonHideOrNot}} >
-                                  <Button variant="contained" component="span" disabled ={statusOfButton } >
+                                  <Button variant="contained" component="span" disabled ={statusOfButton }>
                                     Upload
                                   </Button>
                                 </label>

@@ -41,7 +41,7 @@ export default class CredentailCreate extends Component{
       		effectiveEndDate:new Date(),
       		textarea:"",
           remarks : "",
-          credential_types:"",
+          credential_types:[],
           loader:true,
           credential_value:"",
           uploadFile:"",
@@ -406,6 +406,12 @@ handleChange = name => event => {
      let  visitor_types   =  CommonService.localStore.get("visitor_types").visitor_types; 
     let isDisplay  =  (visitor_types != "agency")?  "" : "none";
     let  statusOfVendort = ((this.state.vendoerType != "vendor")? "show"  : "none")
+    let credentialnote =   this.state.credential_types.filter((data)=> data.id == this.state.credential_value);
+    if (credentialnote.length > 0){
+      console.log(credentialnote[0]["notes"],"909");
+    }
+    
+    
 
 		return (
       		<Fragment>
@@ -658,7 +664,9 @@ handleChange = name => event => {
                      : true}
                     placeholder=" Remarks" />   
                   </Grid>
-        					
+                  <Grid item xs={12} sm={12} md={12} className="singleFormRight" style={{marginTop:"7px"}}>
+                  <FormHelperText style={{'color': 'black',top: "0px",position:"relative" }}> { (credentialnote.length > 0) ? "Note: "+ (credentialnote[0]["notes"] !=null)?credentialnote[0]["notes"]:"" : "No notes" }</FormHelperText> 
+                  </Grid>
         					<Grid item xs={12} sm={6} md={6} justify="center" style={{marginTop:"25px"}} >
             				<Button variant="contained" color="primary" onClick = {this.onSubmit}
             					style={{backgroundColor:"#47b16f"}} 
