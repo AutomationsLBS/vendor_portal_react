@@ -250,13 +250,15 @@ export default class AgCredentails extends Component {
                           {(this.state.myCredentails)? (this.state.myCredentails.credentials.length  > 0) ?
                           this.state.myCredentails.credentials.map((data,i)=>{
                               
-                            let docpath = (data.docs.length > 0)? data.docs[0]["document_path"]: "none"
+                            let docpath = (data.docs.length > 0)? data.docs[0]["document_path"]: "none";
+                            let trimedData  = docpath.replace(/%20/g, "");
+                            let docname = trimedData.split('/').splice(-1,1);
                            
                             return (<Fragment>
                               <TableRow key={i} >
                                 <TableCell style={{width: "30%"}}>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
                                 
-                                <TableCell>{(docpath != "none")? <a href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"} </TableCell>
+                                <TableCell style={{width: "30%"}} >{(docpath != "none")? <a href="javascript:void(0);" style={{"text-decoration":"none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }  > { docname } </a> :"--"} </TableCell>
 
                                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
@@ -287,6 +289,9 @@ export default class AgCredentails extends Component {
                                    
                                   { (data.old_credentials.length > 0)? data.old_credentials.map((olddata) =>{
                                       let docpath = (olddata.docs.length > 0)? olddata.docs[0]["document_path"]: "none";
+                                      let trimedData  = docpath.replace(/%20/g, "");
+                                      let docname = trimedData.split('/').splice(-1,1);
+                                     
                                     //  let alternativeDocPath =  (olddata.alternate_docs.length > 0)? (olddata.alternate_docs[0]["document_path"] != "" )? olddata.alternate_docs[0]["document_path"] : "none" : "none";
                                     return(
                                       <Fragment>
@@ -301,11 +306,9 @@ export default class AgCredentails extends Component {
                                         
                                         >
                                             
-                                                <TableCell style={{width:"30%"}} > </TableCell>
+                                                <TableCell style={{width:"40%"}} > </TableCell>
                                                 
-                                                    <TableCell style={{width:"6%"}} >{(docpath != "none")? <a href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black",
-                                                   
-                                                  }} > </i></a> :"--"} </TableCell>
+                                                    <TableCell style={{width:"42%"}} >{(docpath != "none" && docpath != undefined )? <a href="javascript:void(0);" style={{"text-decoration": "none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }   ><span style={{ "word-break":"break-word" }} > { docname } </span> </a> :"--"} </TableCell>
                                                    
     
                                                     <TableCell > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>

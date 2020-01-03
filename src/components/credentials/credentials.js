@@ -132,7 +132,7 @@ export default class Credentails extends Component {
     var dateformat = new Date(fdate)
     var emonth = (dateformat.getMonth() + 1);
     var eday = (dateformat.getDate());
-    var eyear = (dateformat.getFullYear() - 1);
+    var eyear = (dateformat.getFullYear() );
     var endtdate = emonth +"/"+ eday + "/" +eyear;
     return endtdate
   }
@@ -248,20 +248,34 @@ export default class Credentails extends Component {
               this.state.myCredentails.credentials.map((data,i)=>{
                   
                 let docpath = (data.docs.length > 0)? (data.docs[0]["document_path"] != "")? data.docs[0]["document_path"] : "none": "none"
+                let trimedData  = docpath.replace(/%20/g, "");
+                let docname = trimedData.split('/').splice(-1,1);
                 let alternativeDocPath =  (data.alternate_docs.length > 0)? (data.alternate_docs[0]["document_path"] != "" )? data.alternate_docs[0]["document_path"] : "none" : "none";
-                 
+                let trimedAlternavieData  = alternativeDocPath.replace(/%20/g, "");
+                let altername = trimedAlternavieData.split('/').splice(-1,1);
                 return (
                   <Fragment> 
                   <TableRow key={i} >
-                <TableCell style={{width: "16%"}}>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
+                <TableCell >  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
                 
-                <TableCell>{ (docpath !="none")? <a  href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> : "---" } </TableCell>
-                <TableCell> { (alternativeDocPath !="none")? <a  href="javascript:void(0);"  onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"}</TableCell>
+                <TableCell style={{
+                                                          "text-decoration": "none",
+                                                          "word-break": "break-word",
+                                                           "width" :"108px"
+                                                    }} >{ (docpath !="none")? <a  href="javascript:void(0);" style={{"text-decoration": "none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }  > {docname}</a> : "---" } </TableCell>
+                <TableCell 
+                
+                style={{
+                  "text-decoration": "none",
+                  "word-break": "break-word",
+                   "width" :"131px"
+            }}
+                > { (alternativeDocPath !="none")? <a  href="javascript:void(0);"  style={{"text-decoration": "none"}}  onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > {altername}</a> :"--"}</TableCell>
 
                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
                 <TableCell> {(data.docs.length > 0)?Config.credetailStatus[data.docs[0]["verification_status"]]: "--" }</TableCell>
-                <TableCell style ={{width: "120px" }}>  {(data.alternate_docs.length > 0)?data.alternate_docs[0]["remarks"]: (data.docs.length > 0)?data.docs[0]["remarks"]: ""  }</TableCell>
+                <TableCell >  {(data.alternate_docs.length > 0)?data.alternate_docs[0]["remarks"]: (data.docs.length > 0)?data.docs[0]["remarks"]: ""  }</TableCell>
                 <TableCell>
                               
                               <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/> </a> 
@@ -293,7 +307,11 @@ export default class Credentails extends Component {
                                    
                                   { (data.old_credentials.length > 0)? data.old_credentials.map((olddata) =>{
                                       let docpath = (olddata.docs.length > 0)? olddata.docs[0]["document_path"]: "none";
+                                      let trimedData  = docpath.replace(/%20/g, "");
+                                      let docname = trimedData.split('/').splice(-1,1);
                                       let alternativeDocPath =  (olddata.alternate_docs.length > 0)? (olddata.alternate_docs[0]["document_path"] != "" )? olddata.alternate_docs[0]["document_path"] : "none" : "none";
+                                      let trimedAlternavieData  = alternativeDocPath.replace(/%20/g, "");
+                                      let altername = trimedAlternavieData.split('/').splice(-1,1);
                                     return(
                                       <Fragment>
                                   
@@ -301,19 +319,27 @@ export default class Credentails extends Component {
                                        
                                         key={i} >
                                             
-                                            <TableCell style={{width:"16%"}} > </TableCell>
-                                                
-                                                    <TableCell  style={{width:"6%", position:"relative",left: "-6px" }} >{(docpath != "none")? <a href="javascript:void(0);" onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"} </TableCell>
-                                                    <TableCell style={{ width: "18%",
-                                                      position: "relative",
-                                                      left: "-5px",
-                                                  }}  > { (alternativeDocPath !="none")? <a  href="javascript:void(0);"  onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> :"--"}</TableCell>
+                                            <TableCell style={{
+                                                  width: "16%"
+                                            }} > </TableCell>
+                                                 
+                                                    <TableCell style={{
+                                                          "text-decoration": "none",
+                                                          "word-break": "break-word",
+                                                           "width" :"108px"
+                                                    }}  >{(docpath != "none")? <a href="javascript:void(0);" style={{"text-decoration": "none"}}  onClick = {(e) =>this.handleClickOpen(docpath)  }  > {docname}</a> :"--"} 
+                                                    </TableCell>
                                                     <TableCell 
-                                                      style ={{ position:"relative",left: "-4px"}}
-                                                    > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
-                                                    <TableCell  > {(olddata.docs.length > 0)? <span> { this.dateFormat(olddata.docs[0]["effective_end_date"]) }</span>: "--" } </TableCell>
-                                                    <TableCell> {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell>
-                                                    <TableCell style={{ width:"24%"}}> {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
+                                                     style={{
+                                                      "text-decoration": "none",
+                                                      "word-break": "break-word",
+                                                      "width": "131px"
+                                                    }}
+                                                      > { (alternativeDocPath !="none")? <a  href="javascript:void(0);" style={{"text-decoration": "none"}}   onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > { altername}</a> :"--"}</TableCell>
+                                                    <TableCell style={{"width": "10%"}} > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
+                                                    <TableCell style={{"width": "11%"}} > {(olddata.docs.length > 0)? <span> { this.dateFormat(olddata.docs[0]["effective_end_date"]) }</span>: "--" } </TableCell>
+                                                    <TableCell style={{"width": "10%"}}> {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell>
+                                                    <TableCell > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
                                                     
                                               </TableRow>
                                         
