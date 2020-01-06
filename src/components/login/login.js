@@ -44,7 +44,7 @@ export default class Login extends Component {
                 .post(axios.login(), data)
 
                 .then((response) => {
-             
+                     
                     CommonService.localStore.set("companystatus", 0);   
                 CommonService.localStore.set("phone_mobile_user", data.phone_mobile); 
 
@@ -67,9 +67,10 @@ export default class Login extends Component {
                         CommonService.localStore.set("usr_company_id", JSON.stringify(response.vendor_companies[0]["id"]));   
                         CommonService.localStore.set("usr_company_name", response.vendor_companies[0]["name"]);   
                     }
-                     
+                 
                  if (response.visitor_type == "vendor"){
                     window.location.href = "/communityc";
+                    CommonService.localStore.set("logourl", "/communityc"); 
 
                   }else{
                            
@@ -77,13 +78,16 @@ export default class Login extends Component {
                                 if (response.vendor_companies.length > 1){
 
                                     window.location.href = "/companies";
+                                    CommonService.localStore.set("logourl", "/companies"); 
                                     CommonService.localStore.set("companystatus", 1);   
                                 }else{
+                                    CommonService.localStore.set("logourl", "/communityv");
                                     window.location.href = "/communityv";
                                 }
                                 
 
                             } else {
+                                CommonService.localStore.set("logourl", "/communityv");
                                 window.location.href = "/communityv";
                             }
                             

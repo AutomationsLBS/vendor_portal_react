@@ -227,7 +227,10 @@ export default class CredentailCreate extends Component{
       this.setState({startDateError_error: "Invalid date range"});
       statusFlag =  false;
     }
-
+    
+    if (statusFlag == false){
+      return false;
+    }
 
     if(this.state.vendoerType != "vendor"){
       
@@ -419,12 +422,12 @@ handleChange = name => event => {
       }
     };
 
-    const  lowerLimitTooltip  = "If Applicable,Please enter the lower limit of the credentials Ex. For liability insurance your lower limit is 500,000 Please enter 500,000";
-    const  upperLimitTooltip  = "If Applicable,Please enter the upper limit of the credentials Ex. For liability insurance your upper limit is 2,000,000 Please enter 2,000,000";
+    const  lowerLimitTooltip  = "If Applicable, Please enter the lower limit of the credentials Ex. For liability insurance your lower limit is 500,000 Please enter 500,000";
+    const  upperLimitTooltip  = "If Applicable, Please enter the upper limit of the credentials Ex. For liability insurance your upper limit is 2,000,000 Please enter 2,000,000";
     const  EffectiveStartDateTooltip = "Please enter the start date of the selected credentials";
     const  EffectiveEndDateTooltip = "Please enter the end date of the selected credentials";
     const uploadButton = "Upload the document by clicking the UPLOAD button ";
-    const alternativeDoc = "if a supporting document or alternative document is available,please Select 'Yes' and upload the document";
+    const alternativeDoc = "if a supporting document or alternative document is available, please Select 'Yes' and upload the document";
 
 
 		return (
@@ -482,7 +485,7 @@ handleChange = name => event => {
         onChange = { this.onChangedata}
       />
       <label htmlFor="contained-button-file">
-      <Tooltip title = { uploadButton} >
+      <Tooltip title = { uploadButton} style={{color:"red"}} >
        
       <Button variant="contained" component="span" style={{ position: "relative",top: "19px"}} >
           Upload

@@ -87,12 +87,12 @@ class Appheader extends Component {
   }
   goToHome = () => {
     let userData = CommonService.getToken();
-
-    if(userData != null) {
-      window.location.href = '/';
-    }else{
-      window.location.href = '/';
-    }
+    window.location.href = CommonService.localStore.get("logourl").logourl;
+    // if(userData != null) {
+    //   window.location.href = '/';
+    // }else{
+    //   window.location.href = '/';
+    // }
     // window.location.href = "/";
   }
 

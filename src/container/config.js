@@ -90,7 +90,7 @@ const Config = {
 
         { name: "Settings", link: "#", icon: "settings-icon.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false, buttonClass :"dropdown-btn", childClass :"settings", usertype:"admin"},
         { name: "Payment Settings", link: "/mypayments", icon: "payment-icon-1.png", isLogin:true,template:"user", isDisplay:true, isSubNav : true, buttonClass :"settings" ,usertype:  "admin"},
-        { name: "Add Admin", link: "/addAdmin", icon: "admin-icon.png", isLogin:true,template:"user", isDisplay:true, isSubNav : true, buttonClass :"settings" ,usertype: 'agency'},
+     //   { name: "Add Admin", link: "/addAdmin", icon: "admin-icon.png", isLogin:true,template:"user", isDisplay:true, isSubNav : true, buttonClass :"settings" ,usertype: 'agency'},
         { name: changeTabName , link: "/updatenewpin", icon: "changepassword-icon.png", isLogin:true,template:"user", isDisplay:true, isSubNav : true, buttonClass :"settings",usertype: 'agency_vendor'},
       //  { name: "Update Profile", link: "/updateProfile", icon: "admin-icon.png", isLogin:true,template:"user", isDisplay:true, isSubNav : true, buttonClass :"settings",usertype: 'agency_vendor'},
       //  { name: "Update Details", link: "/updateDetails", icon: "update-white.png", isLogin:true,template:"user", isDisplay:true, isSubNav : true, buttonClass :"settings" ,usertype: 'vendor' },

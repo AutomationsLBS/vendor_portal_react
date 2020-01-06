@@ -78,7 +78,7 @@ export default class Approute extends Component {
                         <div className="bodySection">
                         <Switch>
                         <Router>
-                        <Route path="/" component={Companys} />
+                       
                             <Route path="/communityc" component={Contractor} />
                             <Route path="/communityv" component={Vendor} />
                             <Route path="/account" component={Account} />

@@ -142,7 +142,7 @@ handleChange = name => event => {
       })
       .then((response) => {
 
-           console.log(response,"checkdata...")
+          
           
 
           this.setState({ loader: false
@@ -156,7 +156,7 @@ handleChange = name => event => {
 
           remarks: (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)? response.credential_data.docs.remarks : "":"",
           fileName: (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)? response.credential_data.docs.document_path : "":"",
-         // alterFilename:  (response.credential_data.hasOwnProperty('alternate_docs'))? response.credential_data.alternate_docs[0]["document_path"] : "",
+          alterFilename:  (response.credential_data.hasOwnProperty('alternate_docs'))? (response.credential_data.alternate_docs.length >0)?response.credential_data.alternate_docs[0]["document_path"] :"" : "",
           recordId: response.credential_data.credentialdata.id,
           altfile:  (response.credential_data.hasOwnProperty('alternate_docs'))? (response.credential_data.alternate_docs.length > 0)? "yes":"no"  : "no",
           verificationStatus: (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)? response.credential_data.docs.verification_status : "":"",
@@ -219,6 +219,7 @@ handleChange = name => event => {
 
   
   	componentDidMount() {
+      console.log(this.state,"statecheck")
       let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
       console.log(visitorType,"vistor")
       let  vendoerType  = (visitorType == "vendor")?  'vendor': 'vendor_agency' ;
@@ -592,14 +593,16 @@ handleChange = name => event => {
   
     }
     let  filenameAlter = "";
-    console.log(this.state.alterFilename,"opooo");
+    console.log(this.state.alterFilename,"opooo11");
      if (this.state.alterFilename != null && this.state.alterFilename != undefined ){
       let data = this.state.alterFilename.replace(/%20/g, "")
 
       let fileSplit =   data.split("/");
-  
+      
       let filenames =fileSplit.length -1;
-       filenameAlter = fileSplit[filenames]
+      let filename91 = fileSplit[filenames]
+      
+       filenameAlter = filename91;
   
     }
    
@@ -615,12 +618,12 @@ handleChange = name => event => {
 
     let  statusOfVendort = ((this.state.vendoerType != "vendor")? "show"  : "none")
 
-    const  lowerLimitTooltip  = "If Applicable,Please enter the lower limit of the credentials Ex. For liability insurance your lower limit is 500,000 Please enter 500,000";
-    const  upperLimitTooltip  = "If Applicable,Please enter the upper limit of the credentials Ex. For liability insurance your upper limit is 2,000,000 Please enter 2,000,000";
+    const  lowerLimitTooltip  = "If Applicable, Please enter the lower limit of the credentials Ex. For liability insurance your lower limit is 500,000 Please enter 500,000";
+    const  upperLimitTooltip  = "If Applicable, Please enter the upper limit of the credentials Ex. For liability insurance your upper limit is 2,000,000 Please enter 2,000,000";
     const  EffectiveStartDateTooltip = "Please enter the start date of the selected credentials";
     const  EffectiveEndDateTooltip = "Please enter the end date of the selected credentials";
     const uploadButton = "Upload the document by clicking the UPLOAD button ";
-    const alternativeDoc = "if a supporting document or alternative document is available,please Select 'Yes' and upload the document";
+    const alternativeDoc = "if a supporting document or alternative document is available, please Select 'Yes' and upload the document";
 
 
 
@@ -691,7 +694,7 @@ handleChange = name => event => {
         onChange = { this.onChangedata}
       />
       <label htmlFor="contained-button-file" style={{display:buttonHideOrNot }}>
-      <Tooltip title = { uploadButton} >
+      <Tooltip title = { uploadButton}  >
         <Button variant="contained" component="span" style={{ position: "relative",top: "12px"}} disabled ={statusOfButton } >
           Upload
         </Button>

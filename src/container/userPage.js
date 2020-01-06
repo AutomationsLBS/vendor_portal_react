@@ -58,6 +58,7 @@ import EmployeeBasedCommunity from "../components/employees/employeeBasedCommuni
 import UpdateProfile from "../components/updateNewpin/updateProfile";
 import EmployeeEdit from "../components/employees/editEmployee";
 import ForgotPassword from  "../components/forgotpassword/forgotpassword";
+import {Redirect} from 'react-router-dom';
 
 import CompanysList from  "../components/companysList/index";
 
@@ -76,6 +77,9 @@ const styles = theme => ({
 class userPage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      redirectUrl:false,
+    }
   };
   loadComponent = () => {
     const path = this.props.location.pathname;
@@ -302,12 +306,23 @@ class userPage extends Component {
       );
     }
 
+    else{
+      // window.location.href = CommonService.localStore.get("logourl").logourl;
+      this.setState({redirectUrl: true})
+    }
+
+    
+     
    
     
   }
 
 
   render() {
+
+    if (this.state.redirectUrl) {
+      return(<Redirect to={CommonService.localStore.get("logourl").logourl} />)
+    }
     return (
       <div>
         <Header {...this.props} />

@@ -275,7 +275,7 @@ export default class Credentails extends Component {
                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
                 <TableCell> {(data.docs.length > 0)?Config.credetailStatus[data.docs[0]["verification_status"]]: "--" }</TableCell>
-                <TableCell >  {(data.alternate_docs.length > 0)?data.alternate_docs[0]["remarks"]: (data.docs.length > 0)?data.docs[0]["remarks"]: ""  }</TableCell>
+                <TableCell >  { (data.alternate_docs.length > 0)? data.alternate_docs[0]["remarks"]  : data.docs[0]["remarks"]} </TableCell>
                 <TableCell>
                               
                               <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/> </a> 
