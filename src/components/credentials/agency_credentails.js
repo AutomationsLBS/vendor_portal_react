@@ -258,7 +258,13 @@ export default class AgCredentails extends Component {
                               <TableRow key={i} >
                                 <TableCell style={{width: "30%"}}>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
                                 
-                                <TableCell style={{width: "30%"}} >{(docpath != "none")? <a href="javascript:void(0);" style={{"text-decoration":"none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }  > { docname } </a> :"--"} </TableCell>
+                                <TableCell style={{
+                                                      "text-decoration": "none",
+                                                      "word-break": "break-word",
+                                                      "width": "131px"
+                                                    }}
+                                
+                                >{(docpath != "none")? <a href="javascript:void(0);" style={{"text-decoration":"none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }  > { docname } </a> :"--"} </TableCell>
 
                                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
@@ -306,9 +312,16 @@ export default class AgCredentails extends Component {
                                         
                                         >
                                             
-                                                <TableCell style={{width:"40%"}} > </TableCell>
+                                                <TableCell width="30%"> </TableCell>
                                                 
-                                                    <TableCell style={{width:"42%"}} >{(docpath != "none" && docpath != undefined )? <a href="javascript:void(0);" style={{"text-decoration": "none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }   ><span style={{ "word-break":"break-word" }} > { docname } </span> </a> :"--"} </TableCell>
+                                                    <TableCell 
+                                                    
+                                                    style={{
+                                                      "text-decoration": "none",
+                                                      "word-break": "break-word",
+                                                      "width": "131px"
+                                                    }}
+                                                    >{(docpath != "none" && docpath != undefined )? <a href="javascript:void(0);" style={{"text-decoration": "none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }   ><span style={{ "word-break":"break-word" }} > { docname } </span> </a> :"--"} </TableCell>
                                                    
     
                                                     <TableCell > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>

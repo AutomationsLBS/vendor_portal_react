@@ -24,6 +24,8 @@ import Config from '../../container/config';
 import DateFnsUtils from '@date-io/date-fns';
 import { ToastContainer, toast } from 'react-toastify';
 import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
+import TooltipOwn from  "../_/Tooltip";
+import Tooltip from '@material-ui/core/Tooltip';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
@@ -410,8 +412,20 @@ handleChange = name => event => {
     if (credentialnote.length > 0){
       console.log(credentialnote[0]["notes"],"909");
     }
-    
-    
+    const styles = {
+      tooltip: {
+        color: "lightblue",
+        backgroundColor: "green"
+      }
+    };
+
+    const  lowerLimitTooltip  = "If Applicable,Please enter the lower limit of the credentials Ex. For liability insurance your lower limit is 500,000 Please enter 500,000";
+    const  upperLimitTooltip  = "If Applicable,Please enter the upper limit of the credentials Ex. For liability insurance your upper limit is 2,000,000 Please enter 2,000,000";
+    const  EffectiveStartDateTooltip = "Please enter the start date of the selected credentials";
+    const  EffectiveEndDateTooltip = "Please enter the end date of the selected credentials";
+    const uploadButton = "Upload the document by clicking the UPLOAD button ";
+    const alternativeDoc = "if a supporting document or alternative document is available,please Select 'Yes' and upload the document";
+
 
 		return (
       		<Fragment>
@@ -419,7 +433,10 @@ handleChange = name => event => {
 				        <Grid item>
 				          <h2>
             				<Typography className="pageTitle titleSection" variant="title" gutterBottom>
-             					Add Credential 
+                   
+                    Add Credential 
+                  
+             					
            					</Typography>
          					</h2>
                    {CommonService.renderLoader(this.state.loader)}
@@ -465,9 +482,13 @@ handleChange = name => event => {
         onChange = { this.onChangedata}
       />
       <label htmlFor="contained-button-file">
-        <Button variant="contained" component="span" style={{ position: "relative",top: "19px"}} >
+      <Tooltip title = { uploadButton} >
+       
+      <Button variant="contained" component="span" style={{ position: "relative",top: "19px"}} >
           Upload
         </Button>
+       </Tooltip>
+      
       </label>
       <span style={{ position: "relative",
     top: "29px",
@@ -496,7 +517,8 @@ handleChange = name => event => {
                       <KeyboardDatePicker disableToolbar  variant="inline"
             					format ="MM/dd/yyyy" margin="normal"  value ={this.state.effectiveStartDate} id="date-picker-inline"  onChange={this.startDateChange}
                               KeyboardButtonProps={{'aria-label': 'change date', }} style={ {marginTop:"0px"}}  /> */ }
-
+                         <Tooltip title = { EffectiveStartDateTooltip} >
+                         
                         <KeyboardDatePicker
                                   disableToolbar
                                   variant="inline"
@@ -510,6 +532,7 @@ handleChange = name => event => {
                                     'aria-label': 'change date',
                                   }}
                            />
+                        </Tooltip>
                      
                      {(this.state.startDateError_error != null) 
                             ? <FormHelperText style={{'color': '#f44336',top: "0px",position:"relative" }}> { this.state.startDateError_error }</FormHelperText>
@@ -524,8 +547,8 @@ handleChange = name => event => {
             					format="MM/dd/yyyy" margin="normal" id="date-picker-inline"  value={this.state.effectiveEndDate} KeyboardButtonProps={{'aria-label': 'change date', }} 
                       style={{ marginTop:"0px"}}
                                 onChange={this.endDateChange} */ }
-
-
+                               <Tooltip title = { EffectiveEndDateTooltip} >
+                               
                                 <KeyboardDatePicker
                                   disableToolbar
                                   variant="inline"
@@ -540,6 +563,8 @@ handleChange = name => event => {
                                   }}
                                 
                                 />
+                                </Tooltip>
+
 
 
 {(this.state.startDateError_error != null) 
@@ -553,6 +578,7 @@ handleChange = name => event => {
 
                   <Grid item xs={12} sm={6} md={6} className="singleFormLeft"  
                           style={{"marginTop": "0px", display: statusOfVendort }}>
+                          <Tooltip title = { lowerLimitTooltip} >
                              <TextField
                                 id="lowerLimit"
                                 style = {{width: "276px"}}
@@ -566,7 +592,7 @@ handleChange = name => event => {
                                 error={this.state.lowerLimit_error}
                                 
                             />
-                              
+                              </Tooltip>
                           
                         <div>
                         {(this.state.lowerLimit_error)? <FormHelperText style={{'color': '#f44336'}}> Lower Limit is required</FormHelperText>:""}
@@ -578,7 +604,7 @@ handleChange = name => event => {
 
                    
                           <Grid item xs={12} sm={6} md={6} style={{"marginTop": "0px", display: statusOfVendort }} >
-                          
+                          <Tooltip  title={upperLimitTooltip}  >
                           <TextField
                                 id="upperLimit"
                                 style = {{width: "276px"}}
@@ -592,6 +618,9 @@ handleChange = name => event => {
                                 pattern="[0-9]{10}"
                                 error={this.state.upperLimit_error}
                             />
+
+                            </Tooltip>
+
                           
                         <div>
                         
@@ -605,6 +634,7 @@ handleChange = name => event => {
                           <Grid item xs={12} sm={6} md={6} className="singleFormLeft"  
                           style={{"marginTop": "25px" ,display:isDisplay  }}>
                               <FormHelperText > Alternative Doc</FormHelperText>
+                            <Tooltip title ={ alternativeDoc} >
                               
                             <RadioGroup aria-label="position" name="position" 
                               value={this.state.altfile} onChange={this.radioButton} row> 
@@ -613,7 +643,7 @@ handleChange = name => event => {
                               <FormControlLabel value="no"  control={<Radio color="primary" />}
                                 label="No" labelPlacement="start"  />
                             </RadioGroup>
-
+                            </Tooltip>
 
                           </Grid>
 
@@ -665,7 +695,7 @@ handleChange = name => event => {
                     placeholder=" Remarks" />   
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} className="singleFormRight" style={{marginTop:"7px"}}>
-                  <FormHelperText style={{'color': 'black',top: "0px",position:"relative" }}> { (credentialnote.length > 0) ? "Note: "+ (credentialnote[0]["notes"] !=null)?credentialnote[0]["notes"]:"" : "No notes" }</FormHelperText> 
+                  <FormHelperText style={{'color': 'black',top: "0px",position:"relative" }}> { (credentialnote.length > 0) ? (credentialnote[0]["notes"] !=null)? "Note: "+ credentialnote[0]["notes"]:"" : ""}</FormHelperText> 
                   </Grid>
         					<Grid item xs={12} sm={6} md={6} justify="center" style={{marginTop:"25px"}} >
             				<Button variant="contained" color="primary" onClick = {this.onSubmit}

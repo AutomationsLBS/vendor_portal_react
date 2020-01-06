@@ -320,7 +320,7 @@ export default class Credentails extends Component {
                                         key={i} >
                                             
                                             <TableCell style={{
-                                                  width: "16%"
+                                                  width: "17%"
                                             }} > </TableCell>
                                                  
                                                     <TableCell style={{
@@ -336,9 +336,9 @@ export default class Credentails extends Component {
                                                       "width": "131px"
                                                     }}
                                                       > { (alternativeDocPath !="none")? <a  href="javascript:void(0);" style={{"text-decoration": "none"}}   onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > { altername}</a> :"--"}</TableCell>
-                                                    <TableCell style={{"width": "10%"}} > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
-                                                    <TableCell style={{"width": "11%"}} > {(olddata.docs.length > 0)? <span> { this.dateFormat(olddata.docs[0]["effective_end_date"]) }</span>: "--" } </TableCell>
-                                                    <TableCell style={{"width": "10%"}}> {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell>
+                                                    <TableCell style={{"width": "12%"}} > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
+                                                    <TableCell style={{"width": "12%"}} > {(olddata.docs.length > 0)? <span> { this.dateFormat(olddata.docs[0]["effective_end_date"]) }</span>: "--" } </TableCell>
+                                                    <TableCell style={{"width": "11%"}}> {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell>
                                                     <TableCell > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
                                                     
                                               </TableRow>
