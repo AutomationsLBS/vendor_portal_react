@@ -210,7 +210,7 @@ render(){
                         return (
                         
 
-                          <div > { (data.already_set)? <div class="requredcredentilasRows"> { (this.state.vendoerType == "vendor")? <i className="fa fa-check" style={{color:"green",    position: "relative",top: "-2px",padding:"5px"}} aria-hidden="true"></i>  : "" }<span style={{position:"relative",top:"-2px"}}>{ data.title }</span>  </div> : <div class="requredcredentilasRows"> { (this.state.vendoerType == "vendor")? <i className="fa fa-times" style={{color:"red",    position: "relative",top: "-2px"}} aria-hidden="true"></i> : "" } <span style={{position:"relative",top:"-2px"}}>{ data.title }</span>  </div>  }   </div>
+                          <div > { (data.already_set)? <div class="requredcredentilasRows"> { (this.state.vendoerType == "vendor")? <i className="fa fa-check" style={{color:"green",    position: "relative",top: "-2px",padding:"5px"}} aria-hidden="true"></i>  : "" }<span style={{position:"relative",top:"-2px",padding:"5px"}}>{ data.title }</span>  </div> : <div class="requredcredentilasRows"> { (this.state.vendoerType == "vendor")? <i className="fa fa-times" style={{color:"red",    position: "relative",top: "-2px"}} aria-hidden="true"></i> : "" } <span style={{position:"relative",top:"-2px"}}>{ data.title }</span>  </div>  }   </div>
 
                           )
 
