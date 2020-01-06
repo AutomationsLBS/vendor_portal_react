@@ -227,8 +227,8 @@ export default class AgCredentails extends Component {
           
     
                       <Grid item xs={6} sm={6} align="right">
-                        <Button className="btn btn-primary btn-round" id="addCred"
-                        onClick={this.setRedirect}>Add Credential</Button>
+                      <Button className="btn btn-primary btn-round" id="addCred"
+              onClick={this.backButton}>Back</Button>
 
                     <AlertDialog  
                     buttonTitle = {"testignore"}
