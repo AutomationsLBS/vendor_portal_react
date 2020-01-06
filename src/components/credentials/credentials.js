@@ -262,7 +262,7 @@ export default class Credentails extends Component {
                                                           "text-decoration": "none",
                                                           "word-break": "break-word",
                                                            "width" :"108px"
-                                                    }} >{ (docpath !="none")? <a  href="javascript:void(0);" style={{"text-decoration": "none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }  > {docname}</a> : "---" } </TableCell>
+                                                    }} >{ (docpath !="none")? <a  href="javascript:void(0);" style={{"text-decoration": "none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }  > {(docname !="")?docname :"--"}</a> : "---" } </TableCell>
                 <TableCell 
                 
                 style={{
@@ -270,7 +270,7 @@ export default class Credentails extends Component {
                   "word-break": "break-word",
                    "width" :"131px"
             }}
-                > { (alternativeDocPath !="none")? <a  href="javascript:void(0);"  style={{"text-decoration": "none"}}  onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > {altername}</a> :"--"}</TableCell>
+                > { (alternativeDocPath !="none")? <a  href="javascript:void(0);"  style={{"text-decoration": "none"}}  onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > { (altername !="")?altername :"--"}</a> :"--"}</TableCell>
 
                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
@@ -327,7 +327,7 @@ export default class Credentails extends Component {
                                                           "text-decoration": "none",
                                                           "word-break": "break-word",
                                                            "width" :"108px"
-                                                    }}  >{(docpath != "none")? <a href="javascript:void(0);" style={{"text-decoration": "none"}}  onClick = {(e) =>this.handleClickOpen(docpath)  }  > {docname}</a> :"--"} 
+                                                    }}  >{(docpath != "none")? <a href="javascript:void(0);" style={{"text-decoration": "none"}}  onClick = {(e) =>this.handleClickOpen(docpath)  }  > {(docname !="")?docname :"--"}</a> :"--"} 
                                                     </TableCell>
                                                     <TableCell 
                                                      style={{
@@ -335,7 +335,7 @@ export default class Credentails extends Component {
                                                       "word-break": "break-word",
                                                       "width": "131px"
                                                     }}
-                                                      > { (alternativeDocPath !="none")? <a  href="javascript:void(0);" style={{"text-decoration": "none"}}   onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > { altername}</a> :"--"}</TableCell>
+                                                      > { (alternativeDocPath !="none")? <a  href="javascript:void(0);" style={{"text-decoration": "none"}}   onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > {   (altername !="")?altername :"--"}</a> :"--"}</TableCell>
                                                     <TableCell style={{"width": "12%"}} > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
                                                     <TableCell style={{"width": "12%"}} > {(olddata.docs.length > 0)? <span> { this.dateFormat(olddata.docs[0]["effective_end_date"]) }</span>: "--" } </TableCell>
                                                     <TableCell style={{"width": "11%"}}> {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell>
