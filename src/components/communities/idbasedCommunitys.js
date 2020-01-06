@@ -144,10 +144,19 @@ export default class Idbasedvalues extends Component {
                  
                 
                  (this.state.mycommunitys.communities.map((data)=>{
+                    let address  = [];
+                    (data["community"].shipping_city)? address.push(data["community"].shipping_city) : ""  
+                    
+                    (data["community"].shipping_street)? address.push(data["community"].shipping_street) : "";
+                    (data["community"].shipping_state_abbr)?  address.push(data["community"].shipping_state_abbr) : "";
+                    (data["community"].shipping_zip)?  address.push(data["community"].shipping_zip) : "";
+                    
+                    
+
                   return (
                     <TableRow  >
                     <TableCell> { data["community"]["name"]}</TableCell>
-                    <TableCell> { (data["community"].shipping_city)? data["community"].shipping_city+"," :""  }{ (data["community"].shipping_street)? data["community"].shipping_street+"," : ""}{(data["community"].shipping_state_abbr)? data["community"].shipping_state_abbr+",":"" }{(data["community"].shipping_zip)? data["community"].shipping_zip+"," : "" } </TableCell>
+                    <TableCell> { address.join(",")} </TableCell>
                     <TableCell> { (data.phone_num)?data.phone_num: "---"} </TableCell>
                     <TableCell> {  (data.last_visit_date)?  data.last_visit_date:"---"}</TableCell>
                     <TableCell> </TableCell>
