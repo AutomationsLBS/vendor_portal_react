@@ -321,7 +321,11 @@ class userPage extends Component {
   render() {
 
     if (this.state.redirectUrl) {
-      return(<Redirect to={CommonService.localStore.get("logourl").logourl} />)
+      let url = "/";
+      if(CommonService.localStore.get("logourl").logourl != null){
+         url =  CommonService.localStore.get("logourl").logourl 
+      }
+      return(<Redirect to={url} />)
     }
     return (
       <div>

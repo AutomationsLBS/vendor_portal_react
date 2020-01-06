@@ -264,7 +264,7 @@ export default class AgCredentails extends Component {
                                                       "width": "131px"
                                                     }}
                                 
-                                >{(docpath != "none")? <a href="javascript:void(0);" style={{"text-decoration":"none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }  > { docname } </a> :"--"} </TableCell>
+                                >{(docpath != "none")? <a href="javascript:void(0);" style={{"text-decoration":"none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }  > { (docname !="")?docname :"--" } </a> :"--"} </TableCell>
 
                                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
@@ -321,7 +321,7 @@ export default class AgCredentails extends Component {
                                                       "word-break": "break-word",
                                                       "width": "131px"
                                                     }}
-                                                    >{(docpath != "none" && docpath != undefined )? <a href="javascript:void(0);" style={{"text-decoration": "none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }   ><span style={{ "word-break":"break-word" }} > { docname } </span> </a> :"--"} </TableCell>
+                                                    >{(docpath != "none" && docpath != undefined )? <a href="javascript:void(0);" style={{"text-decoration": "none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }   ><span style={{ "word-break":"break-word" }} > { (docname)?docname:"--" } </span> </a> :"--"} </TableCell>
                                                    
     
                                                     <TableCell > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>

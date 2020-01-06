@@ -99,6 +99,7 @@ render(){
           case "jpg":
           case "gif":
           case "jpeg":
+          case "png":
 
 
            urlShowDisplay =  "image"

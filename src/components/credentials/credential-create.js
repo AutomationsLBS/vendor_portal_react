@@ -66,30 +66,26 @@ export default class CredentailCreate extends Component{
         }
   	}
     onChangedata = (e)=> {
-      
-      let filesizes = Math.round((  e.target.files[0]["size"]/ 1024))
-      let  filesizelimit  = Config.filesize;
-      if (filesizes < filesizelimit ){
-        let fileType  =  e.target.files[0]["name"];
-        var ext = fileType.split('.').pop();
-        if(ext== this.state.docTypes[ext]){
-          this.setState({file:e.target.files[0],  fileName : e.target.files[0]["name"],uploadFile_error:""})
-        } else{
-          this.setState({file:"",  fileName :"",uploadFile_error:"Please upload only Doc/Pdf/images"});
-        }
+      if (e.target.files.length >0){
         
-      }else{
-
-        this.setState({file:"",  fileName :"",uploadFile_error:"File size must be low 5 mb"});
-
+        let filesizes = Math.round((  e.target.files[0]["size"]/ 1024))
+        let  filesizelimit  = Config.filesize;
+        if (filesizes < filesizelimit ){
+          let fileType  =  e.target.files[0]["name"];
+          var ext = fileType.split('.').pop();
+          if(ext== this.state.docTypes[ext]){
+            this.setState({file:e.target.files[0],  fileName : e.target.files[0]["name"],uploadFile_error:""})
+          } else{
+            this.setState({file:"",  fileName :"",uploadFile_error:"Please upload only Doc/Pdf/images"});
+          }
+          
+        }else{
+  
+          this.setState({file:"",  fileName :"",uploadFile_error:"File size must below 10 mb"});
+  
+        }
       }
-      
-      
-      
-      
 
-       
-       
         
     }
   	onDrop = () => {

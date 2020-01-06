@@ -692,6 +692,7 @@ handleChange = name => event => {
         type="file"
         style={{"display":"none"}}
         onChange = { this.onChangedata}
+        disabled ={statusOfButton }
       />
       <label htmlFor="contained-button-file" style={{display:buttonHideOrNot }}>
       <Tooltip title = { uploadButton}  >

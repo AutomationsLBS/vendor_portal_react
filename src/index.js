@@ -28,15 +28,26 @@ const theme = createMuiTheme({
       // E.g., shift from Red 500 to Red 300 or Red 700.
       tonalOffset: 0.2,
     },
+    overrides: {
+      MuiTooltip: {
+        tooltip: {
+          fontSize: "14px",
+          color: "white",
+          backgroundColor: "black"
+        }
+      }
+    }
   });
 
 ReactDOM.render(
     <Provider store={store}>
         <MuiThemeProvider theme={theme}>
 			      
-            <HttpsRedirect>
-            <App />
+           <HttpsRedirect>
+               <App />
             </HttpsRedirect>
+            
+       
             
             
               
