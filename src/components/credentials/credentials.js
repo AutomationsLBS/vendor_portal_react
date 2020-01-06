@@ -256,7 +256,7 @@ export default class Credentails extends Component {
                 return (
                   <Fragment> 
                   <TableRow key={i} >
-                <TableCell >  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
+                <TableCell  style={{ width:"18%"}}>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
                 
                 <TableCell style={{
                                                           "text-decoration": "none",
@@ -321,7 +321,7 @@ export default class Credentails extends Component {
                                             
                                             <TableCell style={{
                                                   width: "17%"
-                                            }} > </TableCell>
+                                            }} >  </TableCell>
                                                  
                                                     <TableCell style={{
                                                           "text-decoration": "none",
