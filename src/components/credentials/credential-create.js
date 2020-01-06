@@ -175,18 +175,41 @@ export default class CredentailCreate extends Component{
            this.setState({uploadFile: event.target.files[0]})
            
     }
-    fileUpload2 = (event) =>{
+    fileUpload2 = (e) =>{
 
 
-      let fileType  =  event.target.files[0]["name"];
-      var ext = fileType.split('.').pop();
-      if(ext== this.state.docTypes[ext]){
-        this.setState({alterFiledata: event.target.files[0], alterFilename : event.target.files[0]["name"],alterFiledata_error:"" })
-      } else{
+      // let fileType  =  event.target.files[0]["name"];
+      // var ext = fileType.split('.').pop();
+      // if(ext== this.state.docTypes[ext]){
+      //   this.setState({alterFiledata: event.target.files[0], alterFilename : event.target.files[0]["name"],alterFiledata_error:"" })
+      // } else{
         
-        this.setState({alterFiledata:"", alterFilename :"",alterFiledata_error:"Please upload only Doc/Pdf" })
-      }
+      //   this.setState({alterFiledata:"", alterFilename :"",alterFiledata_error:"Please upload only Doc/Pdf" })
+      // }
     
+
+      if (e.target.files.length >0){
+        
+        let filesizes = Math.round((  e.target.files[0]["size"]/ 1024))
+        let  filesizelimit  = Config.filesize;
+        if (filesizes < filesizelimit ){
+          let fileType  =  e.target.files[0]["name"];
+          var ext = fileType.split('.').pop();
+          if(ext== this.state.docTypes[ext]){
+            
+            this.setState({alterFiledata: e.target.files[0], alterFilename : e.target.files[0]["name"],alterFiledata_error:"" })
+          } else{
+            this.setState({file:"",  fileName :"",uploadFile_error:"Please upload only Doc/Pdf/images"});
+            this.setState({alterFiledata:"", alterFilename :"",alterFiledata_error:"Please upload only Doc/Pdf" })
+          }
+          
+        }else{
+          this.setState({alterFiledata:"", alterFilename :"",alterFiledata_error:"File size must below 10 mb" })
+          
+  
+        }
+      }
+
      
     }
 
