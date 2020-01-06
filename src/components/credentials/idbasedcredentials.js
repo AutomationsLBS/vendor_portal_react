@@ -214,58 +214,60 @@ export default class AgCredentails extends Component {
 
     return (
       <Fragment>
-      <Grid container>
         <Grid container>
-          <Grid item sm={6}>
-            <h2>
-              <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-              Credentials of { CommonService.localStore.get("employeeName_c").employeeName_c  }
-              </Typography>
-            </h2>
-            {CommonService.renderLoader(this.state.loader)}
-          </Grid>
-          
-    
-                      <Grid item xs={6} sm={6} align="right">
-                      <Button className="btn btn-primary btn-round" id="addCred"
+          <Grid container>
+            <Grid item sm={6}>
+              <h2>
+                <Typography className="pageTitle titleSection" variant="title" gutterBottom>
+                Credentials of { CommonService.localStore.get("employeeName_c").employeeName_c  }
+                  </Typography>
+              </h2>
+              {CommonService.renderLoader(this.state.loader)}
+            </Grid>
+            
+      
+            <Grid item xs={6} sm={6} align="right">
+              <Button className="btn btn-primary btn-round" id="addCred"
               onClick={this.backButton}>Back</Button>
 
-                    <AlertDialog  
-                    buttonTitle = {"testignore"}
-                    open = {this.state.open}
-                    url = {this.state.url}
-                    onClose = { this.handleClose}
-
+          <AlertDialog  
+           buttonTitle = {"testignore"}
+           open = {this.state.open}
+           url = {this.state.url}
+           onClose = { this.handleClose}
+          
+          />
+            </Grid>
+            <Grid item sm={12} align="right"> 
+              <Table className="listTable" >
+                <TableHead>
+                  <TableRow>
                     
-                    />
-                      </Grid>
-                      <Grid item sm={12} align="right"> 
-                        <Table className="listTable" >
-                          <TableHead>
-                            <TableRow>
+                    <TableCell>Credential  Name</TableCell>
+                    <TableCell>Doc</TableCell>
+                    <TableCell> Effective Date</TableCell>
+                    <TableCell> Effective End Date </TableCell>
+                    <TableCell> Status </TableCell>
+                    <TableCell> Reason </TableCell>  
+                    <TableCell> </TableCell>  
+                    <TableCell> </TableCell>  
+                    
+                    
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                { /*(data.docs.length > 0)?data.docs[0]["document_path"]: "--"  (data.docs.length > 0)? "": "--"  */}
+                          {(this.state.myCredentails)? (this.state.myCredentails.credentials.length  > 0) ?
+                          this.state.myCredentails.credentials.map((data,i)=>{
                               
-                              <TableCell>Credential Type</TableCell>
-                              <TableCell>Doc</TableCell>
-                              <TableCell> Start Date</TableCell>
-                              <TableCell> End Date </TableCell>
-                              <TableCell> Status </TableCell>
-                              <TableCell> Reason </TableCell>  
-                              <TableCell></TableCell> 
-                              <TableCell></TableCell> 
-                            
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                          { /*(data.docs.length > 0)?data.docs[0]["document_path"]: "--"  (data.docs.length > 0)? "": "--"  */}
-                        {(this.state.myCredentails)? (this.state.myCredentails.credentials.length  > 0) ?
-                        this.state.myCredentails.credentials.map((data,i)=>{
-                            
-                          let docpath = (data.docs.length > 0)? data.docs[0]["document_path"]: "none";
+                            let docpath = (data.docs.length > 0)? data.docs[0]["document_path"]: "none"
+                           
                           let trimedData  = docpath.replace(/%20/g, "");
                           let docname = trimedData.split('/').splice(-1,1);
-                         
-                          return (<Fragment>
-                            <TableRow key={i} >
+                            
+                            return (
+                              <Fragment>
+                             <TableRow key={i} >
                               <TableCell style={{width: "30%"}}>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
                               
                               <TableCell style={{
@@ -280,20 +282,18 @@ export default class AgCredentails extends Component {
                               <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
                               <TableCell> {(data.docs.length > 0)?Config.credetailStatus[data.docs[0]["verification_status"]]: "--" }</TableCell>
                               <TableCell style ={{width: "120px" }} > {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
-                              <TableCell>
-                                <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/></a> 
-                              </TableCell> 
+                              
 
-                              <TableCell>
+                              <TableCell colSpan = {2} >
                           {(data.old_credentials.length > 0)? (this.state.recordValue == i)? <i class="fa fa-minus-circle" aria-hidden="true" onClick = { () => {this.recordToBedisplayed(i)}} ></i> : <i class="fa fa-plus-circle" aria-hidden="true" onClick = { (e) => {this.recordToBedisplayed(i)} } ></i> :"" }
                               
                               </TableCell> 
                         
                           </TableRow>
-        
-                        
-                        
-                        { ((this.state.recordValue  ==  i ) && (data.old_credentials.length > 0)) ?
+ 
+                          
+
+                          { ((this.state.recordValue  ==  i ) && (data.old_credentials.length > 0)) ?
                                 <Fragment>
                                 <TableRow  style={{padding:"10px",boder:"solid"}} >
                                 <TableCell colSpan = {8}>
@@ -331,13 +331,13 @@ export default class AgCredentails extends Component {
                                                     "word-break": "break-word",
                                                     "width": "131px"
                                                   }}
-                                                  >{(docpath != "none" && docpath != undefined )? <a href="javascript:void(0);" style={{"text-decoration": "none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }   ><span style={{ "word-break":"break-word" }} > { (docname)?docname:"--" } </span> </a> :"--"} </TableCell>
+                                                  >{(docpath != "none" && docpath != undefined )? <a href="javascript:void(0);" style={{"text-decoration": "none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }   ><span style={{ "word-break":"break-word" }} > { (docname !="")?docname:"--" } </span> </a> :"--"} </TableCell>
                                                  
   
-                                                  <TableCell > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
-                                                  <TableCell  > {(olddata.docs.length > 0)? <span> { this.dateFormat(olddata.docs[0]["effective_end_date"]) }</span>: "--" } </TableCell>
-                                                  <TableCell> {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell>
-                                                  <TableCell style={{ width:"24%"}}> {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
+                                                  <TableCell style={{ width:"12%"}} > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
+                                                  <TableCell style={{ width:"14%"}} > {(olddata.docs.length > 0)? <span> { this.dateFormat(olddata.docs[0]["effective_end_date"]) }</span>: "--" } </TableCell>
+                                                  <TableCell style={{ width:"10%"}}  > {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell>
+                                                  <TableCell style={{ width:"18%"}} > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
                                                   
                                             </TableRow>
                                       
@@ -352,51 +352,108 @@ export default class AgCredentails extends Component {
                                  </TableCell>
                                 </TableRow>
                                 </Fragment>
-                             : "" }
+                             : "" } 
+
+                          </Fragment>      
+
+                ) 
+              }) :
+              <TableRow >
+              <TableCell colSpan={7}> <center>No Records</center> </TableCell>
+              </TableRow>  
+                
+                :
+                
+                
+                <TableRow >
+                <TableCell colSpan={7}> <center>No Records</center> </TableCell>
+                </TableRow>  
+                
+                }
+                       
+              
+                 
+                </TableBody>
+              </Table>
+           </Grid>
+        </Grid>
+
+
+        {/* <div  align="left" style= { { "padding-bottom": "14px" , "padding-top": "14px"}}> 
+                    { (this.state.historyData)?  <a href="javascript:void(0)" onClick = {this.showHistory}  style ={{"text-decoration": "none",color:"blue"}} >Hide Past Credentials  </a>  :  (this.state.showButton ) ? <a herf="javascript:void(0);" style ={{"text-decoration": "none",color:"blue"}} onClick = {this.showHistory}  > Past Credentials  </a> : null } 
+                </div>
+                <Grid item sm={12} align="right"> 
+                  <Table className="listTable" > */}
+
+
+{/*                  
+                  
+                  { (this.state.historyData)? 
+                      <TableHead>
+                      <TableRow>
                           
-                          </Fragment>
+                          <TableCell>Credential Type</TableCell>
+                          <TableCell>Doc</TableCell>
+                          <TableCell> Effective Start Date</TableCell>
+                          <TableCell> Effective End Date </TableCell>
+                          <TableCell> Status </TableCell>
+                          <TableCell> Reason </TableCell>  
+                      
+                      </TableRow>
+                      </TableHead>
+                     : "" }
 
-                        
-                        )
-                        })
-                        : 
-                        <TableRow >
-                        <TableCell colSpan={8}> <center>No Records</center> </TableCell>
-                        </TableRow> 
-                          :
-                          
-                          <TableRow >
-                          <TableCell colSpan={8}> <center>No Records</center> </TableCell>
-                          </TableRow>
-                          
-                          }
+                      <TableBody >
+                          {(this.state.historyData)? (this.state.myCredentails)? 
+                              
+
+                              this.state.myCredentails.old_credentials.map((data,i) => {
+                              let docpath = (data.docs.length > 0)? data.docs[0]["document_path"]: "none"
+
+                              return (
+                                  <TableRow key={i} >
+                                  <TableCell>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
+                                  
+                                  <TableCell>{ (docpath != "none")? <a onClick = {(e) =>this.handleClickOpen(docpath)  }  > <i className="fas fa-file" style={{color:"black"}} > </i></a> : "--"} </TableCell>
+                  
+                                  <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
+                                  <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
+                                  <TableCell> {(data.docs.length > 0)?data.docs[0]["verification_status"]: "--" }</TableCell>
+                                  <TableCell style ={{width: "120px" }}> {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
+                                 </TableRow>      
+                              )
+                              
+
+                              })
+
+                              
+                              :
+                              
+                              <TableRow >
+                              <TableCell colSpan={6}> <center>No Records</center> </TableCell>
+                              </TableRow>                  
+                              
+                              
+                              : 
+                              null
+                              
+                              }
+
+                        </TableBody>
+
+              
+              
+                 
+
+
+                  </Table>
+                </Grid>  */}
 
 
 
-                                
-                          
-                          </TableBody>
-
-
-                        </Table>
-                    </Grid>
-                        
-
-
-                        
-
-
-
-
-                  </Grid>
-
-             
-
-    
-    </Grid>
-      {/* <ToastContainer autoClose={50000} /> */}
-    </Fragment>
-
-          );
+      </Grid>
+        {/* <ToastContainer autoClose={50000} /> */}
+      </Fragment>
+    );
   };
 }
