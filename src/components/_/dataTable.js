@@ -160,7 +160,7 @@ render(){
           <Grid item sm={12} style={{margin:"10px"}}>
             
               <Typography style={{fontSize:"22px"}} className="pageTitle titleSection" variant="title" gutterBottom>
-              <b >Required Credentials </b> 
+              <b >Required Credentials { this.props.communityName }</b> 
               </Typography>
             
           </Grid>

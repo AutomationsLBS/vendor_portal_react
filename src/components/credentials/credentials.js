@@ -35,7 +35,6 @@ export default class Credentails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      redirect: false,
       prevPath: '',
       myCredentails:"",
       loader:true,
@@ -45,6 +44,9 @@ export default class Credentails extends Component {
       historyData:false,
       showButton: false,
       recordValue: "",
+      doRedirect:false,
+      redirectUrl:"",
+
     }
   }
  
@@ -95,10 +97,8 @@ export default class Credentails extends Component {
     .get(axios.my_credentials(),dataParams)
     .then((response) => {
         console.log("response-my_credentials",response);
-        this.setState({myCredentails: response.credentials, loader: false});
-     //   this.setState({showButton : (response.credentials.old_credentials.length > 0)? true : false })
-      
-       // this.setState({myCredentails: response, loader: false});
+        this.setState({myCredentails: response.credentials});
+    
         toast.success(
             (response.message != undefined) 
                 ? "Successfully..." 
@@ -106,6 +106,8 @@ export default class Credentails extends Component {
             position: toast.POSITION.TOP_CENTER,
             className: 'rotateY animated'
           });
+
+         this.setState({ loader: false});
        
     })
     .catch((error) => {
@@ -120,13 +122,6 @@ export default class Credentails extends Component {
   }
   
   
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.location !== this.props.location) {
-  //     this.setState({ prevPath: this.props.location })
-  //   }
-  //   console.log("Component will Receive Props",this.state.prevPath)
-
-  // }
 
   dateFormat = (fdate)=>{
     var dateformat = new Date(fdate)
@@ -138,9 +133,10 @@ export default class Credentails extends Component {
   }
 
  setRedirect = () => {
-    this.setState({
-      redirect: true
-    })
+  this.setState({
+    doRedirect: true,
+     redirectUrl: "/credentialsCreate"
+    });
   }
 
   handleClickOpen = (data) => {
@@ -166,17 +162,18 @@ export default class Credentails extends Component {
 
 
   getCredetailsData = (data)=>{
-    console.log("dataSet",data);
+     
     
     if(data !== undefined && data !== null){
-      // this.setState({
-      //   doRedirect: true,
-      //    redirectUrl: "/agCredentials/editCredentials/"+data
-      // });
-       window.location.href = "/credentials/editCredentials/"+data;
+      this.setState({
+        doRedirect: true,
+         redirectUrl: "/credentials/editCredentials/"+data
+      });
 
-      //CommonService.localStore.set("employeeName_co",employyeeName);
+   
     }
+    
+
   }
 
   recordToBedisplayed = (data) => {
@@ -194,8 +191,8 @@ export default class Credentails extends Component {
 
   render() {
     
-      if (this.state.redirect) {
-        return(<Redirect to='/credentialsCreate' />)
+      if (this.state.doRedirect) {
+        return(<Redirect to={ this.state.redirectUrl} />)
       }
     
     return (
@@ -248,10 +245,11 @@ export default class Credentails extends Component {
               this.state.myCredentails.credentials.map((data,i)=>{
                   
                 let docpath = (data.docs.length > 0)? (data.docs[0]["document_path"] != "")? data.docs[0]["document_path"] : "none": "none"
-                let trimedData  = docpath.replace(/%20/g, "");
+                
+                let trimedData  = decodeURI(docpath);
                 let docname = trimedData.split('/').splice(-1,1);
                 let alternativeDocPath =  (data.alternate_docs.length > 0)? (data.alternate_docs[0]["document_path"] != "" )? data.alternate_docs[0]["document_path"] : "none" : "none";
-                let trimedAlternavieData  = alternativeDocPath.replace(/%20/g, "");
+                let trimedAlternavieData  =  decodeURI(alternativeDocPath);
                 let altername = trimedAlternavieData.split('/').splice(-1,1);
                 return (
                   <Fragment> 
@@ -307,10 +305,10 @@ export default class Credentails extends Component {
                                    
                                   { (data.old_credentials.length > 0)? data.old_credentials.map((olddata) =>{
                                       let docpath = (olddata.docs.length > 0)? olddata.docs[0]["document_path"]: "none";
-                                      let trimedData  = docpath.replace(/%20/g, "");
+                                      let trimedData  = decodeURI(docpath);
                                       let docname = trimedData.split('/').splice(-1,1);
                                       let alternativeDocPath =  (olddata.alternate_docs.length > 0)? (olddata.alternate_docs[0]["document_path"] != "" )? olddata.alternate_docs[0]["document_path"] : "none" : "none";
-                                      let trimedAlternavieData  = alternativeDocPath.replace(/%20/g, "");
+                                      let trimedAlternavieData  =  decodeURI(alternativeDocPath);
                                       let altername = trimedAlternavieData.split('/').splice(-1,1);
                                     return(
                                       <Fragment>

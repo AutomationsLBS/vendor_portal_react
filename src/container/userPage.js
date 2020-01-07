@@ -45,7 +45,7 @@ import UpdateCardDetails from "../components/_/CardDetails";
 import Updatepin from "../components/updateNewpin";
 import Credentails from "../components/credentials/credentials";
 import CredentailsCreate from "../components/credentials/credential-create"
-import Report from '../components/credentials/report'
+
 import AddAdmin from '../components/account/addAdmin'
 import PaymentHistory from '../components/settings/payment-history'
 import UpdateDetails from '../components/settings/updateDetails'
@@ -96,13 +96,7 @@ class userPage extends Component {
         <div><CompanysList /></div>
       )
     }
-    else if (path.indexOf('/agencyReport') !== -1) {
 
-      
-      return (
-        <div><Report {...this.props}/></div>
-      );
-    }
 
 
     else if (path.indexOf('/agCredentials') !== -1) {

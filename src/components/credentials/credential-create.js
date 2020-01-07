@@ -28,6 +28,9 @@ import TooltipOwn from  "../_/Tooltip";
 import Tooltip from '@material-ui/core/Tooltip';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import {
+  Redirect
+} from "react-router-dom";
 
 
 
@@ -62,6 +65,8 @@ export default class CredentailCreate extends Component{
           lowerLimit:"",
           vendoerType:"",
           upperLimitRange_error:"",
+          doRedirect: false,
+          redirectUrl: "",
           
         }
   	}
@@ -117,8 +122,14 @@ export default class CredentailCreate extends Component{
 
 
     cancelRedirect = (e)=>{
-       let  changelab =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")?  "credentials": "agCredentials" ; 
-        window.location.href = "/"+changelab;
+       let  changetab =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")?  "credentials": "agCredentials" ; 
+       this.setState({
+        doRedirect: true,
+         redirectUrl: "/"+changetab
+        });
+
+
+
     }
 
   
@@ -385,9 +396,9 @@ export default class CredentailCreate extends Component{
       className: 'rotateY animated'
     });
 
-   let  changelab =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")?  "credentials": "agCredentials" ; 
-   window.location.href = "/"+changelab;
-     //  console.log(response,"data........")
+   
+   this.cancelRedirect();
+   
   })
   .catch((error) => {
        
@@ -426,6 +437,12 @@ handleChange = name => event => {
 
 
 	render() {
+
+
+       
+    if (this.state.doRedirect) {
+      return(<Redirect to={ this.state.redirectUrl} />)
+    }
      let errorMessage = (this.state.credential_value_error == "")? false:  true  ;
      let  visitor_types   =  CommonService.localStore.get("visitor_types").visitor_types; 
     let isDisplay  =  (visitor_types != "agency")?  "" : "none";
@@ -468,7 +485,7 @@ handleChange = name => event => {
                         <FormControl   error ={ errorMessage} >
                             <InputLabel htmlFor="community-helper"  style={{"marginTop": "15px"}}>Credential Type</InputLabel>
                             <Select  label="Credentialing" id="credentialing" value={this.state.credential_value} onChange ={this.dropdownValue}
-                                style={{ width: "260px",marginTop: "30px"}}
+                                style={{ width: "276px",marginTop: "30px"}}
 
                                 margin="normal">
                                 { (this.state.credential_types)?
@@ -714,7 +731,7 @@ handleChange = name => event => {
                      error={(this.state.remarks_error == "")
                      ? false
                      : true}
-                    placeholder=" Remarks" />   
+                    placeholder="Remarks" />   
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} className="singleFormRight" style={{marginTop:"7px"}}>
                   <FormHelperText style={{'color': 'black',top: "0px",position:"relative" }}> { (credentialnote.length > 0) ? (credentialnote[0]["notes"] !=null)? "Note: "+ credentialnote[0]["notes"]:"" : ""}</FormHelperText> 

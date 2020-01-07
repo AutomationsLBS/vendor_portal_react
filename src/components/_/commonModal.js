@@ -139,7 +139,11 @@ render(){
 
             { ((urlShowDisplay == "pdf" )  )?  <GoogleDocsViewer  ref = {(e) => this.popUp}  width="1000px" height="780px" fileUrl={this.props.url}/> : "" }
 
-            { ((urlShowDisplay == "image" ) )?  <img src={this.props.url} width="1000px" height="780px" ></img> : "" }
+            { ((urlShowDisplay == "image" ) )?  <img src={this.props.url}  style ={{
+              "max-width":"1000px",
+              "max-height": "780px"
+            }}
+             ></img> : "" }
             
           </Dialog>
         </Fragment>      

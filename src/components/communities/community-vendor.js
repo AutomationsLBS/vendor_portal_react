@@ -39,6 +39,7 @@ export default class CommunityVendor extends Component {
       requestedData:"",
       open: false,
       requestedDataVendor:"",
+      communityName:"",
     
       
     }
@@ -98,7 +99,7 @@ export default class CommunityVendor extends Component {
 
   requriedCredetailsData = (data)=>{
 
- 
+    this.setState({communityName: data.name});
  
     axios
     .get(axios.community_credentials(),{params:{utype:"agency",community_id:data.id,employee:  CommonService.localStore.get("usr_company_id").usr_company_id }})
@@ -110,8 +111,9 @@ export default class CommunityVendor extends Component {
         }
         if(response.vendor_req_credentials.length > 0){
           this.setState({  requestedDataVendor:response.vendor_req_credentials});
+          
         }
-       console.log(this.state,"youandi");
+        
         toast.success(
             (response.message != undefined) 
                 ? "Successfully..." 
@@ -166,6 +168,7 @@ export default class CommunityVendor extends Component {
            data  = {this.state.requestedData}
            onClose = { this.handleClose}
            dataForVendor = {this.state.requestedDataVendor}
+           communityName = {  this.state.communityName }
 
           
           />  
@@ -189,7 +192,7 @@ export default class CommunityVendor extends Component {
                      
                     return (
                       <TableRow >
-                      <TableCell> { data.name} </TableCell>
+                      <TableCell> { data.name } </TableCell>
                       <TableCell> { (data.phone_num)?data.phone_num: "---"} </TableCell>
                       <TableCell> {  (data.last_visit_date)? data.last_visit_date : "---"}</TableCell>
                       <TableCell> </TableCell>

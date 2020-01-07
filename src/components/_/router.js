@@ -4,10 +4,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import {
     BrowserRouter as Router,
     Route,
-    Link,
-    Redirect,
-    matchPath,
-    withRouter,
+  
     Switch
 } from "react-router-dom";
 import MainNav from './navigation';
@@ -42,8 +39,6 @@ import Credentails from "../credentials/credentials";
 import CredentailsCreate from  "../credentials/credential-create";
 import CredentailsEdit from  "../credentials/credential-edit";
 import Companys  from  "../companysList/index"
-
-import Report from '../credentials/report'
 import AddAdmin from '../credentials/account/addAdmin'
 
 export default class Approute extends Component {
@@ -106,7 +101,7 @@ export default class Approute extends Component {
                             <Route path="/updatenewpin" component={ Updatepin} />
                             <Route path="/credentailsCreate" component={CredentailsCreate} />
                             <Route path="/settings" component={Tab4}/>
-                            <Route path="/agencyReport" component={Report}/>
+                          
                             <Route path="/addAdmin" component={AddAdmin}/>
                             <Route path="/credentialsEdit" component={CredentailsEdit}/>
                             <Route path="/companies" component={Companys}/>

@@ -86,7 +86,7 @@ export default class CommunityContractor extends Component {
 
 requriedCredetailsData = (data)=>{
 
-   
+  this.setState({communityName: data.community.name});
  
   axios
   .get(axios.community_credentials(),{params:{utype:"vendor",community_id:data.community.id }})
@@ -148,6 +148,7 @@ requriedCredetailsData = (data)=>{
            data  = {this.state.requestedDataVendor}
            onClose = { this.handleClose}
            dataForVendor = {this.state.requestedData}
+           communityName = {this.state.communityName}
 
           
           />  
@@ -155,10 +156,16 @@ requriedCredetailsData = (data)=>{
               {  (this.state.mycommunitys)? 
                   (this.state.mycommunitys.length > 0) ?  
                    (this.state.mycommunitys.map(data =>{
+                     let addresss = [data.community.shipping_city,data.community.shipping_street,data.community.shipping_state_abbr,data.community.shipping_zip];
+                     
+                      addresss.filter((data) => data != null );
+                    
+
+
                      return (
                       <TableRow >
                       <TableCell> { data.community.name}</TableCell>
-                      <TableCell> { data.community.shipping_city+"," }{ data.community.shipping_street+", " }{data.community.shipping_state_abbr+", "}{data.community.shipping_zip} </TableCell>
+                      <TableCell> {addresss.join(", ") } </TableCell>
                       <TableCell> { data.phone_num} </TableCell>
                       <TableCell> {  data.last_visit_date}</TableCell>
                       <TableCell> <a href="javascript:void(0);"  style={{textDecoration:"none",color: "blue"}} onClick = {(e) =>this.requriedCredetailsData(data) }  > View Credentials </a></TableCell>

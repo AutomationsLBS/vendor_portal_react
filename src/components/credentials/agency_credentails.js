@@ -47,6 +47,9 @@ export default class AgCredentails extends Component {
       historyData:false,
       showButton: false,
       recordValue: "",
+      doRedirect:false,
+      redirectUrl:"",
+
     }
   }
  
@@ -96,7 +99,7 @@ export default class AgCredentails extends Component {
     .get(axios.my_credentials(),{params:{employee:CommonService.localStore.get("usr_company_id").usr_company_id}})
     .then((response) => {
         
-        this.setState({myCredentails: response.credentials, loader: false});
+        this.setState({myCredentails: response.credentials});
        // this.setState({showButton : (response.credentials.old_credentials.length > 0)? true : false })
        // console.log( this.state.myCredentails,"test data")
 
@@ -108,6 +111,7 @@ export default class AgCredentails extends Component {
             position: toast.POSITION.TOP_CENTER,
             className: 'rotateY animated'
           });
+          this.setState({ loader: false});
        
     })
     .catch((error) => {
@@ -139,10 +143,11 @@ export default class AgCredentails extends Component {
     return endtdate
   }
 
- setRedirect = () => {
-    this.setState({
-      redirect: true
-    })
+setRedirect = () => {
+  this.setState({
+    doRedirect: true,
+     redirectUrl: "/credentialsCreate"
+    });
   }
 
   handleClickOpen = (data) => {
@@ -182,25 +187,26 @@ export default class AgCredentails extends Component {
   }
 
   getCredetailsData = (data)=>{
-    console.log("dataSet",data);
-    
-    if(data !== undefined && data !== null){
-      // this.setState({
-      //   doRedirect: true,
-      //    redirectUrl: "/agCredentials/editCredentials/"+data
-      // });
-       window.location.href = "/agCredentials/editCredentials/"+data;
+   
 
-      //CommonService.localStore.set("employeeName_co",employyeeName);
+        
+    if(data !== undefined && data !== null){
+      this.setState({
+        doRedirect: true,
+         redirectUrl: "/credentials/editCredentials/"+data
+      });
+
+   
     }
   }
   
 
   render() {
     
-      if (this.state.redirect) {
-        return(<Redirect to='/credentialsCreate' />)
-      }
+      
+    if (this.state.doRedirect) {
+      return(<Redirect to={ this.state.redirectUrl} />)
+    }
     
     return (
       <Fragment>
@@ -251,7 +257,7 @@ export default class AgCredentails extends Component {
                           this.state.myCredentails.credentials.map((data,i)=>{
                               
                             let docpath = (data.docs.length > 0)? data.docs[0]["document_path"]: "none";
-                            let trimedData  = docpath.replace(/%20/g, "");
+                            let trimedData  = decodeURI(docpath);
                             let docname = trimedData.split('/').splice(-1,1);
                            
                             return (<Fragment>
@@ -295,7 +301,7 @@ export default class AgCredentails extends Component {
                                    
                                   { (data.old_credentials.length > 0)? data.old_credentials.map((olddata) =>{
                                       let docpath = (olddata.docs.length > 0)? olddata.docs[0]["document_path"]: "none";
-                                      let trimedData  = docpath.replace(/%20/g, "");
+                                      let trimedData  =  decodeURI(docpath);
                                       let docname = trimedData.split('/').splice(-1,1);
                                      
                                     //  let alternativeDocPath =  (olddata.alternate_docs.length > 0)? (olddata.alternate_docs[0]["document_path"] != "" )? olddata.alternate_docs[0]["document_path"] : "none" : "none";

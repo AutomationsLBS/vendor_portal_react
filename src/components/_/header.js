@@ -25,6 +25,10 @@ import CommonService from '../../service/commonServices';
 import Tooltip from "@material-ui/core/Tooltip";
 import TooltipOwn from  "../_/Tooltip";
 
+import {
+  Redirect
+} from "react-router-dom";
+
 
 
 
@@ -42,7 +46,10 @@ class Appheader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      doRedirect:false,
+      redirectUrl:""
+      
     }
   }
 
@@ -77,6 +84,17 @@ class Appheader extends Component {
       return;
     }
   }
+
+  redirectToData = event => {
+    
+    this.setState({
+
+      doRedirect:true,
+      redirectUrl:"/updatenewpin"
+    })
+    
+  }
+
   logoutUser() {
     setTimeout(() => {
       window
@@ -141,7 +159,7 @@ class Appheader extends Component {
                 { /* <MenuItem>{ CommonService.localStore.get("username").username } </MenuItem> */ }  
                      <MenuItem
                       onClick={(event) => {
-                      this.redirectTo('/updatenewpin');
+                        this.redirectToData();
                       this.handleClose(event);
                     }}>{ changeTabName }</MenuItem>
 
@@ -171,6 +189,11 @@ class Appheader extends Component {
     return showProfile;
   }
   render() {
+
+      
+    if (this.state.doRedirect) {
+      return(<Redirect to={ this.state.redirectUrl} />)
+    }
      let  username   = (CommonService.localStore.get("username").username.length <= 20 )? false   : true ;
     return (
       <Grid container className="headerContainer">

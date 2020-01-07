@@ -262,7 +262,7 @@ export default class AgCredentails extends Component {
                               
                             let docpath = (data.docs.length > 0)? data.docs[0]["document_path"]: "none"
                            
-                          let trimedData  = docpath.replace(/%20/g, "");
+                          let trimedData  = decodeURI(docpath);
                           let docname = trimedData.split('/').splice(-1,1);
                             
                             return (
@@ -305,7 +305,7 @@ export default class AgCredentails extends Component {
                                  
                                 { (data.old_credentials.length > 0)? data.old_credentials.map((olddata) =>{
                                     let docpath = (olddata.docs.length > 0)? olddata.docs[0]["document_path"]: "none";
-                                    let trimedData  = docpath.replace(/%20/g, "");
+                                    let trimedData  = decodeURI(docpath);
                                     let docname = trimedData.split('/').splice(-1,1);
                                    
                                   //  let alternativeDocPath =  (olddata.alternate_docs.length > 0)? (olddata.alternate_docs[0]["document_path"] != "" )? olddata.alternate_docs[0]["document_path"] : "none" : "none";

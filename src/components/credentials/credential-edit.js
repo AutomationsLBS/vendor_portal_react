@@ -14,8 +14,13 @@ import {
   Radio
   
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import {
+  BrowserRouter as Router,
+  Route,
+
+  Switch,
+  Redirect
+} from "react-router-dom";
 import axios from 'axios';
 import MenuItem from '@material-ui/core/MenuItem';
 import moment from 'moment';
@@ -65,6 +70,8 @@ export default class CredentailEdit extends Component{
           lowerLimit:"",
           vendoerType:"",
           upperLimitRange_error:"",
+          doRedirect: false,
+          redirectUrl: "",
 
 
 
@@ -73,19 +80,18 @@ export default class CredentailEdit extends Component{
     }
     
 
+   
+
 
 handleChange = name => event => {
  
   const onlyNums = event.target.value;
-
-  
-  //console.log(name,onlyNums,"jkerr123lllr");
     this.setState({
       [name]: onlyNums.replace(/[^0-9\.]+/g, ''),
   });
   if (name != '') {
       let errName = name + '_error'
-      console.log("Handle change", event, name, errName);
+     
       this.setState({
           [errName]: false,
       });
@@ -93,23 +99,10 @@ handleChange = name => event => {
 };
 
     handleClickOpen = (data) => {
-      console.log(data,"status__check")
-      this.setState({open:!this.state.open,url:data});
-      
-      
-      
+     
+      this.setState({open:!this.state.open,url:data});   
     }
     onChangedata = (e)=> {
-
-      // let fileType  =  e.target.files[0]["name"];
-      // var ext = fileType.split('.').pop();
-      // if(ext=="pdf" || ext=="docx" || ext=="doc"){
-      //   this.setState({file:e.target.files[0],  fileName : e.target.files[0]["name"],uploadFile_error:""})
-      // } else{
-      //   this.setState({file:"",  fileName :"",uploadFile_error:"Please upload only Doc/Pdf"});
-      // }
-
-
 
       if (e.target.files.length >0){
         
@@ -135,19 +128,13 @@ handleChange = name => event => {
     }
     getDateformat = (dates)=>{
    
-       //let dateformat  = dates.split("-"); 
-      let data = new Date(dates)
-      // //  dateformat[1]+"/"+dateformat[2]+"/"+dateformat[0]
-       return data
+     let data = new Date(dates)
+     return data
     }
     getParams =()=> {
        
       let id  = this.props.history.location.pathname.split("/")
-      console.log( id," kranthis----")
-     // this.setState({communitId:id[3]})
-      console.log(this.state.communitId,"iikt");
-  
-     return id[3]
+      return id[3]
     }
 
     handleClose = (e) => {
@@ -208,8 +195,7 @@ handleChange = name => event => {
   
   
   	onDrop = () => {
-      // POST to a test endpoint for demo purposes
-      //this.inputRef.click();
+     
       this.inputRef.current.click();
     }
     startDateChange =(date) =>{
@@ -236,8 +222,12 @@ handleChange = name => event => {
 
 
     cancelRedirect = (e)=>{
-       let  changelab =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")?  "credentials": "agCredentials" ; 
-        window.location.href = "/"+changelab;
+       let  changetab =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")?  "credentials": "agCredentials" ; 
+       
+       this.setState({
+        doRedirect: true,
+         redirectUrl: "/"+changetab
+        });
     }
 
   
@@ -551,9 +541,9 @@ handleChange = name => event => {
             className: 'rotateY animated'
           });
       
-         let  changelab =  (CommonService.localStore.get("visitor_types").visitor_types == "vendor")?  "credentials": "agCredentials" ; 
-         window.location.href = "/"+changelab;
-           //  console.log(response,"data........")
+         
+         this.cancelRedirect();
+          
         })
         .catch((error) => {
              
@@ -624,13 +614,18 @@ handleChange = name => event => {
  
 
 	render() {
+
+        
+    if (this.state.doRedirect) {
+      return(<Redirect to={ this.state.redirectUrl} />)
+    }
      let errorMessage = (this.state.credential_value_error == "")? false:  true  ;
      let  visitor_types   =  CommonService.localStore.get("visitor_types").visitor_types; 
     let isDisplay  =  (visitor_types != "agency")?  "" : "none"
     let isDisplayDoc  =  (this.state.altfile == "yes")?  "" : "none";
     let filename9 ="";
     if (this.state.fileName !=""){
-      let data = this.state.fileName.replace(/%20/g, "")
+      let data = decodeURI(this.state.fileName);
 
       let fileSplit =   data.split("/");
   
@@ -641,7 +636,7 @@ handleChange = name => event => {
     let  filenameAlter = "";
     console.log(this.state.alterFilename,"opooo11");
      if (this.state.alterFilename != null && this.state.alterFilename != undefined ){
-      let data = this.state.alterFilename.replace(/%20/g, "")
+      let data = decodeURI(this.state.alterFilename);
 
       let fileSplit =   data.split("/");
       
@@ -654,6 +649,7 @@ handleChange = name => event => {
    
     console.log(this.state.verificationStatus,"localdata")
     //console.log( this.state.alterFilename,"alllternatib")
+    
     let  statusOfButton = false;
     let  buttonHideOrNot = "show";  
     if (this.state.verificationStatus == "in_progress" || this.state.verificationStatus == "not_verified" ){
