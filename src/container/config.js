@@ -15,6 +15,18 @@ const BaseURL = () => {
     console.log("Base URL ",apiUrl );
     return apiUrl;
 }
+const employeeStatus =()=>{
+
+    return   [ { "id":  "active",
+                  "value"  :"Active"}
+                  ,
+                 {"id" : "defunct",
+                    "value" : "No longer working"}
+                    , 
+               { "id" :"denied" ,
+               "value": "Block Entry in Kiosk" }]
+    }
+
 
 const  credetailStatus = ()=>{
     return  {
@@ -24,6 +36,15 @@ const  credetailStatus = ()=>{
          "rejected":"Rejected",
     }
 }
+const  credetailStatusColors = ()=>{
+    return  {
+        "not_verified":"green" ,
+        "in_progress":"yellow",
+         "verified": "Verified", 
+         "rejected":"red",
+    }
+}
+
 const ApiUrls = ()=>{
    // let url = window.location.href;
     //let apiUrl = "https://accupass-api-dev.herokuapp.com";
@@ -70,6 +91,9 @@ const Config = {
     "usertype" : getUserType(),
     "filesize": uploadFileSize(),
     "credetailStatus":credetailStatus(),
+    "employeeStatus":employeeStatus(),
+    "credetailStatusColors":credetailStatusColors(),
+    
    
     "mainnav": [
         

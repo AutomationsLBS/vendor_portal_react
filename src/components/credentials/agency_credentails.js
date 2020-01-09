@@ -17,7 +17,8 @@ import  AlertDialog from '../_/commonModal';
 import GoogleDocsViewer from 'react-google-docs-viewer';
 import { ChatFeed, Message } from 'react-chat-ui'
 
-import TooltipOwn from  "../_/historyTooltip";
+import TooltipOwn from  "../_/Tooltip";
+import Tooltip from '@material-ui/core/Tooltip';
 
 
 import {
@@ -274,7 +275,8 @@ setRedirect = () => {
 
                                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
-                                <TableCell> {(data.docs.length > 0)?Config.credetailStatus[data.docs[0]["verification_status"]]: "--" }</TableCell>
+                                <TableCell  >   {(data.docs.length > 0)?  <TooltipOwn message={  Config.credetailStatus[data.docs[0]["verification_status"]] }  position={'left'}> <Button style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] ,padding:"10px" }} > </Button>  </TooltipOwn>    : "--" } </TableCell> 
+                           { /*  <TableCell  > <Tooltip title="hiii">  <span style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] , padding :"4px"}}>  {(data.docs.length > 0)?  Config.credetailStatus[data.docs[0]["verification_status"]]  : "--" } </span> </Tooltip> </TableCell>  */ }    
                                 <TableCell style ={{width: "120px" }} > {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
                                 <TableCell>
                                   <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/></a> 
@@ -330,10 +332,19 @@ setRedirect = () => {
                                                     >{(docpath != "none" && docpath != undefined )? <a href="javascript:void(0);" style={{"text-decoration": "none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }   ><span style={{ "word-break":"break-word" }} > { (docname)?docname:"--" } </span> </a> :"--"} </TableCell>
                                                    
     
-                                                    <TableCell > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
-                                                    <TableCell  > {(olddata.docs.length > 0)? <span> { this.dateFormat(olddata.docs[0]["effective_end_date"]) }</span>: "--" } </TableCell>
-                                                    <TableCell> {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell>
-                                                    <TableCell style={{ width:"24%"}}> {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
+                                                    <TableCell style={{ width: "12px" }} > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
+                                                    <TableCell  style={{ width: "24px" }}   > {(olddata.docs.length > 0)? <span> { this.dateFormat(olddata.docs[0]["effective_end_date"]) }</span>: "--" } </TableCell>
+                                                  {/* <TableCell  >   {(data.docs.length > 0)?  <TooltipOwn message={  Config.credetailStatus[data.docs[0]["verification_status"]] }  position={'left'}> <Button style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] ,padding:"10px" }} > </Button>  </TooltipOwn>    : "--" } </TableCell>  */ }  
+
+                                                  <TableCell  
+                                                   style={{
+                                                    position: "relative",
+                                              
+                                                    left: "10px",
+                                                   }}
+                                                  >  {(olddata.docs.length > 0)?  <TooltipOwn message={  Config.credetailStatus[olddata.docs[0]["verification_status"]] }  position={'left'}> <Button style={{ "background": Config.credetailStatusColors[olddata.docs[0]["verification_status"]],padding:"10px" }} > </Button> </TooltipOwn>: "--" } </TableCell>
+                                                { /* <TableCell  style={{color: Config.credetailStatusColors[olddata.docs[0]["verification_status"]]}}> {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell> */ }  
+                                                    <TableCell style={{ width: "22%" }}> {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
                                                     
                                               </TableRow>
                                         
@@ -379,7 +390,7 @@ setRedirect = () => {
                           
 
 
-                          
+                           
 
 
 

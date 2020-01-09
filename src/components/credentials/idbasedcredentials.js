@@ -15,6 +15,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Dialog } from '@material-ui/core';
 import  AlertDialog from '../_/commonModal';
 import GoogleDocsViewer from 'react-google-docs-viewer';
+import TooltipOwn from  "../_/Tooltip";
 
 
 import {
@@ -45,6 +46,8 @@ export default class AgCredentails extends Component {
       historyData:false,
       showButton: false,
       recordValue: "",
+      doRedirect:false,
+      redirectUrl:"",
     }
   }
  
@@ -105,11 +108,6 @@ export default class AgCredentails extends Component {
     return endtdate
   }
 
- setRedirect = () => {
-    this.setState({
-      redirect: true
-    })
-  }
 
   backButton =()=>{
     this.setState({
@@ -120,7 +118,7 @@ export default class AgCredentails extends Component {
   }
 
   handleClickOpen = (data) => {
-    console.log(data,"status__check")
+   
     this.setState({open:!this.state.open,url:data});
     
     
@@ -142,11 +140,26 @@ export default class AgCredentails extends Component {
        
     let id  = this.props.history.location.pathname.split("/")
     console.log(id[3]," kranthis----")
-    this.setState({communitId:id[3]})
+    this.setState({communitId:id[3]});
     console.log(this.state.communitId,"iikt");
 
    return id[3]
   }
+
+
+  getCredetailsData = (data)=>{
+   
+   
+        
+    if(data !== undefined && data !== null){
+      this.setState({
+        doRedirect: true,
+         redirectUrl: "/credentials/editCredentials/"+data+"?vid=vendor"
+      });
+   
+    }
+  }
+  
 
 
   credetailsData =(data)=>{
@@ -203,6 +216,11 @@ export default class AgCredentails extends Component {
 
 
   render() {
+
+     if(this.state.doRedirect){
+      return(<Redirect to={this.state.redirectUrl} />)
+
+     }
     
       if (this.state.redirect) {
         return(<Redirect to='/credentialsCreate' />)
@@ -280,11 +298,14 @@ export default class AgCredentails extends Component {
 
                               <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                               <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
-                              <TableCell> {(data.docs.length > 0)?Config.credetailStatus[data.docs[0]["verification_status"]]: "--" }</TableCell>
+                             {/* <TableCell> {(data.docs.length > 0)? Config.credetailStatus[data.docs[0]["verification_status"]] : "--" }</TableCell>*/}  
+                             <TableCell  >   {(data.docs.length > 0)?  <TooltipOwn message={  Config.credetailStatus[data.docs[0]["verification_status"]] }  position={'left'}> <Button style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] ,padding:"10px" }} > </Button>  </TooltipOwn>    : "--" } </TableCell> 
                               <TableCell style ={{width: "120px" }} > {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
                               
-
-                              <TableCell colSpan = {2} >
+                              <TableCell>
+                                  <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/></a> 
+                                </TableCell> 
+                              <TableCell  >
                           {(data.old_credentials.length > 0)? (this.state.recordValue == i)? <i class="fa fa-minus-circle" aria-hidden="true" onClick = { () => {this.recordToBedisplayed(i)}} ></i> : <i class="fa fa-plus-circle" aria-hidden="true" onClick = { (e) => {this.recordToBedisplayed(i)} } ></i> :"" }
                               
                               </TableCell> 
@@ -334,10 +355,18 @@ export default class AgCredentails extends Component {
                                                   >{(docpath != "none" && docpath != undefined )? <a href="javascript:void(0);" style={{"text-decoration": "none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }   ><span style={{ "word-break":"break-word" }} > { (docname !="")?docname:"--" } </span> </a> :"--"} </TableCell>
                                                  
   
-                                                  <TableCell style={{ width:"12%"}} > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
-                                                  <TableCell style={{ width:"14%"}} > {(olddata.docs.length > 0)? <span> { this.dateFormat(olddata.docs[0]["effective_end_date"]) }</span>: "--" } </TableCell>
-                                                  <TableCell style={{ width:"10%"}}  > {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell>
-                                                  <TableCell style={{ width:"18%"}} > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
+                                                  <TableCell style={{ width:"10%"}} > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
+                                                  <TableCell style={{ width:"12%"}} > {(olddata.docs.length > 0)? <span> { this.dateFormat(olddata.docs[0]["effective_end_date"]) }</span>: "--" } </TableCell>
+                                                 {/* <TableCell style={{ width:"10%"}}  > {(olddata.docs.length > 0)? <span style={{ }} > { Config.credetailStatus[olddata.docs[0]["verification_status"]] } </span>  : "--" }  }</TableCell> */} 
+                                                 <TableCell  
+                                                   style={{
+                                                    position: "relative",
+                                              
+                                                    left: "7px",
+                                                   }}
+                                                  >  {(olddata.docs.length > 0)?  <TooltipOwn message={  Config.credetailStatus[olddata.docs[0]["verification_status"]] }  position={'left'}> <Button style={{ "background": Config.credetailStatusColors[olddata.docs[0]["verification_status"]],padding:"10px" }} > </Button> </TooltipOwn>: "--" } </TableCell>
+
+                                                  <TableCell style={{ width:"22%"}} > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
                                                   
                                             </TableRow>
                                       
@@ -359,14 +388,14 @@ export default class AgCredentails extends Component {
                 ) 
               }) :
               <TableRow >
-              <TableCell colSpan={7}> <center>No Records</center> </TableCell>
+              <TableCell colSpan={8}> <center>No Records</center> </TableCell>
               </TableRow>  
                 
                 :
                 
                 
                 <TableRow >
-                <TableCell colSpan={7}> <center>No Records</center> </TableCell>
+                <TableCell colSpan={8}> <center>No Records</center> </TableCell>
                 </TableRow>  
                 
                 }

@@ -72,6 +72,9 @@ export default class CredentailEdit extends Component{
           upperLimitRange_error:"",
           doRedirect: false,
           redirectUrl: "",
+          docTypes: {doc:"doc","docx":"docx",pdf:"pdf","jpg":"jpg","png":"png",gif:"gif",jpeg:"jpeg"},
+          searchPath:"",
+          
 
 
 
@@ -134,7 +137,9 @@ handleChange = name => event => {
     getParams =()=> {
        
       let id  = this.props.history.location.pathname.split("/")
-      return id[3]
+      let searchPath  = this.props.history.location.search
+      //this.setState({ searchPath: searchPath.split("=")[1]})
+      return [id[3],searchPath.split("=")[1]]
     }
 
     handleClose = (e) => {
@@ -143,12 +148,19 @@ handleChange = name => event => {
 
     credentails  = (data)=>{
      // console.log(data,"idd")
+     let vendoerType = data[1];
+
+     if(this.state.searchPath == null &&  this.state.searchPath  == undefined ){
+
       let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
-     let  vendoerType  = (visitorType == "vendor")?  'vendor': 'agency' ;
+      vendoerType  = (visitorType == "vendor")?  'vendor': 'agency' ;
+   
+     } 
+      
      this.setState({vendoerType});
        this.setState({loader: true})
       axios
-      .get(axios.credential_details(),{params : {'id':data,"utype":vendoerType}
+      .get(axios.credential_details(),{params : {'id':data[0],"utype":vendoerType}
       })
       .then((response) => {
 
@@ -216,7 +228,7 @@ handleChange = name => event => {
     }
 
     remarksOnChange = (e) =>{
-      console.log(e,"11122")
+      
       this.setState({[e.target.name] : e.target.value})
     }
 
@@ -237,6 +249,10 @@ handleChange = name => event => {
       console.log(visitorType,"vistor")
       let  vendoerType  = (visitorType == "vendor")?  'vendor': 'vendor_agency' ;
     
+       if(this.getParams().length >1){
+         vendoerType = this.getParams()[1] ;
+       }
+      
       axios
       .get(axios.credential_types()+"?ctype="+vendoerType)
       .then((response) => {
@@ -276,7 +292,7 @@ handleChange = name => event => {
      onSubmit = async (e) => {
       e.preventDefault() 
       let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
-      console.log(visitorType,"vistor")
+     //console.log(visitorType,"vistor")
       let  vendoerType  = (visitorType == "vendor")?  'vendor': 'agency' ;
       
       
@@ -367,6 +383,13 @@ handleChange = name => event => {
         let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
         console.log(visitorType,"vistor")
         let  vendoerType  = (visitorType == "vendor")?  'vendor': 'agency' ;
+        
+        if(this.getParams().length > 1){
+
+          vendoerType  = this.getParams()[1];
+          
+        }
+        
       
         if(this.state.credential_value == ""){
               this.setState({credential_value_error: "Please select credentials Type"});
@@ -619,6 +642,11 @@ handleChange = name => event => {
     if (this.state.doRedirect) {
       return(<Redirect to={ this.state.redirectUrl} />)
     }
+    
+    
+
+     
+     
      let errorMessage = (this.state.credential_value_error == "")? false:  true  ;
      let  visitor_types   =  CommonService.localStore.get("visitor_types").visitor_types; 
     let isDisplay  =  (visitor_types != "agency")?  "" : "none"
@@ -652,11 +680,17 @@ handleChange = name => event => {
     
     let  statusOfButton = false;
     let  buttonHideOrNot = "show";  
-    if (this.state.verificationStatus == "in_progress" || this.state.verificationStatus == "not_verified" ){
-      statusOfButton = true;  
-    }else if( this.state.verificationStatus == "verified" || this.state.verificationStatus == "rejected" ) {
-      buttonHideOrNot =  "none";     
-    }
+
+
+   //if ((this.state.fileName =="") && (this.state.alterFilename == "") ){
+
+      if (this.state.verificationStatus == "in_progress" || this.state.verificationStatus == "not_verified" ){
+        statusOfButton = true;  
+      }else if( this.state.verificationStatus == "verified" || this.state.verificationStatus == "rejected" ) {
+        buttonHideOrNot =  "none";     
+      }  
+    //}
+    
 
     let  statusOfVendort = ((this.state.vendoerType != "vendor")? "show"  : "none")
 

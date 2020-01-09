@@ -15,6 +15,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Dialog } from '@material-ui/core';
 import  AlertDialog from '../_/commonModal';
 import GoogleDocsViewer from 'react-google-docs-viewer';
+import TooltipOwn from  "../_/Tooltip";
 
 
 
@@ -272,7 +273,8 @@ export default class Credentails extends Component {
 
                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                 <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
-                <TableCell> {(data.docs.length > 0)?Config.credetailStatus[data.docs[0]["verification_status"]]: "--" }</TableCell>
+               { /*<TableCell> {(data.docs.length > 0)?Config.credetailStatus[data.docs[0]["verification_status"]]: "--" }</TableCell> */} 
+               <TableCell  >   {(data.docs.length > 0)?  <TooltipOwn message={  Config.credetailStatus[data.docs[0]["verification_status"]] }  position={'left'}> <Button style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] ,padding:"10px" }} > </Button>  </TooltipOwn>    : "--" } </TableCell> 
                 <TableCell >  { (data.alternate_docs.length > 0)? data.alternate_docs[0]["remarks"]  : data.docs[0]["remarks"] }  </TableCell>
                 <TableCell>
                               
@@ -324,7 +326,7 @@ export default class Credentails extends Component {
                                                     <TableCell style={{
                                                           "text-decoration": "none",
                                                           "word-break": "break-word",
-                                                           "width" :"108px"
+                                                            "width" :"108px"
                                                     }}  >{(docpath != "none")? <a href="javascript:void(0);" style={{"text-decoration": "none"}}  onClick = {(e) =>this.handleClickOpen(docpath)  }  > {(docname !="")?docname :"--"}</a> :"--"} 
                                                     </TableCell>
                                                     <TableCell 
@@ -334,9 +336,17 @@ export default class Credentails extends Component {
                                                       "width": "131px"
                                                     }}
                                                       > { (alternativeDocPath !="none")? <a  href="javascript:void(0);" style={{"text-decoration": "none"}}   onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > {   (altername !="")?altername :"--"}</a> :"--"}</TableCell>
-                                                    <TableCell style={{"width": "12%"}} > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
-                                                    <TableCell style={{"width": "12%"}} > {(olddata.docs.length > 0)? <span> { this.dateFormat(olddata.docs[0]["effective_end_date"]) }</span>: "--" } </TableCell>
-                                                    <TableCell style={{"width": "11%"}}> {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell>
+                                                    <TableCell style={{"width": "11%"}} > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
+                                                    <TableCell style={{"width": "10%"}} > {(olddata.docs.length > 0)? <span> { this.dateFormat(olddata.docs[0]["effective_end_date"]) }</span>: "--" } </TableCell>
+                                                    {/*<TableCell style={{"width": "11%"}}> {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell> */}
+                                                    <TableCell  
+                                                   style={{
+                                                    position: "relative",
+                                              
+                                                    left: "0px",
+                                                    width:"10px"
+                                                   }}
+                                                  >  {(olddata.docs.length > 0)?  <TooltipOwn message={  Config.credetailStatus[olddata.docs[0]["verification_status"]] }  position={'left'}> <Button style={{ "background": Config.credetailStatusColors[olddata.docs[0]["verification_status"]],padding:"10px" }} > </Button> </TooltipOwn>: "--" } </TableCell>
                                                     <TableCell > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
                                                     
                                               </TableRow>

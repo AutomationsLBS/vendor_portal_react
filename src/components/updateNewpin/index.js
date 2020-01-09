@@ -188,6 +188,45 @@ export default class Updatepin extends Component {
           this.setState({newPin_error:"Please enter your new "+changelab.toLowerCase()}) 
 
         }
+
+        if (this.state.newPin !== "" ){
+          if(changelab ==  "Pin"){
+          
+            if(!/^[0-9]+$/.test(this.state.newPin)){
+              // alert("Please only enter numeric characters only for your Age! (Allowed input:0-9)")
+               this.setState({newPin_error:"Please only enter numeric characters only for your pin! (Allowed input:0-9)"}) 
+               status = false;
+             }
+             if(this.state.newPin.length > 4){
+
+              this.setState({newPin_error:"Please only enter numeric characters only for your pin! (Allowed input:0-9) and Pin length must not be exceed 4 digits"}) 
+              status = false;
+
+
+             }
+            
+          }
+          
+
+
+        }
+
+        if (this.state.confirm_pin !== "" ){
+          if(changelab ==  "pin"){
+            if(!/^[0-9]+$/.test(this.state.confirm_pin)){
+              // alert("Please only enter numeric characters only for your Age! (Allowed input:0-9)")
+               this.setState({confirm_pin_error:"Please only enter numeric characters only for your pin! (Allowed input:0-9)"}) 
+               status = false;
+             }
+          }
+          
+
+
+        }
+
+
+
+
       
         if (status){
           this.setState({loader: true});
@@ -229,7 +268,7 @@ export default class Updatepin extends Component {
             <Grid item sm={6}>
               <h2>
                 <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-                   {changeTabName } 
+                   {changeTabName }  
                 </Typography>
               </h2>
             </Grid>

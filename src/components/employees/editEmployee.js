@@ -52,6 +52,7 @@ export default class EmployeeEdit extends Component {
       doRedirect: false,
       redirectUrl: null,
       dataReadyStatus: false,
+      
     }
   }
   handleFormChange = name => event => {
@@ -200,6 +201,20 @@ export default class EmployeeEdit extends Component {
       employeeError.service_label = "";
       this.setState({employeeError})
     }
+
+
+
+
+    if(this.state.employeeData.employeestatus == ""){
+      
+      employeeError.employeestatus = null;
+      this.setState({employeeError})
+      statusFlag  = false;
+    }else{
+      
+      employeeError.employeestatus = "";
+      this.setState({employeeError})
+    }
    
     let companyID = CommonService.localStore.get("usr_company_id").usr_company_id
 
@@ -255,6 +270,7 @@ export default class EmployeeEdit extends Component {
   }
  
   render() {
+    console.log(Config.employeeStatus,"employeestatus");
     let serviceLables =  JSON.parse(CommonService.localStore.get("serviceLables").serviceLables);
    
     const {loader, employee, employeeData, employeeError,  redirectUrl, doRedirect} = this.state;
@@ -274,7 +290,7 @@ export default class EmployeeEdit extends Component {
                  <Grid item>
                      <h2>
                      <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-                        Edit Employee Details
+                        Edit Employee Details 
                       </Typography>
                     
                      </h2>
@@ -377,7 +393,7 @@ export default class EmployeeEdit extends Component {
           defaultValue ={employeeData.service_label} 
           select
           onChange={this.handleFormChange('service_label')}
-          style={{ width: "260px",marginTop: "30px"}}
+          style={{ width: "352px",marginTop: "30px"}}
                       margin="normal"
                       helperText={(employeeError.service_label !== null) ? "" : "Service type is required."}
                       error={(employeeError.service_label !== null)
@@ -401,19 +417,39 @@ export default class EmployeeEdit extends Component {
         </TextField>
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} className="singleFormLeft" >
-                 { /*  <FormControl>
-                    <InputLabel htmlFor="community-helper"  style={{marginTop: "15px"}}>Community</InputLabel>
-                    <Select  label="Community" id="community"
-                        value={employeeData.community}
-                        onChange={this.handleFormChange('community')}
-                        style={{ width: "350px",marginTop: "30px"}}
-                        margin="normal">
-                         
-                    </Select>
-                    {(employeeError.community === null) 
-                      ? <FormHelperText style={{'color': '#f44336'}}>Community is required!</FormHelperText>
-                      : ""}
-                    </FormControl> */}
+                  
+
+
+                <TextField
+                label="Employee Status" 
+          id="standard-select-currency"
+          defaultValue ={employeeData.employeestatus} 
+          select
+          onChange={this.handleFormChange('employeestatus')}
+          style={{ width: "352px",marginTop: "30px"}}
+                      margin="normal"
+                      helperText={(employeeError.employeestatus !== null) ? "" : "Employee Status is required."}
+                      error={(employeeError.employeestatus !== null)
+                      ? false
+                      : true}
+        >
+           { (Config.employeeStatus.length > 0 )?
+                            
+                            Config.employeeStatus.map((data) => {
+
+                             // console.log("employee status ",key,value);
+  
+                              return (
+  
+                                <MenuItem value={ data.id}> { data.value } </MenuItem>
+                                
+                              )
+                            })
+                          : 
+                            null }
+
+        
+        </TextField>
                 
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} justify="center" style={{marginTop: "15px"}}  >
