@@ -132,12 +132,32 @@ export default class CredentailCreate extends Component{
 
     }
 
+
+    getParams =()=> {
+    
+      let result  = this.props.history.location.pathname.split("/")
+    
+
+     let searchPath  = this.props.history.location.search;
+    if (searchPath.split("=")[1] != undefined){
+         result.push(searchPath.split("=")[1]);
+      }
+      
+      
+      return result
+    }
   
   	componentDidMount() {
+       
       let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
       console.log(visitorType,"vistor")
       let  vendoerType  = (visitorType == "vendor")?  'vendor': 'vendor_agency' ;
       this.setState({vendoerType});
+        
+      if(this.getParams().length > 2 ){
+        console.log(this.getParams(),"datak")
+       vendoerType = this.getParams()[3] ;
+     }
     
       axios
       .get(axios.credential_types()+"?ctype="+vendoerType)
@@ -161,6 +181,8 @@ export default class CredentailCreate extends Component{
             });
           
       });
+
+     this.getParams();
     }
     
     
@@ -169,6 +191,9 @@ export default class CredentailCreate extends Component{
       e.preventDefault() 
       let res = await this.uploadFile(this.state.file,this.state.alterFiledata);
       }
+
+
+     
   
 
      
@@ -339,12 +364,21 @@ export default class CredentailCreate extends Component{
     formData.append('lower_limit',this.state.lowerLimit);
     formData.append('upper_limit',this.state.upperLimit);
   }
+  formData.append('utype',vendorData["visitor_type"]);
+  formData.append('vendor_id',vendorData["visitor"]['id'])
+  console.log( this.getParams() ,"testdd");
+
+  if(this.getParams().length > 2 ){
+    formData.append('employee_id',this.getParams()[2]);
+    formData.append('vendor_id',this.getParams()[2]);
+    formData.append('utype', this.getParams()[3]);
+  }
 
   formData.append('effective_start_date',startdate)
   formData.append('effective_end_date',endtdate)
-  formData.append('vendor_id',vendorData["visitor"]['id'])
+ // formData.append('vendor_id',vendorData["visitor"]['id'])
   formData.append('credential_type_id',this.state.credential_value)
-  formData.append('utype',vendorData["visitor_type"])
+  
   formData.append('alternate_docs', this.state.altfile)
   formData.append('alteruploadDoc',  alterFile)
   formData.append('remarks',  this.state.remarks)

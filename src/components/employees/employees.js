@@ -74,7 +74,7 @@ class Employees extends Component {
         doRedirect: true,
          redirectUrl: "/agCredentials/credentials/"+data
       });
-
+     
       CommonService.localStore.set("employeeName_c", employyeeName);
       console.log(CommonService.localStore.get("employeeName_c"));
     }

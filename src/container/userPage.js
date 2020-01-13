@@ -170,7 +170,7 @@ class userPage extends Component {
     else if (path.indexOf('/credentialsCreate')!== -1){
       console.log("in CredentailsCreate")
       return(
-        <div><CredentailsCreate /></div>
+        <div><CredentailsCreate { ...this.props } /></div>
       )
     }
     else if (path.indexOf('/credentialsEdit')!== -1){

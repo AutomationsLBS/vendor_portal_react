@@ -135,11 +135,17 @@ handleChange = name => event => {
      return data
     }
     getParams =()=> {
-       
-      let id  = this.props.history.location.pathname.split("/")
-      let searchPath  = this.props.history.location.search
-      //this.setState({ searchPath: searchPath.split("=")[1]})
-      return [id[3],searchPath.split("=")[1]]
+    
+      let result  = this.props.history.location.pathname.split("/")
+    
+
+     let searchPath  = this.props.history.location.search;
+    if (searchPath.split("=")[1] != undefined){
+         result.push(searchPath.split("=")[1]);
+      }
+      
+      
+      return result
     }
 
     handleClose = (e) => {
@@ -147,20 +153,20 @@ handleChange = name => event => {
     }
 
     credentails  = (data)=>{
-     // console.log(data,"idd")
-     let vendoerType = data[1];
+     console.log(data,"idd")
+    
+     let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
+     let vendoerType  = (visitorType == "vendor")?  'vendor': 'agency' ;
+  
+     if(data.length > 4){
 
-     if(this.state.searchPath == null &&  this.state.searchPath  == undefined ){
-
-      let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
-      vendoerType  = (visitorType == "vendor")?  'vendor': 'agency' ;
-   
+      vendoerType  = data[4]
      } 
       
      this.setState({vendoerType});
        this.setState({loader: true})
       axios
-      .get(axios.credential_details(),{params : {'id':data[0],"utype":vendoerType}
+      .get(axios.credential_details(),{params : {'id':data[3],"utype":vendoerType}
       })
       .then((response) => {
 
@@ -246,11 +252,12 @@ handleChange = name => event => {
   	componentDidMount() {
       console.log(this.state,"statecheck")
       let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
-      console.log(visitorType,"vistor")
+      
       let  vendoerType  = (visitorType == "vendor")?  'vendor': 'vendor_agency' ;
     
-       if(this.getParams().length >1){
-         vendoerType = this.getParams()[1] ;
+       if(this.getParams().length > 4 ){
+          //console.log(this.getParams(),"datak")
+         vendoerType = this.getParams()[4] ;
        }
       
       axios
@@ -293,7 +300,7 @@ handleChange = name => event => {
       e.preventDefault() 
       let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
      //console.log(visitorType,"vistor")
-      let  vendoerType  = (visitorType == "vendor")?  'vendor': 'agency' ;
+     // let  vendoerType  = (visitorType == "vendor")?  'vendor': 'agency' ;
       
       
       let res = await this.uploadFile(this.state.file,this.state.alterFiledata);
@@ -381,12 +388,12 @@ handleChange = name => event => {
 
         let statusFlag =   true;
         let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
-        console.log(visitorType,"vistor")
+       
         let  vendoerType  = (visitorType == "vendor")?  'vendor': 'agency' ;
         
-        if(this.getParams().length > 1){
+        if(this.getParams().length > 4){
 
-          vendoerType  = this.getParams()[1];
+          vendoerType  = this.getParams()[4];
           
         }
         
@@ -565,7 +572,18 @@ handleChange = name => event => {
           });
       
          
-         this.cancelRedirect();
+         if (this.getParams().length > 4 ){
+            
+
+          this.setState({
+            doRedirect: true,
+             redirectUrl: "/agCredentials/credentials/"+CommonService.localStore.get("_communityId")._communityId
+
+            });
+
+         } else {
+          this.cancelRedirect();
+         }
           
         })
         .catch((error) => {
@@ -662,7 +680,7 @@ handleChange = name => event => {
   
     }
     let  filenameAlter = "";
-    console.log(this.state.alterFilename,"opooo11");
+    
      if (this.state.alterFilename != null && this.state.alterFilename != undefined ){
       let data = decodeURI(this.state.alterFilename);
 

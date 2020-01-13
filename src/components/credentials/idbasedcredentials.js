@@ -142,6 +142,7 @@ export default class AgCredentails extends Component {
     console.log(id[3]," kranthis----")
     this.setState({communitId:id[3]});
     console.log(this.state.communitId,"iikt");
+    CommonService.localStore.set("_communityId",id[3] );
 
    return id[3]
   }
@@ -158,6 +159,7 @@ export default class AgCredentails extends Component {
       });
    
     }
+    //config.()
   }
   
 
@@ -171,7 +173,7 @@ export default class AgCredentails extends Component {
     axios
     .get(axios.my_credentials(),{params:{employee:data,utype: utype}})
     .then((response) => {
-        
+        console.log(response.credentials,"ere")
         this.setState({myCredentails: response.credentials, loader: false});
         console.log( this.state.myCredentails,"test data")
        // this.setState({showButton : (response.credentials.old_credentials.length > 0)? true : false })
@@ -210,6 +212,15 @@ export default class AgCredentails extends Component {
 
 }
 
+  addcredetailsRequried= ()=>{
+
+    this.setState({
+      doRedirect: true,
+       redirectUrl: "/credentialsCreate/"+this.getParams()+"?vid=vendor"
+      });
+     
+  }
+
   showHistory = (e) =>{
     this.setState({"historyData":!this.state.historyData })
   }
@@ -245,8 +256,11 @@ export default class AgCredentails extends Component {
             
       
             <Grid item xs={6} sm={6} align="right">
-              <Button className="btn btn-primary btn-round" id="addCred"
-              onClick={this.backButton}>Back</Button>
+              <Button className="btn btn-primary btn-round" id="addCred" style={{"margin-right":"17px"}} onClick={ this.addcredetailsRequried}
+              >Add credentials</Button> 
+
+<Button className="btn btn-primary btn-round" id="addCred"
+              onClick={this.credetails}>Back</Button>
 
           <AlertDialog  
            buttonTitle = {"testignore"}
@@ -286,23 +300,23 @@ export default class AgCredentails extends Component {
                             return (
                               <Fragment>
                              <TableRow key={i} >
-                              <TableCell style={{width: "30%"}}>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
+                              <TableCell style={{width: "20%"}}>  { this.state.credential_types[data.credential_data.credential_type_id]} </TableCell>
                               
                               <TableCell style={{
                                                     "text-decoration": "none",
                                                     "word-break": "break-word",
-                                                    "width": "131px"
+                                                    "width": "20%"
                                                   }}
                               
                               >{(docpath != "none")? <a href="javascript:void(0);" style={{"text-decoration":"none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }  > { (docname !="")?docname :"--" } </a> :"--"} </TableCell>
 
-                              <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
-                              <TableCell> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
+                              <TableCell style={{width: "10%"}} > {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
+                              <TableCell style={{width: "10%"}} > {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
                              {/* <TableCell> {(data.docs.length > 0)? Config.credetailStatus[data.docs[0]["verification_status"]] : "--" }</TableCell>*/}  
-                             <TableCell  >   {(data.docs.length > 0)?  <TooltipOwn message={  Config.credetailStatus[data.docs[0]["verification_status"]] }  position={'left'}> <Button style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] ,padding:"10px" }} > </Button>  </TooltipOwn>    : "--" } </TableCell> 
-                              <TableCell style ={{width: "120px" }} > {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
+                             <TableCell style={{width: "10%"}} >   {(data.docs.length > 0)?  <TooltipOwn message={  Config.credetailStatus[data.docs[0]["verification_status"]] }  position={'left'}> <Button style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] ,color:"white" }} > {  Config.credetailStatus[data.docs[0]["verification_status"]] }</Button>  </TooltipOwn>    : "--" } </TableCell> 
+                              <TableCell style ={{width: "20%" }} > {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
                               
-                              <TableCell>
+                              <TableCell style ={{width: "5%" }} >
                                   <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/></a> 
                                 </TableCell> 
                               <TableCell  >
@@ -343,30 +357,28 @@ export default class AgCredentails extends Component {
                                       
                                       >
                                           
-                                              <TableCell width="30%"> </TableCell>
+                                              <TableCell width="20%"> </TableCell>
                                               
                                                   <TableCell 
                                                   
                                                   style={{
                                                     "text-decoration": "none",
                                                     "word-break": "break-word",
-                                                    "width": "131px"
+                                                    "width": "21%"
                                                   }}
-                                                  >{(docpath != "none" && docpath != undefined )? <a href="javascript:void(0);" style={{"text-decoration": "none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }   ><span style={{ "word-break":"break-word" }} > { (docname !="")?docname:"--" } </span> </a> :"--"} </TableCell>
+                                                  >{(docpath != "none" && docpath != undefined )? <a href="javascript:void(0);" style={{"text-decoration": "none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }   >{ (docname !="")?docname:"--" }  </a> :"--"} </TableCell>
                                                  
   
                                                   <TableCell style={{ width:"10%"}} > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
-                                                  <TableCell style={{ width:"12%"}} > {(olddata.docs.length > 0)? <span> { this.dateFormat(olddata.docs[0]["effective_end_date"]) }</span>: "--" } </TableCell>
+                                                  <TableCell style={{ width:"10%"}} > {(olddata.docs.length > 0)?  this.dateFormat(olddata.docs[0]["effective_end_date"]) : "--" } </TableCell>
                                                  {/* <TableCell style={{ width:"10%"}}  > {(olddata.docs.length > 0)? <span style={{ }} > { Config.credetailStatus[olddata.docs[0]["verification_status"]] } </span>  : "--" }  }</TableCell> */} 
                                                  <TableCell  
                                                    style={{
-                                                    position: "relative",
-                                              
-                                                    left: "7px",
+                                                     width:"10%"
                                                    }}
-                                                  >  {(olddata.docs.length > 0)?  <TooltipOwn message={  Config.credetailStatus[olddata.docs[0]["verification_status"]] }  position={'left'}> <Button style={{ "background": Config.credetailStatusColors[olddata.docs[0]["verification_status"]],padding:"10px" }} > </Button> </TooltipOwn>: "--" } </TableCell>
+                                                  >  {(olddata.docs.length > 0)?  <TooltipOwn message={  Config.credetailStatus[olddata.docs[0]["verification_status"]] }  position={'left'}> <Button style={{ "background": Config.credetailStatusColors[olddata.docs[0]["verification_status"]],color:"white" }} > { Config.credetailStatus[olddata.docs[0]["verification_status"]]}</Button> </TooltipOwn>: "--" } </TableCell>
 
-                                                  <TableCell style={{ width:"22%"}} > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
+                                                  <TableCell  style={{ width: "29%" }} > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
                                                   
                                             </TableRow>
                                       
