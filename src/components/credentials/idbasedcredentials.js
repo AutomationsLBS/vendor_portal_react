@@ -225,6 +225,14 @@ export default class AgCredentails extends Component {
     this.setState({"historyData":!this.state.historyData })
   }
 
+  credetails =()=>{
+    this.setState({
+      doRedirect: true,
+       redirectUrl: "/employees"
+      });
+
+  }
+ 
 
   render() {
 
@@ -257,7 +265,7 @@ export default class AgCredentails extends Component {
       
             <Grid item xs={6} sm={6} align="right">
               <Button className="btn btn-primary btn-round" id="addCred" style={{"margin-right":"17px"}} onClick={ this.addcredetailsRequried}
-              >Add credentials</Button> 
+              >Add Credential</Button> 
 
 <Button className="btn btn-primary btn-round" id="addCred"
               onClick={this.credetails}>Back</Button>
@@ -313,7 +321,7 @@ export default class AgCredentails extends Component {
                               <TableCell style={{width: "10%"}} > {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                               <TableCell style={{width: "10%"}} > {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
                              {/* <TableCell> {(data.docs.length > 0)? Config.credetailStatus[data.docs[0]["verification_status"]] : "--" }</TableCell>*/}  
-                             <TableCell style={{width: "10%"}} >   {(data.docs.length > 0)?  <TooltipOwn message={  Config.credetailStatus[data.docs[0]["verification_status"]] }  position={'left'}> <Button style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] ,color:"white" }} > {  Config.credetailStatus[data.docs[0]["verification_status"]] }</Button>  </TooltipOwn>    : "--" } </TableCell> 
+                             <TableCell style={{width: "10%"}} >   {(data.docs.length > 0)?  <Button style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] ,color:"white" }} > {  Config.credetailStatus[data.docs[0]["verification_status"]] }</Button>     : "--" } </TableCell> 
                               <TableCell style ={{width: "20%" }} > {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
                               
                               <TableCell style ={{width: "5%" }} >
@@ -376,7 +384,7 @@ export default class AgCredentails extends Component {
                                                    style={{
                                                      width:"10%"
                                                    }}
-                                                  >  {(olddata.docs.length > 0)?  <TooltipOwn message={  Config.credetailStatus[olddata.docs[0]["verification_status"]] }  position={'left'}> <Button style={{ "background": Config.credetailStatusColors[olddata.docs[0]["verification_status"]],color:"white" }} > { Config.credetailStatus[olddata.docs[0]["verification_status"]]}</Button> </TooltipOwn>: "--" } </TableCell>
+                                                  >  {(olddata.docs.length > 0)?   <Button style={{ "background": Config.credetailStatusColors[olddata.docs[0]["verification_status"]],color:"white" }} > { Config.credetailStatus[olddata.docs[0]["verification_status"]]}</Button> : "--" } </TableCell>
 
                                                   <TableCell  style={{ width: "29%" }} > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
                                                   

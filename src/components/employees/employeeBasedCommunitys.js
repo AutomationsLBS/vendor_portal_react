@@ -151,16 +151,17 @@ class Employees extends Component {
       <Fragment>
        <Grid container >
           <Grid container>
-            <Grid item sm={6}>
+            <Grid item xs={10} sm={10}>
               <h2>
                 <Typography className="pageTitle titleSection" variant="title" gutterBottom>
                 Employees served for {   CommonService.localStore.get("CommunityName_c").CommunityName_c}  
                 </Typography>
               </h2>
 
-              {CommonService.renderLoader(this.state.loader)}
+              
             </Grid>
-            <Grid item xs={6} sm={6} align="right">
+            <Grid item xs={2} sm={2} align="right">
+            {CommonService.renderLoader(this.state.loader)}
               <Button className="btn btn-primary btn-round" id="addCred"
               onClick={this.backButton}>Back</Button>
             </Grid>
@@ -171,10 +172,10 @@ class Employees extends Component {
                     <TableCell>Employee Name</TableCell>
                     <TableCell>Phone Number</TableCell>
                     <TableCell> Email</TableCell>
-                    {/* <TableCell> Address </TableCell> */}
+                    
                     <TableCell> Credentials </TableCell>
                     <TableCell> Communities Served </TableCell>
-                   {/* <TableCell> Edit </TableCell> */}
+                  
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -217,12 +218,12 @@ class Employees extends Component {
                  }) :
 
                  <TableRow >
-                 <TableCell colSpan={6}> <center>No Records</center> </TableCell>
+                 <TableCell colSpan={5}> <center>No Records</center> </TableCell>
                  </TableRow>  
                   :  
                   
                   <TableRow >
-                  <TableCell colSpan={6}> <center>No Records</center> </TableCell>
+                  <TableCell colSpan={5}> <center>No Records</center> </TableCell>
                   </TableRow>
                   
                   }

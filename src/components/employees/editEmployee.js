@@ -275,6 +275,11 @@ export default class EmployeeEdit extends Component {
    
     const {loader, employee, employeeData, employeeError,  redirectUrl, doRedirect} = this.state;
     let errorMessage = (this.state.employeeError.service_label !== null)? false: true ;
+
+
+    if (this.state.redirectUrl) {
+      return(<Redirect to={this.state.redirectUrl} />)
+    }
    
     if (!this.state.dataReadyStatus) {
       return (<div>
@@ -461,7 +466,7 @@ export default class EmployeeEdit extends Component {
                   </Button>
                   <Button variant="outlined" className="outlinedBtn" 
                     onClick={this.cancelCreate}
-                    href="/employees"  style={{margin:"14px"}} >
+                      style={{margin:"14px"}} >
                           Cancel
                   </Button>
                 </Grid>

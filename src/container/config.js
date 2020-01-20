@@ -45,6 +45,16 @@ const  credetailStatusColors = ()=>{
     }
 }
 
+const  EmployeeStatusColors = ()=>{
+    return  {
+        "green" :"Verified",
+        "yellow": "In-Progress",
+         "red": "rejected"
+    
+    }
+}
+
+
 const ApiUrls = ()=>{
    // let url = window.location.href;
     //let apiUrl = "https://accupass-api-dev.herokuapp.com";
@@ -93,6 +103,7 @@ const Config = {
     "credetailStatus":credetailStatus(),
     "employeeStatus":employeeStatus(),
     "credetailStatusColors":credetailStatusColors(),
+    "EmployeeStatusColors": EmployeeStatusColors(),
     
    
     "mainnav": [

@@ -161,10 +161,10 @@ class Employees extends Component {
                     <TableCell>Employee Name</TableCell>
                     <TableCell>Phone Number</TableCell>
                     <TableCell> Email</TableCell>
-                   {/*  <TableCell> Address </TableCell> */}
-                    <TableCell> Credentials </TableCell>
-                    <TableCell> Communities Served </TableCell>
-                    <TableCell> Edit </TableCell>
+                    <TableCell>Credential Status</TableCell> 
+                    <TableCell>Credentials</TableCell>
+                    <TableCell>Communities Served</TableCell>
+                    <TableCell>Edit</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -180,6 +180,8 @@ class Employees extends Component {
                               <TableCell> { ( data["employee_details"]["first_name"] )?  data["employee_details"]["first_name"]+" "+data["employee_details"]["last_name"] : "--" }</TableCell>
                               <TableCell>  { (data["employee_details"]["phone_mobile"] )?  data["employee_details"]["phone_mobile"] : "--" }</TableCell>
                               <TableCell>  { (data["employee_details"]["email"] )?  data["employee_details"]["email"] : "--" } </TableCell>
+                              <TableCell>  { (data["employee_credential_status"] )? <Button style={{ "background": data["employee_credential_status"] ,color:"white" }} > { Config.EmployeeStatusColors[data["employee_credential_status"]] }</Button>  : "--" } </TableCell>
+                              
                              {/*
                             
                              <TableCell>  { ( data["employee_details"]["primary_address_city"])?  data["employee_details"]["primary_address_city"]+"," :  ""   } 
@@ -209,13 +211,13 @@ class Employees extends Component {
                         }) : 
 
                         <TableRow >
-                            <TableCell colSpan={6}> <center>No Records</center> </TableCell>
+                            <TableCell colSpan={7}> <center>No Records</center> </TableCell>
                             </TableRow>
 
 
                   :  
                   <TableRow >
-                  <TableCell colSpan={6}> <center>No Records</center> </TableCell>
+                  <TableCell colSpan={7}> <center>No Records</center> </TableCell>
                   </TableRow>
                   
                   }

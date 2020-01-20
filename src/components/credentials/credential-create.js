@@ -367,11 +367,13 @@ export default class CredentailCreate extends Component{
   formData.append('utype',vendorData["visitor_type"]);
   formData.append('vendor_id',vendorData["visitor"]['id'])
   console.log( this.getParams() ,"testdd");
-
+  let redirectUrl = false;
   if(this.getParams().length > 2 ){
     formData.append('employee_id',this.getParams()[2]);
     formData.append('vendor_id',this.getParams()[2]);
     formData.append('utype', this.getParams()[3]);
+    redirectUrl = true;    
+
   }
 
   formData.append('effective_start_date',startdate)
@@ -382,6 +384,7 @@ export default class CredentailCreate extends Component{
   formData.append('alternate_docs', this.state.altfile)
   formData.append('alteruploadDoc',  alterFile)
   formData.append('remarks',  this.state.remarks)
+
 
   if (CommonService.localStore.get("usr_company_id").usr_company_id !== undefined && CommonService.localStore.get("usr_company_id").usr_company_id !== "" ){
    
@@ -430,8 +433,16 @@ export default class CredentailCreate extends Component{
       className: 'rotateY animated'
     });
 
+   if(redirectUrl){
+    this.setState({
+      doRedirect: true,
+       redirectUrl: "/agCredentials/credentials/"+this.getParams()[2]
+      });
+       
+   }else {
+    this.cancelRedirect();
+   }
    
-   this.cancelRedirect();
    
   })
   .catch((error) => {
@@ -766,6 +777,9 @@ handleChange = name => event => {
                      ? false
                      : true}
                     placeholder="Remarks" />   
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} className="singleFormRight" style={{marginTop:"7px"}}>
+                  <FormHelperText style={{'color': 'black',top: "0px",position:"relative" }}> { (credentialnote.length > 0) ? (credentialnote[0]["url"] !=null)?<Fragment> <span>URL:</span> <a href={credentialnote[0]["url"]}  target="_blank" style={{ "text-decoration": "none"}} > { credentialnote[0]["url"] }</a> </Fragment> :"" : ""}</FormHelperText> 
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} className="singleFormRight" style={{marginTop:"7px"}}>
                   <FormHelperText style={{'color': 'black',top: "0px",position:"relative" }}> { (credentialnote.length > 0) ? (credentialnote[0]["notes"] !=null)? "Note: "+ credentialnote[0]["notes"]:"" : ""}</FormHelperText> 
