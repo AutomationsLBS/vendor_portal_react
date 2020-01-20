@@ -660,8 +660,11 @@ handleChange = name => event => {
     if (this.state.doRedirect) {
       return(<Redirect to={ this.state.redirectUrl} />)
     }
+    let credentialnote =""
+    if ( this.state.credential_types){
+      credentialnote =   this.state.credential_types.filter((data)=> data.id == this.state.credential_value);
+    }
     
-    let credentialnote =   this.state.credential_types.filter((data)=> data.id == this.state.credential_value);
 
      
      
