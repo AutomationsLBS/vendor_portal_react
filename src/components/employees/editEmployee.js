@@ -82,7 +82,6 @@ export default class EmployeeEdit extends Component {
   getParams =()=> {
        
     let id  = this.props.history.location.pathname.split("/")
-    console.log(id[3]," kranthis----")
    
    return id[3]
   }
@@ -90,11 +89,11 @@ export default class EmployeeEdit extends Component {
 
    componentDidMount(){
 
-    console.log(" componentDidMount ........")
+   
 
    }
    componentWillMount(){
-     console.log(" componentWillMoun ........")
+   
     this.community_employees(this.getParams());
    }
 
@@ -109,14 +108,14 @@ export default class EmployeeEdit extends Component {
      .get(axios.employee_details(),{params:{id: data}})
      .then((response) => {
 
-       console.log(response,"respose  emp data")
+   
        let empDataa  =  {"phone_mobile":response.employee_data.phone_mobile ,
         "first_name": response.employee_data.first_name ,
         "last_name": response.employee_data.last_name ,
         "email": response.employee_data.email ,
       // "service_label":  response.employee_data.service,
       "service_label":  serviceLables[response.employee_data.service] ,
-       
+       "employeestatus": response.employee_data.status,
         "id": response.employee_data.id, 
       }
          this.setState({employeeData: empDataa, loader: false,dataReadyStatus:true});
@@ -226,7 +225,7 @@ export default class EmployeeEdit extends Component {
     if (statusFlag){
 
       this.setState({ loader : true});
-
+      employeeData.status = employeeData.employeestatus
       axios
       .post(axios.update_employee(),employeeData)
       .then((response) => {
@@ -248,8 +247,8 @@ export default class EmployeeEdit extends Component {
             position: toast.POSITION.TOP_CENTER,
             className: 'rotateY animated'
           });
-
-          window.location.href="/employees"
+         this.cancelCreate();
+          //window.location.href="/employees"
          // console.log(response,"respose  emp data")
            
       })

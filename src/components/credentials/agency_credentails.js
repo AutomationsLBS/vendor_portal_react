@@ -273,7 +273,7 @@ setRedirect = () => {
 
                                 <TableCell style={{ width:"10%"}}> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                                 <TableCell style={{ width:"10%"}}> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
-                                <TableCell style={{ width:"10%"}}  >   {(data.docs.length > 0)?   <Button style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] ,color:"white" }} > {Config.credetailStatus[data.docs[0]["verification_status"]] } </Button>     : "--" } </TableCell> 
+                                <TableCell style={{ width:"10%"}}  >   {(data.docs.length > 0)?   <Button style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] ,color:"white",    cursor: "default" }} > {Config.credetailStatus[data.docs[0]["verification_status"]] } </Button>     : "--" } </TableCell> 
                            { /*  <TableCell  > <Tooltip title="hiii">  <span style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] , padding :"4px"}}>  {(data.docs.length > 0)?  Config.credetailStatus[data.docs[0]["verification_status"]]  : "--" } </span> </Tooltip> </TableCell>  */ }    
                                 <TableCell style ={{width: "20%" }} > {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
                                 <TableCell style ={{width: "5%" }} >
@@ -336,7 +336,7 @@ setRedirect = () => {
 
                                                   <TableCell  
                                                     style={{ width: "10%" }}
-                                                  >  {(olddata.docs.length > 0)?   <Button style={{ "background": Config.credetailStatusColors[olddata.docs[0]["verification_status"]],color:"white"}} >{ Config.credetailStatus[olddata.docs[0]["verification_status"]] }</Button> : "--" } </TableCell>
+                                                  >  {(olddata.docs.length > 0)?   <Button style={{ "background": Config.credetailStatusColors[olddata.docs[0]["verification_status"]],color:"white",cursor: "default" }} >{ Config.credetailStatus[olddata.docs[0]["verification_status"]] }</Button> : "--" } </TableCell>
                                                 { /* <TableCell  style={{color: Config.credetailStatusColors[olddata.docs[0]["verification_status"]]}}> {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell> */ }  
                                                     <TableCell colSpan="3" style={{ width: "30%" }}> {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
                                                     

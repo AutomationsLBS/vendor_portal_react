@@ -167,7 +167,8 @@ export default class EmployeeCreate extends Component {
             position: toast.POSITION.TOP_CENTER,
             className: 'rotateY animated'
           });
-          window.location.href = "/employees"
+          this.cancelCreate();
+         // window.location.href = "/employees"
          // console.log(response,"respose  emp data")
            
       })
@@ -213,7 +214,7 @@ export default class EmployeeCreate extends Component {
               <Grid item xs={12} sm={6} md={6} className="singleFormRight" >
                   <TextField  label="First Name" value={employeeData.first_name}
                   onChange={this.handleFormChange('first_name')}
-                  style={{ width: "350px" }} placeholder=" First Name"
+                  style={{ width: "350px" }} placeholder="First Name"
                   margin="normal"
                   helperText={(employeeError.first_name !== null) ? "" : "First Name is required."}
                   error={(employeeError.first_name !== null)? false: true} 
@@ -223,7 +224,7 @@ export default class EmployeeCreate extends Component {
                   <TextField  label="Last Name"
                     value={employeeData.last_name}
                     onChange={this.handleFormChange('last_name')}
-                    style={{ width: "350px"}} placeholder=" Last Name"
+                    style={{ width: "350px"}} placeholder="Last Name"
                     margin="normal"
                     helperText={(employeeError.last_name !== null) ? "" : "Last Name is required."}
                     error={(employeeError.last_name !== null)
@@ -254,7 +255,7 @@ export default class EmployeeCreate extends Component {
                     margin="normal"
                     fullWidth
                     helperText={(employeeError.email !== null) ?  (employeeError.emailValidate !== null) ? "" : "Please enter valid email"  : "Email is required"  }
-                    error={(employeeError.email !== null) ? false : true} />  
+                    error={(employeeError.email !== null) ? (employeeError.emailValidate !== null) ? false : true : true} />  
               </Grid>
               <Grid item xs={12} sm={6} md={6} className="singleFormLeft" >
                {/** 
@@ -322,7 +323,7 @@ export default class EmployeeCreate extends Component {
                 </Button>
                 <Button variant="outlined" className="outlinedBtn" 
                   onClick={this.cancelCreate}
-                  href="/employees"  style={{margin:"14px"}} >
+                   style={{margin:"14px"}} >
                         Cancel
                 </Button>
               </Grid>

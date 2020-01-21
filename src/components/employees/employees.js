@@ -124,11 +124,12 @@ class Employees extends Component {
 
   
   setRedirect = () => {
-    // this.setState({
-    //   redirect: true
-    // })\
-    window.location.href = "/employeesCreate"
-    //return(<Redirect to='/employeesCreate' />)
+     this.setState({
+       redirect: true,
+       redirectUrl: "/employeesCreate"
+     })
+    
+    
   }
 
   render() {
@@ -180,7 +181,7 @@ class Employees extends Component {
                               <TableCell> { ( data["employee_details"]["first_name"] )?  data["employee_details"]["first_name"]+" "+data["employee_details"]["last_name"] : "--" }</TableCell>
                               <TableCell>  { (data["employee_details"]["phone_mobile"] )?  data["employee_details"]["phone_mobile"] : "--" }</TableCell>
                               <TableCell>  { (data["employee_details"]["email"] )?  data["employee_details"]["email"] : "--" } </TableCell>
-                              <TableCell>  { (data["employee_credential_status"] )? <Button style={{ "background": data["employee_credential_status"] ,color:"white" }} > { Config.EmployeeStatusColors[data["employee_credential_status"]] }</Button>  : "--" } </TableCell>
+                              <TableCell>  { (data["employee_credential_status"] )? <Button style={{ "background": data["employee_credential_status"] ,color:"white",cursor: "default"  }} > { Config.EmployeeStatusColors[data["employee_credential_status"]] }</Button>  : "--" } </TableCell>
                               
                              {/*
                             

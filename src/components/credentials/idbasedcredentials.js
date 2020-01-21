@@ -285,8 +285,8 @@ export default class AgCredentails extends Component {
                     
                     <TableCell>Credential  Name</TableCell>
                     <TableCell>Doc</TableCell>
-                    <TableCell> Effective Date</TableCell>
-                    <TableCell> Effective End Date </TableCell>
+                    <TableCell> Start Date</TableCell>
+                    <TableCell> End Date </TableCell>
                     <TableCell> Status </TableCell>
                     <TableCell> Reason </TableCell>  
                     <TableCell> </TableCell>  
@@ -321,7 +321,7 @@ export default class AgCredentails extends Component {
                               <TableCell style={{width: "10%"}} > {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_start_date"]): "--" } </TableCell>
                               <TableCell style={{width: "10%"}} > {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
                              {/* <TableCell> {(data.docs.length > 0)? Config.credetailStatus[data.docs[0]["verification_status"]] : "--" }</TableCell>*/}  
-                             <TableCell style={{width: "10%"}} >   {(data.docs.length > 0)?  <Button style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] ,color:"white" }} > {  Config.credetailStatus[data.docs[0]["verification_status"]] }</Button>     : "--" } </TableCell> 
+                             <TableCell style={{width: "10%"}} >   {(data.docs.length > 0)?  <Button style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] ,color:"white",cursor: "default !important"  }} > {  Config.credetailStatus[data.docs[0]["verification_status"]] }</Button>     : "--" } </TableCell> 
                               <TableCell style ={{width: "20%" }} > {(data.docs.length > 0)?data.docs[0]["remarks"]: "--" }</TableCell>
                               
                               <TableCell style ={{width: "5%" }} >
@@ -384,7 +384,7 @@ export default class AgCredentails extends Component {
                                                    style={{
                                                      width:"10%"
                                                    }}
-                                                  >  {(olddata.docs.length > 0)?   <Button style={{ "background": Config.credetailStatusColors[olddata.docs[0]["verification_status"]],color:"white" }} > { Config.credetailStatus[olddata.docs[0]["verification_status"]]}</Button> : "--" } </TableCell>
+                                                  >  {(olddata.docs.length > 0)?   <Button style={{ "background": Config.credetailStatusColors[olddata.docs[0]["verification_status"]],color:"white",cursor: "default !important" }} > { Config.credetailStatus[olddata.docs[0]["verification_status"]]}</Button> : "--" } </TableCell>
 
                                                   <TableCell  style={{ width: "29%" }} > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
                                                   

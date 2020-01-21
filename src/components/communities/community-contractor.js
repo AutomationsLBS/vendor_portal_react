@@ -80,7 +80,9 @@ export default class CommunityContractor extends Component {
   }
 
   handleClose = (e) => {
-    this.setState({open:false}); 
+    this.setState({open:false,
+      requestedData: "",
+      requestedDataVendor:""}); 
   }
 
 

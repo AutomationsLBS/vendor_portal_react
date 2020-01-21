@@ -172,7 +172,7 @@ class Employees extends Component {
                     <TableCell>Employee Name</TableCell>
                     <TableCell>Phone Number</TableCell>
                     <TableCell> Email</TableCell>
-                    
+                    <TableCell> Credentials Status </TableCell> 
                     <TableCell> Credentials </TableCell>
                     <TableCell> Communities Served </TableCell>
                   
@@ -197,6 +197,8 @@ class Employees extends Component {
                        {(data["employee_details"]["primary_address_street"]) ? data["employee_details"]["primary_address_street"]+"," : ""   }
                        {data["employee_details"]["primary_address_zip"]  }
                        </TableCell> */}
+                      <TableCell>  { (data["employee_credential_status"] )? <Button style={{ "background": data["employee_credential_status"] ,color:"white",cursor: "default"  }} > { Config.EmployeeStatusColors[data["employee_credential_status"]] }</Button>  : "--" } </TableCell>
+                     
                        <TableCell> 
                          
                          <a href="javascript:void(0);"  onClick= {(e) =>  this.getCredentalData( data["employee_details"]["id"], data["employee_details"]["first_name"]+" "+data["employee_details"]["last_name"] ) }  style={{textDecoration:"none"}} >  View Credentials</a> 
@@ -218,12 +220,12 @@ class Employees extends Component {
                  }) :
 
                  <TableRow >
-                 <TableCell colSpan={5}> <center>No Records</center> </TableCell>
+                 <TableCell colSpan={6}> <center>No Records</center> </TableCell>
                  </TableRow>  
                   :  
                   
                   <TableRow >
-                  <TableCell colSpan={5}> <center>No Records</center> </TableCell>
+                  <TableCell colSpan={6}> <center>No Records</center> </TableCell>
                   </TableRow>
                   
                   }

@@ -17,14 +17,18 @@ const BaseURL = () => {
 }
 const employeeStatus =()=>{
 
-    return   [ { "id":  "active",
-                  "value"  :"Active"}
+    return   [ { "id":  "temporary",
+                  "value"  :"Temporary"}
                   ,
-                 {"id" : "defunct",
-                    "value" : "No longer working"}
+                 {"id" : "active",
+                    "value" : "Active"}
                     , 
-               { "id" :"denied" ,
-               "value": "Block Entry in Kiosk" }]
+               { "id" :"defunct" ,
+               "value": "Defunct" },
+               { "id" :"billing" ,
+               "value": "Billing" },
+               
+            ]
     }
 
 
@@ -47,9 +51,9 @@ const  credetailStatusColors = ()=>{
 
 const  EmployeeStatusColors = ()=>{
     return  {
-        "green" :"Verified",
-        "yellow": "In-Progress",
-         "red": "rejected"
+        "green" :"",
+        "yellow": "",
+         "red": ""
     
     }
 }
