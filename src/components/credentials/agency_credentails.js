@@ -318,7 +318,7 @@ setRedirect = () => {
                                         
                                         >
                                             
-                                                <TableCell width="20%"> </TableCell>
+                                                <TableCell width="19%"> </TableCell>
                                                 
                                                     <TableCell 
                                                     
@@ -335,8 +335,8 @@ setRedirect = () => {
                                                   {/* <TableCell  >   {(data.docs.length > 0)?  <TooltipOwn message={  Config.credetailStatus[data.docs[0]["verification_status"]] }  position={'left'}> <Button style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] ,padding:"10px" }} > </Button>  </TooltipOwn>    : "--" } </TableCell>  */ }  
 
                                                   <TableCell  
-                                                    style={{ width: "10%" }}
-                                                  >  {(olddata.docs.length > 0)?   <Button style={{ "background": Config.credetailStatusColors[olddata.docs[0]["verification_status"]],color:"white",cursor: "default" }} >{ Config.credetailStatus[olddata.docs[0]["verification_status"]] }</Button> : "--" } </TableCell>
+                                                    style={{ width: "11%" }}
+                                                  >  {(olddata.docs.length > 0)?    Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" } </TableCell>
                                                 { /* <TableCell  style={{color: Config.credetailStatusColors[olddata.docs[0]["verification_status"]]}}> {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell> */ }  
                                                     <TableCell colSpan="3" style={{ width: "30%" }}> {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
                                                     

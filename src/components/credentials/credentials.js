@@ -344,10 +344,10 @@ export default class Credentails extends Component {
                                                     position: "relative",
                                               
                                                     left: "0px",
-                                                    width:"10%"
+                                                    width:"11%"
                                                    }}
-                                                  >  {(olddata.docs.length > 0)?   <Button style={{ "background": Config.credetailStatusColors[olddata.docs[0]["verification_status"]],color:"white",cursor: "default"  }} > { Config.credetailStatus[olddata.docs[0]["verification_status"]] }</Button> : "--" } </TableCell>
-                                                    <TableCell  style={{"width": "27%"}}  > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
+                                                  >  {(olddata.docs.length > 0)?   Config.credetailStatus[olddata.docs[0]["verification_status"]]  : "--" } </TableCell>
+                                                    <TableCell  style={{"width": "26%"}}  > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
                                                     
                                               </TableRow>
                                         

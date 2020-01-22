@@ -365,14 +365,14 @@ export default class AgCredentails extends Component {
                                       
                                       >
                                           
-                                              <TableCell width="20%"> </TableCell>
+                                              <TableCell width="19%"> </TableCell>
                                               
                                                   <TableCell 
                                                   
                                                   style={{
                                                     "text-decoration": "none",
                                                     "word-break": "break-word",
-                                                    "width": "21%"
+                                                    "width": "20%"
                                                   }}
                                                   >{(docpath != "none" && docpath != undefined )? <a href="javascript:void(0);" style={{"text-decoration": "none"}} onClick = {(e) =>this.handleClickOpen(docpath)  }   >{ (docname !="")?docname:"--" }  </a> :"--"} </TableCell>
                                                  
@@ -382,11 +382,11 @@ export default class AgCredentails extends Component {
                                                  {/* <TableCell style={{ width:"10%"}}  > {(olddata.docs.length > 0)? <span style={{ }} > { Config.credetailStatus[olddata.docs[0]["verification_status"]] } </span>  : "--" }  }</TableCell> */} 
                                                  <TableCell  
                                                    style={{
-                                                     width:"10%"
+                                                     width:"12%"
                                                    }}
-                                                  >  {(olddata.docs.length > 0)?   <Button style={{ "background": Config.credetailStatusColors[olddata.docs[0]["verification_status"]],color:"white",cursor: "default !important" }} > { Config.credetailStatus[olddata.docs[0]["verification_status"]]}</Button> : "--" } </TableCell>
+                                                  >  {(olddata.docs.length > 0)?    Config.credetailStatus[olddata.docs[0]["verification_status"]] : "--" } </TableCell>
 
-                                                  <TableCell  style={{ width: "29%" }} > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
+                                                  <TableCell  style={{ width: "30%" }} > {(olddata.docs.length > 0)?olddata.docs[0]["remarks"]: "--" }</TableCell>
                                                   
                                             </TableRow>
                                       
