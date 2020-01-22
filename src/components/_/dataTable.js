@@ -21,9 +21,10 @@ import {
   TableCell,
   TableSortLabel,
   Hidden,
-
+  FormHelperText,
   
 } from '@material-ui/core';
+
 
 
 
@@ -177,7 +178,7 @@ render(){
                         (this.props.data.map(data =>{
                           return (
                             
-                            <div > { (data.already_set)? <div class="requredcredentilasRows"> <i className="fa fa-check" style={{color:"green",    position: "relative",top: "-2px"}} aria-hidden="true"></i> <span style={{position:"relative",top:"-2px"}}>{ data.title }</span>  </div> : <div class="requredcredentilasRows"> <i className="fa fa-times" style={{color:"red",    position: "relative",top: "-2px"}} aria-hidden="true"></i> <span style={{position:"relative",top:"-2px"}}>{ data.title }</span>  </div>  }   </div>
+                            <div > { (data.already_set)? <div class="requredcredentilasRows"> <i className="fa fa-check" style={{color:"green",    position: "relative",top: "-2px"}} aria-hidden="true"></i> <span style={{position:"relative",top:"-2px"}}>{ data.title }</span> <div> { (data.url)? <FormHelperText style={{'color': 'black',top: "0px",position:"relative",paddingLeft:"20px"  }}>URL: <a href={data["url"]}  target="_blank" style={{ "text-decoration": "none"}} > { data["url"] }</a></FormHelperText>  :""}  </div> </div> : <div class="requredcredentilasRows"> <i className="fa fa-times" style={{color:"red",    position: "relative",top: "-2px",paddingLeft:"20px" }} aria-hidden="true"></i> <span style={{position:"relative",top:"-2px"}}>{ data.title }</span> <div> {(data.url)?  <FormHelperText style={{'color': 'black',top: "0px",position:"relative" }}> URL: <a href={data["url"]}  target="_blank" style={{ "text-decoration": "none"}} > { data["url"] }</a></FormHelperText>:""}  </div>   </div>  }   </div>
                             
 
                           )
@@ -207,10 +208,14 @@ render(){
               {  (this.props.dataForVendor.length >0 )?
                   
                       (this.props.dataForVendor.map(data =>{
+                        let  padding= "0px";
+                        if(this.state.vendoerType == "vendor"){
+                          padding = "30px";
+                        }
                         return (
                         
 
-                          <div > { (data.already_set)? <div class="requredcredentilasRows"> { (this.state.vendoerType == "vendor")? <i className="fa fa-check" style={{color:"green",    position: "relative",top: "-2px",padding:"5px"}} aria-hidden="true"></i>  : "" }<span style={{position:"relative",top:"-2px",padding:"5px"}}>{ data.title }</span>  </div> : <div class="requredcredentilasRows"> { (this.state.vendoerType == "vendor")? <i className="fa fa-times" style={{color:"red",    position: "relative",top: "-2px"}} aria-hidden="true"></i> : "" } <span style={{position:"relative",top:"-2px"}}>{ data.title }</span>  </div>  }   </div>
+                          <div > { (data.already_set)? <div class="requredcredentilasRows"> { (this.state.vendoerType == "vendor")? <i className="fa fa-check" style={{color:"green",    position: "relative",top: "-2px",padding:"5px"}} aria-hidden="true"></i>  : "" }<span style={{position:"relative",top:"-2px",padding:"5px"}}>{ data.title }</span> <div>  { (data.url)? <FormHelperText style={{'color': 'black',top: "0px",position:"relative",paddingLeft:padding}}><span>URL:</span> <a href={data["url"]}  target="_blank" style={{ "text-decoration": "none"}} > { data["url"] }</a></FormHelperText> :"" }  </div>  </div> : <div class="requredcredentilasRows"> { (this.state.vendoerType == "vendor")? <i className="fa fa-times" style={{color:"red",    position: "relative",top: "-2px"}} aria-hidden="true"></i> : "" } <span style={{position:"relative",top:"-2px"}}>{ data.title }</span>  <div>  {(data.url)? <FormHelperText style={{'color': 'black',top: "0px",position:"relative",paddingLeft:padding }}><span>URL:</span> <a href={data["url"]}  target="_blank" style={{ "text-decoration": "none"}} > { data["url"] }</a></FormHelperText> : "" }  </div>  </div>  }   </div>
 
                           )
 

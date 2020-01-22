@@ -779,7 +779,7 @@ handleChange = name => event => {
                     placeholder="Remarks" />   
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} className="singleFormRight" style={{marginTop:"7px"}}>
-                  <FormHelperText style={{'color': 'black',top: "0px",position:"relative" }}> { (credentialnote.length > 0) ? (credentialnote[0]["url"] !=null)?<Fragment> <span>URL:</span> <a href={credentialnote[0]["url"]}  target="_blank" style={{ "text-decoration": "none"}} > { credentialnote[0]["url"] }</a> </Fragment> :"" : ""}</FormHelperText> 
+                  { /* <FormHelperText style={{'color': 'black',top: "0px",position:"relative" }}> { (credentialnote.length > 0) ? (credentialnote[0]["url"] !=null)?<Fragment> <span>URL:</span> <a href={credentialnote[0]["url"]}  target="_blank" style={{ "text-decoration": "none"}} > { credentialnote[0]["url"] }</a> </Fragment> :"" : ""}</FormHelperText>  */ } 
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} className="singleFormRight" style={{marginTop:"7px"}}>
                   <FormHelperText style={{'color': 'black',top: "0px",position:"relative" }}> { (credentialnote.length > 0) ? (credentialnote[0]["notes"] !=null)? "Note: "+ credentialnote[0]["notes"]:"" : ""}</FormHelperText> 
