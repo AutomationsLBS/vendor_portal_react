@@ -272,14 +272,16 @@ export default class EmployeeCreate extends Component {
 
 
               
-                    <FormControl error = {errorMessage} maxHeight={100}   >
+                    <FormControl error = {errorMessage} style={{ maxHeight : "100px" }}  >
                     <InputLabel htmlFor="community-helper"  style={{"marginTop": "15px"}}>Service Type</InputLabel>
                     <Select  label="Credentialing" id="credentialing" value={employeeData.service_label} 
                     onChange={this.handleFormChange('service_label')}
                         style={{ width: "260px",marginTop: "30px"}}
 
                         margin="normal" 
-                        
+                        MenuProps = {{
+                          style: {maxHeight:"300px"}
+                        }}
                         
                        
                         >
@@ -289,7 +291,7 @@ export default class EmployeeCreate extends Component {
 
                             return (
 
-                              <MenuItem style={{maxHeight :"100px"}} value={data}>{data}</MenuItem>
+                              <MenuItem  value={data}>{data}</MenuItem>
                               
                             )
                           })
