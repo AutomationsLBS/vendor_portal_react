@@ -74,6 +74,7 @@ export default class CredentailEdit extends Component{
           redirectUrl: "",
           docTypes: {doc:"doc","docx":"docx",pdf:"pdf","jpg":"jpg","png":"png",gif:"gif",jpeg:"jpeg"},
           searchPath:"",
+          alternativedocStatus:""
           
 
 
@@ -185,6 +186,7 @@ handleChange = name => event => {
           remarks: (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)? response.credential_data.docs.remarks : "":"",
           fileName: (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)? response.credential_data.docs.document_path : "":"",
           alterFilename:  (response.credential_data.hasOwnProperty('alternate_docs'))? (response.credential_data.alternate_docs.length >0)?response.credential_data.alternate_docs[0]["document_path"] :"" : "",
+          alternativedocStatus: (response.credential_data.hasOwnProperty('alternate_docs'))? (response.credential_data.alternate_docs.length >0)?response.credential_data.alternate_docs[0]["document_path"] :"" : "",
           recordId: response.credential_data.credentialdata.id,
           altfile:  (response.credential_data.hasOwnProperty('alternate_docs'))? (response.credential_data.alternate_docs.length > 0)? "yes":"no"  : "no",
           verificationStatus: (response.credential_data.hasOwnProperty('docs'))? (response.credential_data.docs != null)? response.credential_data.docs.verification_status : "":"",
@@ -957,9 +959,9 @@ handleChange = name => event => {
                             <Tooltip title = { alternativeDoc} >
                             <RadioGroup aria-label="position" name="position" 
                               value={this.state.altfile} onChange={this.radioButton} row> 
-                              <FormControlLabel value="yes" disabled ={statusOfButton }  control={<Radio color="primary" />}
+                              <FormControlLabel value="yes" disabled ={(this.state.alternativedocStatus !="")? statusOfButton :""   }  control={<Radio color="primary" />}
                                 label="Yes" labelPlacement="start"  />
-                              <FormControlLabel value="no"  disabled ={statusOfButton } control={<Radio color="primary" />}
+                              <FormControlLabel value="no"  disabled ={(this.state.alternativedocStatus !="")? statusOfButton :""   } control={<Radio color="primary" />}
                                 label="No" labelPlacement="start"  />
                             </RadioGroup>
                           </Tooltip>
@@ -983,11 +985,11 @@ handleChange = name => event => {
                                   type="file"
                                   style={{"display":"none"}}
                                   onChange = { this.fileUpload2}
-                                  disabled ={statusOfButton }
+                                  disabled ={(this.state.alternativedocStatus !="")? statusOfButton :""   }
 
                                 />
                                 <label htmlFor="contained-button-file1" style={{ position: "relative",top: "12px" ,display:buttonHideOrNot}} >
-                                  <Button variant="contained" component="span" disabled ={statusOfButton }>
+                                  <Button variant="contained" component="span" disabled ={(this.state.alternativedocStatus !="")? statusOfButton :""   }>
                                     Upload
                                   </Button>
                                 </label>
@@ -997,11 +999,13 @@ handleChange = name => event => {
                             ? <FormHelperText style={{'color': '#f44336',top: "21px",position:"relative" }}> { this.state.alterFiledata_error }</FormHelperText>
                             : ""}
      
-
      <span style={{
-                       position: "relative",
-                       color: "black",
-                       top: "15px",
+                      
+                       "text-decoration": "none",
+                            "color": "black",
+                            "top": "15px",
+                            "position": "relative",
+                            
                      }} >{(this.state.alterFilename != "")? <a href="javascript:void(0);" style={{textDecoration:"none",color:"black"}} onClick = {(e) =>this.handleClickOpen(this.state.alterFilename)  }  > { filenameAlter }</a> :"--"}</span>
                        
                             
@@ -1021,7 +1025,7 @@ handleChange = name => event => {
                      error={(this.state.remarks_error == "")
                      ? false
                      : true}
-                    placeholder=" Remarks" />   
+                    placeholder="Remarks" />   
                   </Grid>
 
                   <Grid item xs={12} sm={12} md={12} className="singleFormRight" style={{marginTop:"7px"}}>
