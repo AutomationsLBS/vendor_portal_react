@@ -40,6 +40,7 @@ const  credetailStatus = ()=>{
          "rejected":"Rejected",
     }
 }
+
 const  credetailStatusColors = ()=>{
     return  {
         "not_verified":"green" ,
@@ -108,8 +109,7 @@ const Config = {
     "employeeStatus":employeeStatus(),
     "credetailStatusColors":credetailStatusColors(),
     "EmployeeStatusColors": EmployeeStatusColors(),
-    
-   
+    "perPage": 5,
     "mainnav": [
         
         
@@ -118,6 +118,7 @@ const Config = {
         { name: "Companies", link: "/companies", icon: "credentials-icon.png", isLogin:true, template:"user", isDisplay: companysDisplay, isSubNav : false, buttonClass:"",usertype: "agency_vendor" }, 
         //{ name: "Independent Contractor", link: "#", icon: "contractor-icon.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false, buttonClass :"dropdown-btn", childClass : "independent"},
         { name: "My Communities", link: "/communityc", icon: "communities.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false , buttonClass:"" ,usertype: "vendor" }, // @@@
+        { name: "Visitor Report", link: "/visitorlogs", icon: "visitor_log.png", isLogin: true, template: "user",isDisplay:true, isSubNav : false , buttonClass:"" ,usertype: "vendor"  },
         
         //{ name: "Vendor Agency", link: "#", icon: "vendor.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false, buttonClass :"dropdown-btn" , childClass : 'vendor' },
         { name: "Agency Communities", link: "/communityv", icon: "communities.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false, buttonClass :"" ,usertype: 'agency' },       
@@ -221,6 +222,9 @@ const Config = {
         
             'url': '/api/v2/vendors/vendor_req_credentials', 'type': 'get', 'isToken': true
         },
+        "visits_history":{
+            "url": '/api/v2/vendors/visits_history', 'type': 'get', 'isToken': true
+        }
 
         
         

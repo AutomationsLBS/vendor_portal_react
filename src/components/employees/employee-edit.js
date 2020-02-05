@@ -265,9 +265,9 @@ export default class EmployeesEdit extends Component {
                 onChange={this.handleFormChange('phone_mobile')}
                 margin="normal"
                 onInput = {(e) =>{
-                  e.target.value = e.target.value.replace(/[^\d]/g, " ");
-                  e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,10);
-                  e.target.value = (e.target.value == "NaN") ? "" : e.target.value;
+                  e.target.value = e.target.value.replace(/[^0-9\.]+/g, " ");
+                    e.target.value = (e.target.value).slice(0,10);
+                    e.target.value = (e.target.value == "NaN") ? "" : e.target.value;
                 }}
                 fullWidth
                 disabled

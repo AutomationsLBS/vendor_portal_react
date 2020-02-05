@@ -254,10 +254,10 @@ const Employees = (props) => {
               <TableCell>Duration (Minutes)</TableCell>
               <TableCell>Visitor Name</TableCell>
               <TableCell>Service Type</TableCell>
-              <TableCell>Company Name</TableCell>
+              <TableCell>Resident/Staff</TableCell>
       { /*  <TableCell>Visitor status </TableCell> */ }
               
-              <TableCell>Photo</TableCell>
+            { /*  <TableCell>Photo</TableCell> */} 
               
             </TableRow>
           </TableHead>
@@ -287,9 +287,9 @@ const Employees = (props) => {
                     <TableCell>{n.visitor_name}</TableCell>
                     <TableCell>{n.service_type}</TableCell>
 
-                    <TableCell>{n.company_name}</TableCell>
-                  { /*   <TableCell>{n.visitor_status}</TableCell>  */ }
-                    <TableCell><img width="90px" height="80px" src={  "https://s3.amazonaws.com/accushield-uploads-prod/"+year+"/"+month+"/"+day+"/visit-"+n.session_id+"-0.jpg" }  /></TableCell>
+                    <TableCell>{n.resident_name}</TableCell>
+                  { /*   <TableCell>{n.visitor_status}</TableCell> <TableCell><img width="90px" height="80px" src={  "https://s3.amazonaws.com/accushield-uploads-prod/"+year+"/"+month+"/"+day+"/visit-"+n.session_id+"-0.jpg" }  /></TableCell> */ }
+                    
                    
                   </TableRow>
                 )
@@ -314,7 +314,7 @@ const Employees = (props) => {
               
               <TableCell>Visitor Type</TableCell>
               <TableCell>Device Name</TableCell>
-              <TableCell>Company</TableCell>
+              
               <TableCell>Resident/staff</TableCell>
               </TableRow>
             </TableHead>
@@ -323,6 +323,20 @@ const Employees = (props) => {
                 .data
                 .map((n, i) => {
                   /* console.log(n) */
+
+                  const dates  = n.on_date.split("/")
+                  const year  = dates[2];
+                  let day = dates[1]
+                     day =  (day[0] == 0)? day[1] :day;
+                  let  month = dates[0]
+                  month  = (month[0] == 0) ?month[1] :month;
+                   let duration_day = (n.duration_mins)?n.duration_mins.toFixed(0):n.duration_mins ;
+                  let session_time_end_varible = n.session_time_end
+                  if (n.session_time_end =="" || n.session_time_end ==null || n.session_time_end  == undefined ){
+                   duration_day = "In Progress"
+                   session_time_end_varible = "---"
+                  }
+
                   return (
                     <TableRow key={i}>
                     
@@ -336,7 +350,7 @@ const Employees = (props) => {
                     <TableCell>{n.visitor_status}</TableCell>
                     <TableCell>{n.visitor_type}</TableCell>
                     <TableCell>{n.device_name}</TableCell>
-                    <TableCell>{n.company_name}</TableCell>
+                   
                     <TableCell>{n.resident_name}</TableCell>
                     </TableRow>
                   )

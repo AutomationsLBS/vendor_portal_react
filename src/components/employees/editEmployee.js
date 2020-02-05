@@ -364,11 +364,14 @@ export default class EmployeeEdit extends Component {
                    
   
   
-                {/* <FormControl label="Select" error = {errorMessage}   >
+                 <FormControl label="Select" error = {errorMessage}   >
                      
                       <Select  label="Credentialing" id="credentialing" defaultValue ={employeeData.service_label} 
                       onChange={this.handleFormChange('service_label')}
-                          style={{ width: "260px",marginTop: "30px"}}
+                          style={{ width: "350px",marginTop: "30px"}}
+                           MenuProps = {{
+            style: {maxHeight:"300px"}
+          }}
   
                           margin="normal">
                           { (serviceLables)?
@@ -388,14 +391,20 @@ export default class EmployeeEdit extends Component {
               ? "" :<FormHelperText style={{'color': '#f44336'}}>Service type is required</FormHelperText>
               }
                                                 
-                </FormControl>    */}
+                </FormControl>    
 
 
-                <TextField
+             { /* 
+             
+            <TextField
                 label="Service Type" 
           id="standard-select-currency"
           defaultValue ={employeeData.service_label} 
           select
+          MenuProps = {{
+            style: {maxHeight:"300px"}
+          }}
+          
           onChange={this.handleFormChange('service_label')}
           style={{ width: "352px",marginTop: "30px"}}
                       margin="normal"
@@ -419,6 +428,8 @@ export default class EmployeeEdit extends Component {
 
         
         </TextField>
+            
+            */}   
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} className="singleFormLeft" >
                   

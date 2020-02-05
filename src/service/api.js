@@ -173,6 +173,11 @@ axios.vendor_req_credentials = () => {
   return Config.apiUrlData + Config.api.vendor_req_credentials.url;
   
 };
+axios.visits_history = () => {
+  return Config.apiUrlData + Config.api.visits_history.url;
+  
+};
+
 
 
 

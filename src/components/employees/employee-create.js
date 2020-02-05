@@ -239,8 +239,8 @@ export default class EmployeeCreate extends Component {
                    style={{ width: "350px"}} placeholder="Phone Number"
                    margin="normal" 
                    onInput = {(e) =>{
-                    e.target.value = e.target.value.replace(/[^\d]/g, " ");
-                    e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,10);
+                    e.target.value = e.target.value.replace(/[^0-9\.]+/g, " ");
+                    e.target.value = (e.target.value).slice(0,10);
                     e.target.value = (e.target.value == "NaN") ? "" : e.target.value;
                   }}
                   fullWidth
@@ -276,7 +276,7 @@ export default class EmployeeCreate extends Component {
                     <InputLabel htmlFor="community-helper"  style={{"marginTop": "15px"}}>Service Type</InputLabel>
                     <Select  label="Credentialing" id="credentialing" value={employeeData.service_label} 
                     onChange={this.handleFormChange('service_label')}
-                        style={{ width: "260px",marginTop: "30px"}}
+                        style={{ width: "350px",marginTop: "30px"}}
 
                         margin="normal" 
                         MenuProps = {{

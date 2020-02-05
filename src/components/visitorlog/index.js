@@ -22,7 +22,17 @@ import {
   ClickAwayListener,
   Radio,
   RadioGroup,
-  TextField
+  TextField,
+  
+    InputLabel,
+
+
+    Select,
+  
+    FormHelperText,
+    FormControl,
+   
+  
 } from '@material-ui/core';
 import axios from 'axios';
 import CommonService from '../../service/commonServices';
@@ -32,6 +42,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
 import './visit.scss';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -45,7 +56,7 @@ export default class Visitlogs extends Component {
         doRedirect:"",
         redirectUrl:"",
         pageTitle:"",
-        loader:false,
+        loader:true,
         total_entries: "",
         per_page:"",
         visitor_daterange:"",
@@ -59,7 +70,8 @@ export default class Visitlogs extends Component {
           open: false,
           date:{}
           },
-         
+          mycommunitys:"",
+          communityId:"",
        }
     }
 
@@ -69,10 +81,53 @@ export default class Visitlogs extends Component {
      
     }
     componentDidMount() {
+      this.setState({loader: true});
       this.GetFormattedDate();
       this.GetDate();
-      this.getVisitorLogs();
+      
       console.log("componentdidMount");
+
+    
+
+      axios
+      .get(axios.myCommunitys())
+      .then((response) => {
+          //console.log(response,"rta")
+          let communitiesData = []
+          if(response){
+           response.communities.map((data)=>{
+             // console.log(data,"data13");
+              communitiesData.push({ id:data.community.sugar_id,name:data.community.name })
+      
+            } 
+                  
+            );
+            this.setState({communityId: communitiesData[0]['id']});
+
+          }
+          this.setState({mycommunitys: communitiesData, loader: false});
+          this.getVisitorLogs();
+          this.setState({loader: false});
+          toast.success(
+              (response.message != undefined) 
+                  ? "Successfully..." 
+                  : response.message, {
+              position: toast.POSITION.TOP_CENTER,
+              className: 'rotateY animated'
+            });
+         
+      })
+      .catch((error) => {
+         
+          this.setState({loader: false});
+          toast.error((error.message != undefined) ? error.toString() : "Failed for some reason", {
+              position: toast.POSITION.TOP_CENTER
+            });
+          
+      });
+
+
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -84,19 +139,22 @@ export default class Visitlogs extends Component {
     
     
     getVisitorLogs =  (reisdentid =null,pagId = 1)=>{
-      
-     this.setState({loader: true});
-        let ud = CommonService.localStore.get('local_resident_id');
-
+      this.setState({loader: true});
     
     axios
-    .get(axios.webvisits_history(),{params: {resident_id:ud.local_resident_id,page:pagId,start_date:this.state.filter.date.startdate,end_date:this.state.filter.date.enddate}})
+    .get(axios.visits_history(),{params: {page:pagId,per_page:Config.perPage,
+      start_date:this.state.filter.date.startdate,
+      end_date:this.state.filter.date.enddate,
+      community_id:this.state.communityId}})
     .then((response) => {
        console.log(response,"okokoko");
+       
       this.setState({visitorsList:response.visits,loader:false,total_entries:response.total_entries,per_page:response.per_page});
       
       this.setState({ visitor_daterange:response["date_range"]});
       this.setState({loader: false});
+      
+      
      
   
       
@@ -119,7 +177,7 @@ export default class Visitlogs extends Component {
     
       let ud = CommonService.localStore.get('local_resident_id');
       axios
-      .get(axios.webvisits_history(),{params: {resident_id:ud.local_resident_id,page:1,fetch_all:"all",start_date:this.state.filter.date.startdate,end_date:this.state.filter.date.enddate}})
+      .get(axios.visits_history(),{params: {page:1,fetch_all:"all",start_date:this.state.filter.date.startdate,end_date:this.state.filter.date.enddate}})
       .then((response) => {
           let  data =  response.visits.reduce((intal,n)=>{
             
@@ -140,6 +198,7 @@ export default class Visitlogs extends Component {
 
               visitor_status:n.visitor_status,
               visitor_type:n.visitor_type,
+              resident_name:n.resident_name,
             
             });
              return  intal;
@@ -154,7 +213,7 @@ export default class Visitlogs extends Component {
             { label: "Duration (Minutes)", key: "duration_mins" },
             { label: "Visitor Name", key: "visitor_name" },
             { label: "Service Type", key: "service_type" },
-            { label: "Company Name", key: "company_name" },
+            { label: "Resident/Staff Name", key: "resident_name" },
            
             
           ]; 
@@ -236,8 +295,13 @@ export default class Visitlogs extends Component {
   this.getVisitorLogs();
 
 }
+
+
+dropdownValue = (event)=>{
+  this.setState({communityId:event.target.value }) 
+  this.setState({communityId_error: ""});
+}
    
-  
   
 
     render(){
@@ -266,12 +330,12 @@ export default class Visitlogs extends Component {
             {CommonService.renderLoader(loader)}
               <Grid item sm={12}>
                 <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-                VISITOR REPORT
+               <h2> VISITOR REPORT</h2>  
                 </Typography>
                 
                 <div style={{width: "100%", overflow: "hidden"}}>
-                  <div style={{ width: "70%", float: "left"}}>  <h3>Resident Name: {  CommonService.localStore.get('local_resident_name').local_resident_name} </h3> 
-                 </div>
+                  {/* <div style={{ width: "70%", float: "left"}}>  <h3>Resident Name: {  CommonService.localStore.get('local_resident_name').local_resident_name} </h3> 
+                 </div> */}
                   
                   
                   <div style={{ width: "30%",float:"right" }} > 
@@ -298,29 +362,63 @@ export default class Visitlogs extends Component {
 								selected={this.state.filter.date.start}
                 onChange={ this.handleSelectedDate('start')
                 }
-                
+                className = "datePickerFont"
               
                 dateFormat="MM/DD/YYYY"
 
-              
+                style = {{ fontSize: "15px !important"}}
 								maxDate={this.state.filter.date.end}/>
 							</div>
               <label style={{"padding-left":"11px"}}>End Date:</label>
 							<div className="endDate">
 								<DatePicker
+                className = "datePickerFont"
 								placeholderText="End Date"
 								selected={this.state.filter.date.end}
 								onChange={this.handleSelectedDate('end')}
 								dateFormat="MM/DD/YYYY"
-								minDate={this.state.filter.date.start}/>
+								minDate={this.state.filter.date.start}
+                style = {{ fontSize: "15px !important"}}
+                />
+                
+							</div>
+
+             
+							<div className="endDate" style={{position:"relative",top:"-5px"}}>
+              <FormControl   error ={this.state.communityId_error } >
+                           
+                            <Select  label="Credentialing" id="credentialing" value={this.state.communityId} onChange ={this.dropdownValue}
+                                style={{ width: "250x",marginTop: "0px",padding:"10px 10px"}}
+
+                                margin="normal">
+                                { (this.state.mycommunitys)?
+                                  this.state.mycommunitys.map(data => {
+                                    return (
+                                      <MenuItem value={data.id}>{data.name}</MenuItem>
+                                      
+                                    )
+                                  })
+                                : 
+                                  null}
+                            </Select>
+                    {(this.state.communityId_error != "" && this.state.communityId =="") 
+                    ? <FormHelperText style={{'color': '#f44336'}}> Community is required!</FormHelperText>
+                    : ""}
+                           
+                          </FormControl>
+
 							</div>
 						</div>
+             
+            
 
             <div className="filterItem">
-							<button style ={{ height :"31px",    border: "0px",
+							<button style ={{ height :"40px",    border: "0px",
                         width:" 81px",
-                      "background-color": "#56b16f",
+                      "background-color": "#4CAF50",
                                  color: "white",
+                                 fontSize:"16px",
+
                          }}
      onClick={this.doFilter}>Submit</button>
 					</div>

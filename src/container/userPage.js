@@ -98,7 +98,13 @@ class userPage extends Component {
     }
 
 
-
+    else if (path.indexOf('/visitorlogs') !== -1){
+    
+      return (
+        
+        <div><Vistlogouts /></div>
+      );
+    }
     else if (path.indexOf('/agCredentials') !== -1) {
 
       var credentails  = path.split('/');
