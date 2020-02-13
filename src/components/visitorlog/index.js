@@ -97,12 +97,18 @@ export default class Visitlogs extends Component {
           if(response){
            response.communities.map((data)=>{
              // console.log(data,"data13");
-              communitiesData.push({ id:data.community.sugar_id,name:data.community.name })
+             
+                communitiesData.push({ id:data.community.sugar_id,name:data.community.name })
+            
+              
       
             } 
                   
             );
-            this.setState({communityId: communitiesData[0]['id']});
+            if (communitiesData.length > 0){
+              this.setState({communityId: communitiesData[0]['id']});
+            }
+            
 
           }
           this.setState({mycommunitys: communitiesData, loader: false});
@@ -330,7 +336,7 @@ dropdownValue = (event)=>{
             {CommonService.renderLoader(loader)}
               <Grid item sm={12}>
                 <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-               <h2> VISITOR REPORT</h2>  
+               <h2> My Visits</h2> 
                 </Typography>
                 
                 <div style={{width: "100%", overflow: "hidden"}}>
@@ -338,12 +344,12 @@ dropdownValue = (event)=>{
                  </div> */}
                   
                   
-                  <div style={{ width: "30%",float:"right" }} > 
+                  {/* <div style={{ width: "30%",float:"right" }} > 
                   { (total_entries !='') ?  
                    <button 
                   className="allScroll customButton"  onClick={(e)=>{ this.csvVisitorLogs(e)}} > Download CSV</button>
                  :''}
-                 </div>
+                 </div> */}
               </div>
               <Grid item sm={12} className={ 
 																 "filterContainer active"
@@ -362,7 +368,7 @@ dropdownValue = (event)=>{
 								selected={this.state.filter.date.start}
                 onChange={ this.handleSelectedDate('start')
                 }
-                className = "datePickerFont"
+                className = "datePickerFont endDatapickerWidth"
               
                 dateFormat="MM/DD/YYYY"
 
@@ -372,13 +378,15 @@ dropdownValue = (event)=>{
               <label style={{"padding-left":"11px"}}>End Date:</label>
 							<div className="endDate">
 								<DatePicker
-                className = "datePickerFont"
+                className = "datePickerFont endDatapickerWidth"
 								placeholderText="End Date"
 								selected={this.state.filter.date.end}
 								onChange={this.handleSelectedDate('end')}
 								dateFormat="MM/DD/YYYY"
 								minDate={this.state.filter.date.start}
                 style = {{ fontSize: "15px !important"}}
+                maxDate = { new Date() }
+ 
                 />
                 
 							</div>
@@ -388,14 +396,14 @@ dropdownValue = (event)=>{
               <FormControl   error ={this.state.communityId_error } >
                            
                             <Select  label="Credentialing" id="credentialing" value={this.state.communityId} onChange ={this.dropdownValue}
-                                style={{ width: "250x",marginTop: "0px",padding:"10px 10px"}}
+                                style={{ width: "250x",marginTop: "9px",paddingBottom:"7px"}}
+                                
 
                                 margin="normal">
                                 { (this.state.mycommunitys)?
                                   this.state.mycommunitys.map(data => {
                                     return (
                                       <MenuItem value={data.id}>{data.name}</MenuItem>
-                                      
                                     )
                                   })
                                 : 
@@ -423,6 +431,21 @@ dropdownValue = (event)=>{
      onClick={this.doFilter}>Submit</button>
 					</div>
 
+
+          <div className="filterItem" > 
+                  { (total_entries !='') ?  
+                   <button 
+                   style ={{ height :"40px",    border: "0px",
+                        width:" 129px",
+                      "background-color": "#4CAF50",
+                                 color: "white",
+                                 fontSize:"16px",
+
+                         }}
+                    onClick={(e)=>{ this.csvVisitorLogs(e)}} > Download CSV</button>
+                 :''}
+                 </div>
+
 					</div>
 					
 				</Grid>
@@ -439,7 +462,7 @@ dropdownValue = (event)=>{
               <CSVLink
                            headers={this.state.headers}
                         data={this.state.data1}
-                        filename={"Visitor Report "+this.state.filter.date.startdate+" to "+this.state.filter.date.enddate+".csv"}
+                        filename={"My Visits "+this.state.filter.date.startdate+" to "+this.state.filter.date.enddate+".csv"}
                         className="hidden"
                         ref={this.csvLink}
                         target="_blank" 

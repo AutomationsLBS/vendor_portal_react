@@ -162,7 +162,7 @@ export default class CredentailCreate extends Component{
       axios
       .get(axios.credential_types()+"?ctype="+vendoerType)
       .then((response) => {
-          console.log("SSS",response.data)
+          console.log("SSS",response)
           this.setState({credential_types: response.credentials, loader: false});
           toast.success(
               (response.message != undefined) 
@@ -645,7 +645,7 @@ handleChange = name => event => {
                                   KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                   }}
-                                
+                                                                 
                                 />
                                 </Tooltip>
 
@@ -779,7 +779,7 @@ handleChange = name => event => {
                     placeholder="Remarks" />   
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} className="singleFormRight" style={{marginTop:"7px"}}>
-                  { /* <FormHelperText style={{'color': 'black',top: "0px",position:"relative" }}> { (credentialnote.length > 0) ? (credentialnote[0]["url"] !=null)?<Fragment> <span>URL:</span> <a href={credentialnote[0]["url"]}  target="_blank" style={{ "text-decoration": "none"}} > { credentialnote[0]["url"] }</a> </Fragment> :"" : ""}</FormHelperText>  */ } 
+                  {  <FormHelperText style={{'color': 'black',top: "0px",position:"relative" }}> { (credentialnote.length > 0) ? (credentialnote[0]["url"] !=null)?<Fragment> <span>URL:</span> <a href={credentialnote[0]["url"]}  target="_blank" style={{ "text-decoration": "none"}} > { credentialnote[0]["url"] }</a> </Fragment> :"" : ""}</FormHelperText>   } 
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} className="singleFormRight" style={{marginTop:"7px"}}>
                   <FormHelperText style={{'color': 'black',top: "0px",position:"relative" }}> { (credentialnote.length > 0) ? (credentialnote[0]["notes"] !=null)? "Note: "+ credentialnote[0]["notes"]:"" : ""}</FormHelperText> 

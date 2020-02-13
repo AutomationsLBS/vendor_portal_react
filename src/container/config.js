@@ -109,7 +109,7 @@ const Config = {
     "employeeStatus":employeeStatus(),
     "credetailStatusColors":credetailStatusColors(),
     "EmployeeStatusColors": EmployeeStatusColors(),
-    "perPage": 5,
+    "perPage": 50,
     "mainnav": [
         
         
@@ -118,7 +118,7 @@ const Config = {
         { name: "Companies", link: "/companies", icon: "credentials-icon.png", isLogin:true, template:"user", isDisplay: companysDisplay, isSubNav : false, buttonClass:"",usertype: "agency_vendor" }, 
         //{ name: "Independent Contractor", link: "#", icon: "contractor-icon.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false, buttonClass :"dropdown-btn", childClass : "independent"},
         { name: "My Communities", link: "/communityc", icon: "communities.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false , buttonClass:"" ,usertype: "vendor" }, // @@@
-        { name: "Visitor Report", link: "/visitorlogs", icon: "visitor_log.png", isLogin: true, template: "user",isDisplay:true, isSubNav : false , buttonClass:"" ,usertype: "vendor"  },
+        
         
         //{ name: "Vendor Agency", link: "#", icon: "vendor.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false, buttonClass :"dropdown-btn" , childClass : 'vendor' },
         { name: "Agency Communities", link: "/communityv", icon: "communities.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false, buttonClass :"" ,usertype: 'agency' },       
@@ -127,7 +127,7 @@ const Config = {
         { name: "Agency Credentials", link: "/agCredentials", icon: "credentials-icon.png", isLogin:true, template:"user", isDisplay:true, isSubNav : false, buttonClass:"",usertype: "agency" },
        
         { name: "My Credentials", link: "/credentials", icon: "credentials-icon.png", isLogin:true, template:"user", isDisplay:true, isSubNav : false, buttonClass:"",usertype: "vendor" }, // @@
-
+        { name: "My Visits", link: "/visitorlogs", icon: "visitor_log.png", isLogin: true, template: "user",isDisplay:true, isSubNav : false , buttonClass:"" ,usertype: "vendor"  },
         { name: "Settings", link: "#", icon: "settings-icon.png", isLogin: true, template: "user", isDisplay:true, isSubNav : false, buttonClass :"dropdown-btn", childClass :"settings", usertype:"admin"},
         { name: "Payment Settings", link: "/mypayments", icon: "payment-icon-1.png", isLogin:true,template:"user", isDisplay:true, isSubNav : true, buttonClass :"settings" ,usertype:  "admin"},
      //   { name: "Add Admin", link: "/addAdmin", icon: "admin-icon.png", isLogin:true,template:"user", isDisplay:true, isSubNav : true, buttonClass :"settings" ,usertype: 'agency'},
