@@ -168,7 +168,7 @@ requriedCredetailsData = (data)=>{
                       <TableRow >
                       <TableCell> { data.community.name}</TableCell>
                       <TableCell> {addresss.join(", ") } </TableCell>
-                      <TableCell> { data.phone_num} </TableCell>
+                      <TableCell> { (data.phone_num != null)? data.phone_num.replace(/(\d{3})\-?(\d{3})\-?(\d{4})/,'$1-$2-$3') : ""} </TableCell>
                       <TableCell> {  data.last_visit_date}</TableCell>
                       <TableCell> <a href="javascript:void(0);"  style={{textDecoration:"none",color: "blue"}} onClick = {(e) =>this.requriedCredetailsData(data) }  > View Credentials </a></TableCell>
                       </TableRow >

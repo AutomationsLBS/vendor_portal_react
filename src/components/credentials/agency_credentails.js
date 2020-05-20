@@ -49,6 +49,7 @@ export default class AgCredentails extends Component {
       recordValue: "",
       doRedirect:false,
       redirectUrl:"",
+      tablesRows:"",
 
     }
   }
@@ -100,6 +101,11 @@ export default class AgCredentails extends Component {
     .then((response) => {
         
         this.setState({myCredentails: response.credentials});
+        
+        if (response.credentials.credentials.length  > 0){
+          this.setState({tablesRows: "No Records" });
+        }
+      
        // this.setState({showButton : (response.credentials.old_credentials.length > 0)? true : false })
        // console.log( this.state.myCredentails,"test data")
 
@@ -362,12 +368,12 @@ setRedirect = () => {
                           })
                           : 
                           <TableRow >
-                          <TableCell colSpan={8}> <center>No Records</center> </TableCell>
+                          <TableCell colSpan={8}> <center>{this.state.tablesRows}</center> </TableCell>
                           </TableRow> 
                             :
                             
                             <TableRow >
-                            <TableCell colSpan={8}> <center>No Records</center> </TableCell>
+                            <TableCell colSpan={8}> <center>{this.state.tablesRows}</center> </TableCell>
                             </TableRow>
                             
                             }

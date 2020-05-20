@@ -32,7 +32,9 @@ import {
   Redirect
 } from "react-router-dom";
 
-
+const TextFieldComponent = (props) => {
+  return <TextField {...props} disabled={true} />
+}
 
 export default class CredentailCreate extends Component{
 	constructor(props) {
@@ -235,7 +237,7 @@ export default class CredentailCreate extends Component{
             
             this.setState({alterFiledata: e.target.files[0], alterFilename : e.target.files[0]["name"],alterFiledata_error:"" })
           } else{
-            this.setState({file:"",  fileName :"",uploadFile_error:"Please upload only Doc/Pdf/images"});
+           // this.setState({file:"",  fileName :"",uploadFile_error:"Please upload only Doc/Pdf/images"});
             this.setState({alterFiledata:"", alterFilename :"",alterFiledata_error:"Please upload only Doc/Pdf" })
           }
           
@@ -615,6 +617,8 @@ handleChange = name => event => {
                                   KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                   }}
+
+                                  TextFieldComponent={TextFieldComponent}
                            />
                         </Tooltip>
                      
@@ -635,6 +639,7 @@ handleChange = name => event => {
                                
                                 <KeyboardDatePicker
                                   disableToolbar
+                                
                                   variant="inline"
                                   format="MM/dd/yyyy"
                                   margin="normal"
@@ -645,6 +650,8 @@ handleChange = name => event => {
                                   KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                   }}
+
+                                  TextFieldComponent={TextFieldComponent}
                                                                  
                                 />
                                 </Tooltip>

@@ -34,7 +34,9 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import  AlertDialog from '../_/commonModal';
 import Tooltip from '@material-ui/core/Tooltip';
-
+const TextFieldComponent = (props) => {
+  return <TextField {...props} disabled={true} />
+}
 
 export default class CredentailEdit extends Component{
 	constructor(props) {
@@ -386,7 +388,7 @@ handleChange = name => event => {
 
 
       uploadFile = async (file,alterFile) => {
-  
+        console.log("0000000000000000000000000000000000kranthiooooo");
 
         let statusFlag =   true;
         let visitorType    =   CommonService.localStore.get('visitor_types').visitor_types;
@@ -411,61 +413,67 @@ handleChange = name => event => {
 
           if(this.state.vendoerType != "vendor"){
       
-            if(this.state.lowerLimit == ""){
-              statusFlag  =  false;
-              this.setState({lowerLimit_error: true});
-              return false;
-      
-           }else {
-              statusFlag  =  true;
-      
-           }
+                if(this.state.lowerLimit == ""){
+                      statusFlag  =  false;
+                      this.setState({lowerLimit_error: true});
+                      return false;
+              
+                  }else {
+                      statusFlag  =  true;
+              
+                  }
           
-            if(this.state.upperLimit ==""){
-               statusFlag  =  false;
-               this.setState({upperLimit_error: true});
-               return false;
-            }else {
-               statusFlag  =  true;
-            }
-      
-      
-            
-      
-            let data  = ( this.state.upperLimit - this.state.lowerLimit);
-          
-            if(data > 0 ){
-             
-              statusFlag  =  true;
-              this.setState({upperLimit_error: false});
-              this.setState({upperLimitRange_error:false})
-            }else {
-              this.setState({upperLimit_error: true});
-              this.setState({upperLimitRange_error:true})
-              statusFlag  =  false;
-              return false;
-            }
-
-
-            if (this.state.altfile  != "no"){
-      
-              // if (this.state.alterFiledata == ""){
-              //    this.setState({alterFiledata_error: "Please upload document"});
-              //    statusFlag =  false;
-              // }
-         
-            }else {
-              if(this.state.fileName == ""){
-                if (this.state.file == ""){
-                  this.setState({uploadFile_error: "Please upload document"});
-                  statusFlag =  false;
+                if(this.state.upperLimit ==""){
+                      statusFlag  =  false;
+                      this.setState({upperLimit_error: true});
+                      return false;
+                }else {
+                      statusFlag  =  true;
                 }
-              }
-               
-            }
+              let data  = ( this.state.upperLimit - this.state.lowerLimit);
+          
+                if(data > 0 ){
+                
+                  statusFlag  =  true;
+                  this.setState({upperLimit_error: false});
+                  this.setState({upperLimitRange_error:false})
+                }else {
+                  this.setState({upperLimit_error: true});
+                  this.setState({upperLimitRange_error:true})
+                  statusFlag  =  false;
+                  return false;
+                }
+          
+                console.log("0000000000000000000000000000000000kranthi");
+                if (this.state.altfile  != "no"){
+                  console.log("00000000000000000");
+                  // if (this.state.alterFiledata == "" || this.state.alterFiledata == null ){
+            
+                  //     this.setState({alterFiledata_error: "Please upload document"});
+                  //     statusFlag =  false;
+                  // }
+            
+                }else {
+                  if(this.state.fileName == ""){
+                    if (this.state.file == ""){
+                      this.setState({uploadFile_error: "Please upload document"});
+                      statusFlag =  false;
+                    }
+                  }
+                  
+                }
       
           }
           
+          if (this.state.altfile  != "no"){
+               
+             if (this.state.alterFiledata == "" && this.state.alterFiledata == null ){
+      
+                 this.setState({alterFiledata_error: "Please upload document"});
+                 statusFlag =  false;
+             }
+      
+          }
           let  parseStartDate = Date.parse(this.state.effectiveStartDate);
           let  parseEndDate =  Date.parse(this.state.effectiveEndDate);
           let dates  = (parseEndDate - parseStartDate )
@@ -502,13 +510,15 @@ handleChange = name => event => {
         let efdate  = startdate;
         let efenddate  = endtdate;
         const formData = new FormData();
-        this.setState({loader:true})
+        //this.setState({loader:true})
         if(file){
           console.log(file,"hifile");
           formData.append('uploadDoc',file)
         }
 
+        console.log(this.state,"wsss");
 
+   
   if(this.state.vendoerType != "vendor"){
     formData.append('lower_limit',this.state.lowerLimit);
     formData.append('upper_limit',this.state.upperLimit);
@@ -638,7 +648,7 @@ handleChange = name => event => {
             
             this.setState({alterFiledata: e.target.files[0], alterFilename : e.target.files[0]["name"],alterFiledata_error:"" })
           } else{
-            this.setState({file:"",  fileName :"",uploadFile_error:"Please upload only Doc/Pdf/images"});
+           // this.setState({file:"",  fileName :"",uploadFile_error:"Please upload only Doc/Pdf/images"});
             this.setState({alterFiledata:"", alterFilename :"",alterFiledata_error:"Please upload only Doc/Pdf" })
           }
           
@@ -860,6 +870,7 @@ handleChange = name => event => {
                                   KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                   }}
+                               TextFieldComponent = {TextFieldComponent}                                
                            />
                       </Tooltip>
                      
@@ -892,7 +903,7 @@ handleChange = name => event => {
                                     'aria-label': 'change date',
                                   }}
                                  
- 
+                                  TextFieldComponent = {TextFieldComponent} 
                                 
                                 />
                                 </Tooltip>
@@ -1008,7 +1019,7 @@ handleChange = name => event => {
                             "top": "15px",
                             "position": "relative",
                             
-                     }} >{(this.state.alterFilename != "")? <a href="javascript:void(0);" style={{textDecoration:"none",color:"black"}} onClick = {(e) =>this.handleClickOpen(this.state.alterFilename)  }  > { filenameAlter }</a> :"--"}</span>
+                     }} >{(this.state.alterFilename != "")? <a href="javascript:void(0);" style={{textDecoration:"none",color:"black"}} onClick = {(e) =>this.handleClickOpen(this.state.alterFilename)  }  > { filenameAlter }</a> :""}</span>
                        
                             
                           </Grid>

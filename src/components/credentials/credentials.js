@@ -47,6 +47,7 @@ export default class Credentails extends Component {
       recordValue: "",
       doRedirect:false,
       redirectUrl:"",
+      tablesRows:"",
 
     }
   }
@@ -99,6 +100,9 @@ export default class Credentails extends Component {
     .then((response) => {
         console.log("response-my_credentials",response);
         this.setState({myCredentails: response.credentials});
+        if (response.credentials.credentials.length  > 0){
+          this.setState({tablesRows: "No Records" });
+        }
     
         toast.success(
             (response.message != undefined) 
@@ -249,7 +253,8 @@ export default class Credentails extends Component {
                 
                 let trimedData  = decodeURI(docpath);
                 let docname = trimedData.split('/').splice(-1,1);
-                let alternativeDocPath =  (data.alternate_docs.length > 0)? (data.alternate_docs[0]["document_path"] != "" )? data.alternate_docs[0]["document_path"] : "none" : "none";
+                let data_alternamte_doc =   (data.alternate_docs !=null)? data.alternate_docs : 0; 
+                let alternativeDocPath =  (data_alternamte_doc.length > 0  )? (data.alternate_docs[0]["document_path"] != "" )? data.alternate_docs[0]["document_path"] : "none" : "none";
                 let trimedAlternavieData  =  decodeURI(alternativeDocPath);
                 let altername = trimedAlternavieData.split('/').splice(-1,1);
                 return (
@@ -275,7 +280,7 @@ export default class Credentails extends Component {
                 <TableCell style={{ width:"10%"}}> {(data.docs.length > 0)? this.dateFormat(data.docs[0]["effective_end_date"]): "--" } </TableCell>
                { /*<TableCell> {(data.docs.length > 0)?Config.credetailStatus[data.docs[0]["verification_status"]]: "--" }</TableCell> */} 
                <TableCell style={{ width:"5%"}}  >   {(data.docs.length > 0)?   <Button style={{ "background": Config.credetailStatusColors[data.docs[0]["verification_status"]] ,color:(data.docs[0]["verification_status"] == 'in_progress')? 'black':"white",cursor: "default"  }} > {  Config.credetailStatus[data.docs[0]["verification_status"]]  } </Button>    : "--" } </TableCell> 
-                <TableCell style={{ width:"20%"}} >  { (data.alternate_docs.length > 0)? data.alternate_docs[0]["remarks"]  : data.docs[0]["remarks"] }  </TableCell>
+                <TableCell style={{ width:"20%"}} >  { (data.alternate_docs != null)? (data.alternate_docs.length > 0)? data.alternate_docs[0]["remarks"]  : data.docs[0]["remarks"] : '' }  </TableCell>
                 <TableCell style={{ width:"5%"}}>
                               
                               <a href="javascript:void(0);" style={{textDecoration:"none"}} onClick= {(e) =>  this.getCredetailsData(data.credential_data.id) }   >  <img src={Config.images + "/fevicon_icon/edit.png" } style = {{ width :'23px',height :'23px' }}/> </a> 
@@ -327,7 +332,7 @@ export default class Credentails extends Component {
                                                           "text-decoration": "none",
                                                           "word-break": "break-word",
                                                             "width" :"12%"
-                                                    }}  >{(docpath != "none")? <a href="javascript:void(0);" style={{"text-decoration": "none"}}  onClick = {(e) =>this.handleClickOpen(docpath)  }  > {(docname !="")?docname :"--"}</a> :"--"} 
+                                                    }}  >{(docpath != "none")? <a href="javascript:void(0);" style={{"text-decoration": "none"}}  onClick = {(e) =>this.handleClickOpen(docpath)  }  > {(docname !="" &&  docname  != null && docname  != 'null')?docname :"--"}</a> :"--"} 
                                                     </TableCell>
                                                     <TableCell 
                                                      style={{
@@ -335,7 +340,7 @@ export default class Credentails extends Component {
                                                       "word-break": "break-word",
                                                       "width": "15%"
                                                     }}
-                                                      > { (alternativeDocPath !="none")? <a  href="javascript:void(0);" style={{"text-decoration": "none"}}   onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > {   (altername !="")?altername :"--"}</a> :"--"}</TableCell>
+                                                      > { (alternativeDocPath !="none")? <a  href="javascript:void(0);" style={{"text-decoration": "none"}}   onClick = {(e) =>this.handleClickOpen(alternativeDocPath)  }  > {   (altername !="" && altername != null  &&  altername != 'null')?altername+1 :"--"}</a> :"--"}</TableCell>
                                                     <TableCell style={{"width": "10%"}} > {(olddata.docs.length > 0)? this.dateFormat(olddata.docs[0]["effective_start_date"]): "--" } </TableCell>
                                                     <TableCell style={{"width": "10%"}} > {(olddata.docs.length > 0)?  this.dateFormat(olddata.docs[0]["effective_end_date"]) : "--" } </TableCell>
                                                     {/*<TableCell style={{"width": "11%"}}> {(olddata.docs.length > 0)? Config.credetailStatus[olddata.docs[0]["verification_status"]]: "--" }</TableCell> */}
@@ -372,11 +377,11 @@ export default class Credentails extends Component {
               })
               :  
               <TableRow >
-              <TableCell colSpan={9}> <center>No Records</center> </TableCell>
+              <TableCell colSpan={9}> <center>{this.state.tablesRows}</center> </TableCell>
               </TableRow> 
                 : 
                 <TableRow >
-                <TableCell colSpan={9}> <center>No Records</center> </TableCell>
+                <TableCell colSpan={9}> <center>{this.state.tablesRows}</center> </TableCell>
                 </TableRow>}
 
 
