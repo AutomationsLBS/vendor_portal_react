@@ -102,7 +102,7 @@ export default class AgCredentails extends Component {
         
         this.setState({myCredentails: response.credentials});
         
-        if (response.credentials.credentials.length  > 0){
+        if (response.credentials.credentials.length  == 0){
           this.setState({tablesRows: "No Records" });
         }
       

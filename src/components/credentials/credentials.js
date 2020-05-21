@@ -100,7 +100,7 @@ export default class Credentails extends Component {
     .then((response) => {
         console.log("response-my_credentials",response);
         this.setState({myCredentails: response.credentials});
-        if (response.credentials.credentials.length  > 0){
+        if (response.credentials.credentials.length  ==  0){
           this.setState({tablesRows: "No Records" });
         }
     

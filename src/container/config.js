@@ -45,7 +45,7 @@ const  credetailStatusColors = ()=>{
     return  {
         "not_verified":"green" ,
         "in_progress":"yellow",
-         "verified": "Verified", 
+         "verified": "green", 
          "rejected":"red",
     }
 }
