@@ -72,7 +72,10 @@ export default class Visitlogs extends Component {
           },
           mycommunitys:"",
           communityId:"",
+          noOfrows: "",
+
        }
+       
     }
 
     componentWillMount() {
@@ -153,18 +156,23 @@ export default class Visitlogs extends Component {
       end_date:this.state.filter.date.enddate,
       community_id:this.state.communityId}})
     .then((response) => {
-       console.log(response,"okokoko");
+       
        
       this.setState({visitorsList:response.visits,loader:false,total_entries:response.total_entries,per_page:response.per_page});
       
       this.setState({ visitor_daterange:response["date_range"]});
       this.setState({loader: false});
+     
       
       
      
   
       
     }).catch((error)=>{
+  
+    
+         this.setState({ noOfrows:"No records to show!"});
+    
       this.setState({visitorsList:"",loader:false,total_entries:"",per_page:""});
       
      
@@ -480,7 +488,7 @@ dropdownValue = (event)=>{
             getVisitorLogs = { this.getVisitorLogs}
             header={["on_date", "session_time_start", "duration_mins","session_time_end", "visitor_name", "phone_num","device_name","resident_name","visitor_type","staff_id"]}/>
             {
-              (total_entries =='') ? (<div><h3>No records to show!</h3></div>) : null
+              (total_entries =='') ? (<div><h3>{this.state.noOfrows}</h3></div>) : null
             }
           </Grid>
 
